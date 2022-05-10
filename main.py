@@ -2,31 +2,79 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 tokens = (
-    'NAME', 'NUMBER',
-    'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS',
-    'LPAREN', 'RPAREN',
+    'L_BRACKET', 'R_BRACKET', 'SEMICOLON', 'COLON'
+    'COMMA', 'L_BRACE', 'R_BRACE', 'L_SQUARE_BRACKET',
+    'R_SQUARE_BRACKET', 'PLUS', 'MINUS', 'MUL', 'DIV',
+    'MOD', 'INCREMENT', 'DECREMENT', 'AND', 'OR',
+    'EQUAL', 'NOT_EQUAL', 'GREATER', 'GREATER_EQUAL',
+    'LESSER', 'LESSER_EQUAL', 'ASSIGN', 'PLUS_ASSIGN',
+    'MINUS_ASSIGN', 'MUL_ASSIGN', 'DIV_ASSIGN',
+    'MOD_ASSIGN'
 )
 
 # Tokens
 
+t_L_BRACKET = r'\('
+t_R_BRACKET = r'\)'
+t_SEMICOLON = r'\;'
+t_COLON = r'\:'
+t_COMMA = r'\,'
+t_L_BRACE = r'\{'
+t_R_BRACE = r'\}'
+t_L_SQUARE_BRACKET = r'\['
+t_R_SQUARE_BRACKET = r'\]'
 t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
-t_EQUALS = r'='
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
+t_MINUS = r'\-'
+t_MUL = r'\*'
+t_DIV = r'\/'
+t_MOD = r'\%'
+t_AND = r'\&&'
+t_OR = r'\||'
+t_EQUAL = r'\=='
+t_NOT_EQUAL = r'\!='
+t_GREATER = r'\>'
+t_GREATER_EQUAL = r'\>='
+t_LESSER = r'\<'
+t_LESSER_EQUAL = r'\<='
+t_ASSIGN = r'\='
+t_PLUS_ASSIGN = r'\+='
+t_MINUS_ASSIGN = r'\-='
+t_MUL_ASSIGN = r'\*='
+t_DIV_ASSIGN = r'\/='
+t_MOD_ASSIGN = r'\%='
 
 
-def t_NUMBER(t):
-    r'\d+'
-    try:
-        t.value = int(t.value)
-    except ValueError:
-        print("Integer value too large %d", t.value)
-        t.value = 0
-    return t
+
+
+# keywords
+
+reserved = {
+    'int': 'INT',
+    'float': 'FLOAT',
+    'long': 'LONG',
+    'double': 'DOUBLE',
+    'char': 'CHAR',
+    'bool': 'BOOL',
+    'void': 'VOID',
+    'if': 'IF',
+    'for': 'FOR',
+    'do': 'DO',
+    'while': 'WHILE',
+    'unsigned': 'UNSIGNED',
+    'switch': 'SWITCH',
+    'return': 'RETURN',
+    'else': 'ELSE',
+    'break': 'BREAK',
+    'case': 'CASE',
+    'default': 'DEFAULT',
+    'const': 'CONST',
+    'printf': 'PRINTF',
+    'scanf': 'SCANF',
+    'false': 'FALSE',
+    'true': 'TRUE'
+}
+
+tokens += list(reserved.values())
 
 
 # Ignored characters
@@ -117,7 +165,6 @@ def main():
             s = input('calc > ')  # Use raw_input on Python 2
         except EOFError:
             break
-        print(lexer.input("cum = 2137"))
         parser.parse(s)
 
 
