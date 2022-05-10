@@ -2,48 +2,60 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 tokens = (
-    'L_BRACKET', 'R_BRACKET', 'SEMICOLON', 'COLON'
-    'COMMA', 'L_BRACE', 'R_BRACE', 'L_SQUARE_BRACKET',
-    'R_SQUARE_BRACKET', 'PLUS', 'MINUS', 'MUL', 'DIV',
-    'MOD', 'INCREMENT', 'DECREMENT', 'AND', 'OR',
-    'EQUAL', 'NOT_EQUAL', 'GREATER', 'GREATER_EQUAL',
-    'LESSER', 'LESSER_EQUAL', 'ASSIGN', 'PLUS_ASSIGN',
-    'MINUS_ASSIGN', 'MUL_ASSIGN', 'DIV_ASSIGN',
-    'MOD_ASSIGN'
+    'L_BRACKET', 'R_BRACKET', 'L_BRACE', 'R_BRACE', 'L_SQUARE_BRACKET', 'R_SQUARE_BRACKET',
+    'SEMICOLON', 'COLON', 'COMMA', 'QUESTION_MARK'  
+    'PLUS', 'MINUS', 'MUL', 'DIV', 'MOD',
+    'INCREMENT', 'DECREMENT',
+    'AND', 'OR', 'NEGATION'
+    'EQUAL', 'NOT_EQUAL', 'GREATER', 'GREATER_EQUAL', 'LESSER', 'LESSER_EQUAL',
+    'ASSIGN', 'PLUS_ASSIGN', 'MINUS_ASSIGN', 'MUL_ASSIGN', 'DIV_ASSIGN', 'MOD_ASSIGN'
+    'COMMENT_LINE', "COMMENT_START", "COMMENT_END"
 )
 
 # Tokens
 
 t_L_BRACKET = r'\('
 t_R_BRACKET = r'\)'
-t_SEMICOLON = r'\;'
-t_COLON = r'\:'
-t_COMMA = r'\,'
 t_L_BRACE = r'\{'
 t_R_BRACE = r'\}'
 t_L_SQUARE_BRACKET = r'\['
 t_R_SQUARE_BRACKET = r'\]'
+
+t_SEMICOLON = r';'
+t_COLON = r':'
+t_COMMA = r','
+t_QUESTION_MARK = r'\?'
+
 t_PLUS = r'\+'
-t_MINUS = r'\-'
+t_MINUS = r'-'
 t_MUL = r'\*'
-t_DIV = r'\/'
-t_MOD = r'\%'
-t_AND = r'\&&'
-t_OR = r'\||'
-t_EQUAL = r'\=='
-t_NOT_EQUAL = r'\!='
-t_GREATER = r'\>'
-t_GREATER_EQUAL = r'\>='
-t_LESSER = r'\<'
-t_LESSER_EQUAL = r'\<='
-t_ASSIGN = r'\='
+t_DIV = r'/'
+t_MOD = r'%'
+
+t_INCREMENT = r'\+\+'
+t_DECREMENT = r'--'
+
+t_AND = r'&&'
+t_OR = r'\|\|'
+t_NEGATION = r'!'
+
+t_EQUAL = r'=='
+t_NOT_EQUAL = r'!='
+t_GREATER = r'>'
+t_GREATER_EQUAL = r'>='
+t_LESSER = r'<'
+t_LESSER_EQUAL = r'<='
+
+t_ASSIGN = r'='
 t_PLUS_ASSIGN = r'\+='
-t_MINUS_ASSIGN = r'\-='
+t_MINUS_ASSIGN = r'-='
 t_MUL_ASSIGN = r'\*='
-t_DIV_ASSIGN = r'\/='
-t_MOD_ASSIGN = r'\%='
+t_DIV_ASSIGN = r'/='
+t_MOD_ASSIGN = r'%='
 
-
+t_COMMENT_LINE = r'//'
+t_COMMENT_START = r'/\*'
+t_COMMENT_END = r'\*/'
 
 
 # keywords
@@ -91,7 +103,7 @@ def t_error(t):
     t.lexer.skip(1)
 
 # Parsing rules
-
+"""
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
@@ -153,7 +165,7 @@ def p_expression_name(t):
 
 def p_error(t):
     print("Syntax error at '%s'" % t.value)
-
+"""
 
 
 def main():
