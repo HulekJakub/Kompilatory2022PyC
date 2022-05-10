@@ -45,7 +45,6 @@ t_GREATER = r'>'
 t_GREATER_EQUAL = r'>='
 t_LESSER = r'<'
 t_LESSER_EQUAL = r'<='
-
 t_ASSIGN = r'='
 t_PLUS_ASSIGN = r'\+='
 t_MINUS_ASSIGN = r'-='
