@@ -121,7 +121,7 @@ def t_PREPROCESSOR_LINE(t):
 
 
 def t_COMMENT(t):
-    r'(\/\/[^\n]*)|(\/\*(.|\n)*\*\/)'
+    r'(\/\/[^\n]*\n)|(\/\*(.|\n)*\*\/)'
     if (t.value[:2] == "//"):
         t.value = t.value[2:]
     else:
@@ -213,10 +213,12 @@ def p_error(t):
 '''program : program_component | program_component program'''
 
 '''program_component : declaration_statement
-           | function_definition_statement'''
+           | function_definition_statement
+           | COMMENT
+           | PREPROCESSOR_LINE'''
 
 # STATEMENTS
-'''statement : any_statement | SEMICOLON'''
+'''statement : any_statement | COMMENT | SEMICOLON'''
 
 '''statements : statement 
               | statement statements'''
