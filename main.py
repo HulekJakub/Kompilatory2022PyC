@@ -9,7 +9,8 @@ tokens = (
     'AND', 'OR', 'NEGATION'
     'EQUAL', 'NOT_EQUAL', 'GREATER', 'GREATER_EQUAL', 'LESSER', 'LESSER_EQUAL',
     'ASSIGN', 'PLUS_ASSIGN', 'MINUS_ASSIGN', 'MUL_ASSIGN', 'DIV_ASSIGN', 'MOD_ASSIGN'
-    'COMMENT_LINE', "COMMENT_START", "COMMENT_END"
+    'ID', 'INTEGER', 'DECIMAL', 'CHARACTER', "STRING",
+    "PREPROCESSOR_LINE", 'COMMENT'
 )
 
 # Tokens
@@ -29,7 +30,7 @@ t_QUESTION_MARK = r'\?'
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MUL = r'\*'
-t_DIV = r'/'
+t_DIV = r'\/'
 t_MOD = r'%'
 
 t_INCREMENT = r'\+\+'
@@ -49,16 +50,36 @@ t_ASSIGN = r'='
 t_PLUS_ASSIGN = r'\+='
 t_MINUS_ASSIGN = r'-='
 t_MUL_ASSIGN = r'\*='
-t_DIV_ASSIGN = r'/='
+t_DIV_ASSIGN = r'\/='
 t_MOD_ASSIGN = r'%='
 
-t_COMMENT_LINE = r'//'
-t_COMMENT_START = r'/\*'
-t_COMMENT_END = r'\*/'
+t_ID = r'[a-zA-Z_][a-zA-zZ0-9_]*'
 
+def t_INTEGER(t):
+    '\d+'
+    pass
+
+def t_DECIMAL(t):
+    '\d+\.\d+'
+    pass
+
+def t_CHARACTER(t):
+    r'\'.\''
+    pass
+
+def t_STRING(t):
+    r'".*"'
+    pass
+
+def t_PREPROCESSOR_LINE(t):
+    r'\#[^\n]*'
+    pass
+
+def t_COMMENT(t):
+    r'(\/\/[^\n]*)|(\/\*(.|\n)*\*\/)'
+    pass
 
 # keywords
-
 reserved = {
     'int': 'INT',
     'float': 'FLOAT',
@@ -86,8 +107,6 @@ reserved = {
 }
 
 tokens += list(reserved.values())
-
-
 # Ignored characters
 t_ignore = " \t"
 
@@ -102,6 +121,7 @@ def t_error(t):
     t.lexer.skip(1)
 
 # Parsing rules
+# EXAMPLE TO DELETE
 """
 precedence = (
     ('left', 'PLUS', 'MINUS'),
