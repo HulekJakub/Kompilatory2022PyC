@@ -226,6 +226,8 @@ def p_error(t):
 '''opt_statements : statements 
                   | empty'''
 
+'''statements_block : L_BRACE opt_statements R_BRACE'''
+
 '''any_statement : declaration_statement 
                  | assign_statement 
                  | function_statement 
@@ -245,15 +247,15 @@ def p_error(t):
 
 '''break_statement : BREAK SEMICOLON'''
 
-'''function_definition_statement : type ID L_BRACKET opt_args R_BRACKET L_BRACE statements R_BRACE'''
+'''function_definition_statement : type ID L_BRACKET opt_args R_BRACKET statements_block'''
 
-'''while_loop_statement : WHILE L_BRACKET logical_expression R_BRACKET L_BRACE opt_statements R_BRACE'''
+'''while_loop_statement : WHILE L_BRACKET logical_expression R_BRACKET statements_block'''
 
-'''do_while_loop_statement : DO L_BRACE opt_statements R_BRACE 
+'''do_while_loop_statement : DO statements_block
                                 WHILE L_BRACKET logical_expression  R_BRACKET SEMICOLON'''
 
 '''for_loop_statement : FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET 
-                            L_BRACE opt_statements R_BRACE'''
+                            statements_block'''
 
 '''decl_stat_or_sem : declaration_statement 
                     | SEMICOLON'''
@@ -272,9 +274,9 @@ def p_error(t):
 
 '''case_statement : CASE value_expression COLON opt_statements opt_break_statement'''
 
-'''if_statement : IF L_BRACKET logical_expression R_BRACKET L_BRACE opt_statements R_BRACE'''
+'''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
-'''else_if_statement : ELSE IF L_BRACKET logical_expression R_BRACKET L_BRACE opt_statements R_BRACE'''
+'''else_if_statement : ELSE IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
 '''else_if_statements : else_if_statement  
                       | else_if_statement else_if_statements'''
