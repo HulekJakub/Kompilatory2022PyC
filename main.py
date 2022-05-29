@@ -208,36 +208,116 @@ def p_error(t):
 
 # Tylko gramatyka w formacie Ply, brak działań
 # PROGRAM
-'''s_prim : program'''
+INDENT = "    "
 
-'''program : program_component | program_component program'''
 
-'''program_component : declaration_statement
-           | function_definition_statement
-           | COMMENT
-           | PREPROCESSOR_LINE'''
+def indent_text(text):
+    text = INDENT + text
+    text.replace("\n", "\n" + INDENT)
+    return text
+
+
+def p_s_prim(t):
+    '''s_prim : program'''
+    t[0] = t[1]
+
+
+def p_program(t):
+    '''program : program_component
+               | program_component program'''
+    if len(t) == 2:
+        t[0] = t[1]
+    elif len(t) == 3:
+        t[0] = t[1] + t[2]
+
+
+def p_program_component(t):
+    '''program_component : declaration_statement
+                         | function_definition_statement
+                         | COMMENT
+                         | PREPROCESSOR_LINE'''
+    t[0] = t[1]
 
 # STATEMENTS
-'''statement : any_statement | COMMENT | SEMICOLON'''
 
-'''statements : statement 
-              | statement statements'''
+def p_statement(t):
+    '''statement : any_statement | COMMENT | SEMICOLON'''
+    if t[1] == t_SEMICOLON:
+        t[0] = ""
+    else:
+        t[0] = t[1]
 
-'''opt_statements : statements 
-                  | empty'''
 
-'''statements_block : L_BRACE opt_statements R_BRACE'''
+def p_statements(t):
+    '''statements : statement
+                  | statement statements'''
+    if len(t) == 2:
+        t[0] = t[1]
+    elif len(t) == 3:
+        t[0] = t[1] + t[2]
 
-'''any_statement : declaration_statement 
-                 | assign_statement 
-                 | function_statement 
-                 | return_statement 
-                 | while_loop_statement 
-                 | for_loop_statement
-                 | switch_statement 
-                 | if_statement opt_else_if_statements opt_else_statement'''
 
-'''declaration_statement : opt_const type ID opt_array_mark ASSIGN declaration_expression SEMICOLON'''
+def p_opt_statements(t):
+    '''opt_statements : statements
+                      | empty'''
+    t[0] = t[1]
+
+
+def p_statements_block(t):
+    '''statements_block : L_BRACE opt_statements R_BRACE'''
+    t[0] = ":" + "\n" + indent_text(t[2]) + "\n"
+
+
+def p_any_statement(t):
+    '''any_statement : declaration_statement
+                     | assign_statement
+                     | function_statement
+                     | return_statement
+                     | while_loop_statement
+                     | for_loop_statement
+                     | switch_statement
+                     | if_statement opt_else_if_statements opt_else_statement'''
+    if len(t) == 4:
+        t[0] = t[1] + t[2] + t[3]
+    else:
+        t[0] = t[1]
+
+
+def p_declaration_statement(t):
+    '''declaration_statement : opt_const type ID opt_array_mark
+                             | opt_const type ID opt_array_mark ASSIGN declaration_expression SEMICOLON'''
+    if len(t) == 5:
+        dec_type = ""
+        if t[2] == reserved["int"]:
+            dec_type = "int()"
+        if t[2] == reserved["float"]:
+            dec_type = "float()"
+        if t[2] == reserved["long"]:
+            dec_type = "int()"
+        if t[2] == reserved["double"]:
+            dec_type = "float()"
+        if t[2] == reserved["char"]:
+            dec_type = "\"\""
+        if t[2] == reserved["bool"]:
+            dec_type = "bool()"
+        if t[2] == reserved["void"]:
+            dec_type = ""
+
+        dec_assign = ""
+        if t[4] != "":
+            if dec_type != "":
+                dec_assign = " = " + "[" + dec_type + "]" + " * " "(" + t[4][1:-1] + ")"
+            else:
+
+        else:
+            if dec_type != "":
+
+            else:
+
+    else:
+        if t[4] != "":
+
+
 
 '''assign_statement : assign_expression SEMICOLON'''
 
@@ -395,7 +475,10 @@ def p_error(t):
 '''opt_args : args type ID 
             | empty'''
 
-'''empty: '''
+
+def p_empty(t):
+    '''empty: '''
+    t[0] = ""
 
 
 def main():
@@ -408,6 +491,7 @@ def main():
         while token is not None:
             token = lexer.token()
             print(token)
+
 
 
 """
