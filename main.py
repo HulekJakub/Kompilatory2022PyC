@@ -4,7 +4,7 @@ import ply.yacc as yacc
 # Tokens
 tokens = (
     'L_BRACKET', 'R_BRACKET', 'L_BRACE', 'R_BRACE', 'L_SQUARE_BRACKET', 'R_SQUARE_BRACKET',
-    'SEMICOLON', 'COLON', 'COMMA', 'QUESTION_MARK',
+    'SEMICOLON', 'COLON', 'COMMA', 'QUESTION_MARK', 'AMPERSAND',
     'INCREMENT', 'DECREMENT',
     'AND', 'OR', 'NEGATION',
     'EQUAL', 'NOT_EQUAL', 'GREATER_EQUAL', 'LESSER_EQUAL', 'GREATER', 'LESSER',
@@ -55,6 +55,7 @@ t_SEMICOLON = r';'
 t_COLON = r':'
 t_COMMA = r','
 t_QUESTION_MARK = r'\?'
+t_AMPERSAND = r'&'
 
 t_INCREMENT = r'\+\+'
 t_DECREMENT = r'--'
@@ -82,6 +83,7 @@ t_MINUS = r'-'
 t_MUL = r'\*'
 t_DIV = r'\/'
 t_MOD = r'%'
+
 
 
 def t_ID(t):
@@ -141,71 +143,7 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-# Parsing rules
-# EXAMPLE TO DELETE
-"""
-precedence = (
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'TIMES', 'DIVIDE'),
-    ('right', 'UMINUS'),
-)
 
-# dictionary of names
-names = {}
-
-
-def p_statement_assign(t):
-    'statement : NAME EQUALS expression'
-    names[t[1]] = t[3]
-
-
-def p_statement_expr(t):
-    'statement : expression'
-    print(t[1])
-
-
-def p_expression_binop(t):
-    '''expression : expression PLUS expression
-                  | expression MINUS expression
-                  | expression TIMES expression
-                  | expression DIVIDE expression'''
-    if t[2] == '+':
-        t[0] = t[1] + t[3]
-    elif t[2] == '-':
-        t[0] = t[1] - t[3]
-    elif t[2] == '*':
-        t[0] = t[1] * t[3]
-    elif t[2] == '/':
-        t[0] = t[1] / t[3]
-
-
-def p_expression_uminus(t):
-    'expression : MINUS expression %prec UMINUS'
-    t[0] = -t[2]
-
-
-def p_expression_group(t):
-    'expression : LPAREN expression RPAREN'
-    t[0] = t[2]
-
-
-def p_expression_number(t):
-    'expression : NUMBER'
-    t[0] = t[1]
-
-
-def p_expression_name(t):
-    'expression : NAME'
-    try:
-        t[0] = names[t[1]]
-    except LookupError:
-        print("Undefined name '%s'" % t[1])
-        t[0] = 0
-
-
-def p_error(t):
-    print("Syntax error at '%s'" % t.value)
-"""
 
 # Funkcje pomocnicze
 
@@ -218,6 +156,7 @@ def indent_text(text):
     return text
 
 # PROGRAM
+
 
 
 def p_s_prim(t):
@@ -245,7 +184,9 @@ def p_program_component(t):
 # STATEMENTS
 
 def p_statement(t):
-    '''statement : any_statement | COMMENT | SEMICOLON'''
+    '''statement : any_statement
+                 | COMMENT
+                 | SEMICOLON'''
     if t[1] == ";":
         t[0] = ""
     else:
@@ -278,10 +219,12 @@ def p_any_statement(t):
                      | function_statement
                      | return_statement
                      | while_loop_statement
+                     | do_while_loop_statement
+                     | break_statement
                      | for_loop_statement
-                     | switch_statement
                      | if_statement opt_else_if_statements opt_else_statement
-                     | print_statement'''
+                     | print_statement
+                     | scan_statement'''
     if len(t) == 4:
         t[0] = t[1] + t[2] + t[3]
     else:
@@ -358,9 +301,8 @@ def p_while_loop_statement(t):
     t[0] = "while" + "(" + t[3] + ")" + t[5] + "\n"
 
 
-def do_while_loop_statement(p):
-    '''do_while_loop_statement : DO statements_block
-                                WHILE L_BRACKET logical_expression  R_BRACKET SEMICOLON'''
+def p_do_while_loop_statement(p):
+    '''do_while_loop_statement : DO statements_block WHILE L_BRACKET logical_expression  R_BRACKET SEMICOLON'''
     preparation = "do_while_loop_first_pass = True\n"
     body = "while(" + preparation + " or (" + p[5] + "))" + p[2]
     end = INDENT + "do_while_loop_first_pass = False\n"
@@ -368,8 +310,7 @@ def do_while_loop_statement(p):
 
 
 def p_for_loop_statement(p):
-    '''for_loop_statement : FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET
-                            statements_block'''
+    '''for_loop_statement : FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET statements_block'''
     condition = p[4]
     if condition == "":
         condition = "True"
@@ -431,10 +372,15 @@ def p_opt_else_statement(p):
 
     p[0] = p[1]
 
+
 def p_print_statement(p):
     '''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
+    p[0] = "print" + "(" + p[3] + ")"
 
-'''scan_statement : SCANF L_BRACKET  R_BRACKET'''
+
+def p_scan_statement(p):
+    '''scan_statement : SCANF L_BRACKET AMPERSAND ID  R_BRACKET'''
+    p[0] = p[4] + " = " + "input" + "()" + "\n"
 
 # EXPRESSIONS
 
@@ -448,6 +394,7 @@ def p_declaration_value_expression(p):
 
     elif len(p) == 4:
         p[0] = "[" + p[2] + "]"
+
 
 def p_value_expression(p):
     '''value_expression : math_expression
@@ -463,11 +410,13 @@ def p_value_expression(p):
     else:
         p[0] = "(" + p[2] + ")"
 
+
 def p_opt_value_expression(p):
     '''opt_value_expression : value_expression
                             | empty'''
 
     p[0] = p[1]
+
 
 def p_math_expression(p):
     '''math_expression : math_expression math_op math_expression
@@ -490,6 +439,7 @@ def p_math_expression(p):
     elif len(p) == 4:
         p[0] = "(" + p[2] + ")"
 
+
 def p_logical_expression(p):
     '''logical_expression : logical_expression bool_op logical_expression
                           | TRUE
@@ -508,28 +458,36 @@ def p_logical_expression(p):
         p[0] = p[1] + p[2] + p[3]
 
 
-'''function_expression: ID L_BRACKET opt_listed_values R_BRACKET'''
+def p_function_expression(p):
+    '''function_expression : ID L_BRACKET opt_listed_values R_BRACKET'''
+    p[0] = p[1] + "(" + p[3] + ")"
+
 
 def p_trinary_mark_expression(p):
-    '''trinary_mark_expression : logical_expression Q_MARK value_expression COLON value_expression'''
+    '''trinary_mark_expression : logical_expression QUESTION_MARK value_expression COLON value_expression'''
 
     p[0] = "(" + p[5] + "," + p[3] + ")""[int(" + p[1] + ")]"
+
 
 def p_assign_expression(p):
     '''assign_expression : ID assign_op value_expression
                          | unary_op ID
                          | ID unary_op'''
     if len(p) == 3:
-        p[0] = p[1] + p[2]
-
+        if p[1] == "-" or p[1] == "+":
+            p[0] = p[2] + p[1] + "=" + " 1"
+        else:
+            p[0] = p[1] + p[2] + "=" + " 1"
     else:
         p[0] = p[1] + p[2] + p[3]
+
 
 def p_opt_logical_expression(p):
     '''opt_logical_expression : logical_expression
                               | empty'''
 
     p[0] = p[1]
+
 
 def p_opt_assign_expression(p):
     '''opt_assign_expression : assign_expression
@@ -539,6 +497,7 @@ def p_opt_assign_expression(p):
 
 # DEFINITIONS
 
+
 def p_type(p):
     '''type : INT
             | FLOAT
@@ -547,8 +506,8 @@ def p_type(p):
             | BOOL
             | LONG
             | VOID'''
-
     p[0] = p[1]
+
 
 def p_value(p):
     '''value : INTEGER
@@ -564,6 +523,7 @@ def p_value(p):
     else:
         p[0] = p[1] + "[" + p[3] + "]"
 
+
 def p_listed_values(p):
     '''listed_values : value_expression
                      | listed_values COMMA listed_values'''
@@ -574,6 +534,7 @@ def p_listed_values(p):
     else:
         p[0] = p[1] + "," + p[3]
 
+
 def p_math_op(p):
     '''math_op : PLUS
                | MINUS
@@ -583,10 +544,12 @@ def p_math_op(p):
 
     p[0] = p[1]
 
+
 def p_unary_op(p):
     '''unary_op : INCREMENT
                 | DECREMENT'''
-    p[0] = p[1]
+    p[0] = p[1][0]
+
 
 def p_bool_op(p):
     '''bool_op : AND
@@ -594,8 +557,9 @@ def p_bool_op(p):
 
     p[0] = p[1]
 
-def p_comparsion_op(p):
-    '''comparsion_op : EQUAL
+
+def p_comparison_op(p):
+    '''comparison_op : EQUAL
                      | NOT_EQUAL
                      | GREATER
                      | GREATER_EQUAL
@@ -604,25 +568,29 @@ def p_comparsion_op(p):
 
     p[0] = p[1]
 
+
 def p_assign_op(p):
     '''assign_op : ASSIGN
-                 | PLUS_ASSGIN
-                 | MINUS_ASIGN
+                 | PLUS_ASSIGN
+                 | MINUS_ASSIGN
                  | MUL_ASSIGN
                  | DIV_ASSIGN
                  | MOD_ASSIGN'''
 
     p[0] = p[1]
 
+
 def p_array_mark(p):
     '''array_mark : L_SQUARE_BRACKET opt_value_expression  R_SQUARE_BRACKET '''
 
     p[0] = "[" + p[2] + "]"
 
+
 def p_opt_const(p):
     '''opt_const : CONST
                  | empty'''
     p[0] = p[1]
+
 
 def p_opt_array_mark(p):
     '''opt_array_mark : array_mark
@@ -630,11 +598,13 @@ def p_opt_array_mark(p):
 
     p[0] = p[1]
 
+
 def p_opt_listed_values(p):
     '''opt_listed_values :  listed_values
                          | empty'''
 
     p[0] = p[1]
+
 
 def p_args(p):
     '''args : type ID
@@ -646,26 +616,46 @@ def p_args(p):
     else:
         p[0] = p[1] + p[2] + "," + p[4]
 
+
 def p_opt_args(p):
     '''opt_args : args type ID
                 | empty'''
 
     p[0] = p[1]
 
-def p_empty(t):
-    '''empty: '''
-    t[0] = ""
 
+def p_empty(p):
+    '''empty : '''
+    p[0] = ""
+
+# Errors
+
+def p_error(p):
+    print("Whoa. You are seriously hosed.")
+    if not p:
+        print("End of File!")
+        return
+
+    # Read ahead looking for a closing '}'
+    while True:
+        tok = parser.token()  # Get the next token
+        if not tok or tok.type == 'R_BRACE' or tok.type == 'R_BRACKET' or tok.type == 'SEMICOLON':
+            break
+    parser.restart()
+
+lexer = lex.lex()
+parser = yacc.yacc()
 
 def main():
-    lexer = lex.lex()
-    #parser = yacc.yacc()
-    while True:
-        try:
-            a = lexer.input(input('<<'))
-        except EOFError:
-            break
-        #parser.parse(a)
+
+
+    with open("small.c", "r") as f:
+        while True:
+            try:
+                a = lexer.input(f.read())
+            except EOFError:
+                break
+            parser.parse(a)
 
 """
     while True:

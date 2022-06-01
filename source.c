@@ -16,11 +16,7 @@ int main(void) {
   variable -= 2;
   } while(true);
 
-  variable > 0 ? printf("TAK") : printf("NIE");
+  printf("TAK");
+  printf("NIE");
 
 return 0; }
-
-
-
-//printf("cos" + wawd);
-//printf("cos %d", wawd);
