@@ -54,7 +54,7 @@ Rule 41    else_if_statements -> else_if_statement
 Rule 42    else_if_statements -> else_if_statement else_if_statements
 Rule 43    opt_else_if_statements -> else_if_statements
 Rule 44    opt_else_if_statements -> empty
-Rule 45    else_statement -> ELSE statements_block
+Rule 45    else_statement -> ELSE
 Rule 46    opt_else_statement -> else_statement
 Rule 47    opt_else_statement -> empty
 Rule 48    print_statement -> PRINTF L_BRACKET value_expression R_BRACKET
@@ -78,31 +78,31 @@ Rule 65    math_expression -> CHARACTER
 Rule 66    math_expression -> ID
 Rule 67    math_expression -> L_BRACKET math_expression R_BRACKET
 Rule 68    logical_expression -> logical_expression bool_op logical_expression
-Rule 69    logical_expression -> TRUE
-Rule 70    logical_expression -> FALSE
-Rule 71    logical_expression -> NEGATION logical_expression
-Rule 72    logical_expression -> value_expression comparison_op value_expression
-Rule 73    logical_expression -> value_expression
-Rule 74    function_expression -> ID L_BRACKET opt_listed_values R_BRACKET
-Rule 75    trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression
-Rule 76    assign_expression -> ID assign_op value_expression
-Rule 77    assign_expression -> unary_op ID
-Rule 78    assign_expression -> ID unary_op
-Rule 79    opt_logical_expression -> logical_expression
-Rule 80    opt_logical_expression -> empty
-Rule 81    opt_assign_expression -> assign_expression
-Rule 82    opt_assign_expression -> empty
-Rule 83    type -> INT
-Rule 84    type -> FLOAT
-Rule 85    type -> DOUBLE
-Rule 86    type -> CHAR
-Rule 87    type -> BOOL
-Rule 88    type -> LONG
-Rule 89    type -> VOID
-Rule 90    value -> INTEGER
-Rule 91    value -> DECIMAL
-Rule 92    value -> CHARACTER
-Rule 93    value -> STRING
+Rule 69    logical_expression -> NEGATION logical_expression
+Rule 70    logical_expression -> value_expression comparison_op value_expression
+Rule 71    logical_expression -> value_expression
+Rule 72    function_expression -> ID L_BRACKET opt_listed_values R_BRACKET
+Rule 73    trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression
+Rule 74    assign_expression -> ID assign_op value_expression
+Rule 75    assign_expression -> unary_op ID
+Rule 76    assign_expression -> ID unary_op
+Rule 77    opt_logical_expression -> logical_expression
+Rule 78    opt_logical_expression -> empty
+Rule 79    opt_assign_expression -> assign_expression
+Rule 80    opt_assign_expression -> empty
+Rule 81    type -> INT
+Rule 82    type -> FLOAT
+Rule 83    type -> DOUBLE
+Rule 84    type -> CHAR
+Rule 85    type -> BOOL
+Rule 86    type -> LONG
+Rule 87    type -> VOID
+Rule 88    value -> INTEGER
+Rule 89    value -> DECIMAL
+Rule 90    value -> CHARACTER
+Rule 91    value -> STRING
+Rule 92    value -> TRUE
+Rule 93    value -> FALSE
 Rule 94    value -> ID
 Rule 95    value -> ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
 Rule 96    listed_values -> value_expression
@@ -146,39 +146,39 @@ Terminals, with rules where they appear
 AMPERSAND            : 49
 AND                  : 105
 ASSIGN               : 28 113
-BOOL                 : 87
+BOOL                 : 85
 BREAK                : 32
 CASE                 : 
-CHAR                 : 86
-CHARACTER            : 65 92
-COLON                : 75
+CHAR                 : 84
+CHARACTER            : 65 90
+COLON                : 73
 COMMA                : 97 127
 COMMENT              : 6 9
 CONST                : 120
-DECIMAL              : 64 91
+DECIMAL              : 64 89
 DECREMENT            : 104
 DEFAULT              : 
 DIV                  : 101
 DIV_ASSIGN           : 117
 DO                   : 35
-DOUBLE               : 85
+DOUBLE               : 83
 ELSE                 : 40 45
 EQUAL                : 107
-FALSE                : 70
-FLOAT                : 84
+FALSE                : 93
+FLOAT                : 82
 FOR                  : 36
 GREATER              : 109
 GREATER_EQUAL        : 110
-ID                   : 27 28 33 49 66 74 76 77 78 94 95 126 127 128
+ID                   : 27 28 33 49 66 72 74 75 76 94 95 126 127 128
 IF                   : 39 40
 INCREMENT            : 103
-INT                  : 83
-INTEGER              : 63 90
+INT                  : 81
+INTEGER              : 63 88
 LESSER               : 111
 LESSER_EQUAL         : 112
-LONG                 : 88
+LONG                 : 86
 L_BRACE              : 15 51 52
-L_BRACKET            : 33 34 35 36 39 40 48 49 58 67 74
+L_BRACKET            : 33 34 35 36 39 40 48 49 58 67 72
 L_SQUARE_BRACKET     : 95 119
 MINUS                : 62 99
 MINUS_ASSIGN         : 115
@@ -186,25 +186,25 @@ MOD                  : 102
 MOD_ASSIGN           : 118
 MUL                  : 100
 MUL_ASSIGN           : 116
-NEGATION             : 71
+NEGATION             : 69
 NOT_EQUAL            : 108
 OR                   : 106
 PLUS                 : 98
 PLUS_ASSIGN          : 114
 PREPROCESSOR_LINE    : 7
 PRINTF               : 48
-QUESTION_MARK        : 75
+QUESTION_MARK        : 73
 RETURN               : 31
 R_BRACE              : 15 51 52
-R_BRACKET            : 33 34 35 36 39 40 48 49 58 67 74
+R_BRACKET            : 33 34 35 36 39 40 48 49 58 67 72
 R_SQUARE_BRACKET     : 95 119
 SCANF                : 49
 SEMICOLON            : 10 28 29 30 31 32 35 36 38
-STRING               : 93
+STRING               : 91
 SWITCH               : 
-TRUE                 : 69
+TRUE                 : 92
 UNSIGNED             : 
-VOID                 : 89
+VOID                 : 87
 WHILE                : 34 35
 error                : 
 
@@ -213,12 +213,12 @@ Nonterminals, with rules where they appear
 any_statement        : 8
 args                 : 127 128
 array_mark           : 122
-assign_expression    : 29 81
-assign_op            : 76
+assign_expression    : 29 79
+assign_op            : 74
 assign_statement     : 17
 bool_op              : 68
 break_statement      : 22
-comparison_op        : 72
+comparison_op        : 70
 decl_stat_or_sem     : 36
 declaration_statement : 4 16 37
 declaration_value_expression : 28 52
@@ -226,14 +226,14 @@ do_while_loop_statement : 21
 else_if_statement    : 41 42
 else_if_statements   : 42 43
 else_statement       : 46
-empty                : 14 44 47 60 80 82 121 123 125 129
+empty                : 14 44 47 60 78 80 121 123 125 129
 for_loop_statement   : 23
 function_definition_statement : 5
 function_expression  : 30 55
 function_statement   : 18
 if_statement         : 24
 listed_values        : 51 97 97 124
-logical_expression   : 34 35 39 40 54 68 68 71 75 79
+logical_expression   : 34 35 39 40 54 68 68 69 73 77
 math_expression      : 53 61 61 62 67
 math_op              : 61
 opt_args             : 33
@@ -242,7 +242,7 @@ opt_assign_expression : 36
 opt_const            : 27 28
 opt_else_if_statements : 24
 opt_else_statement   : 24
-opt_listed_values    : 74
+opt_listed_values    : 72
 opt_logical_expression : 36
 opt_statements       : 15
 opt_value_expression : 119
@@ -254,12 +254,12 @@ s_prim               : 0
 scan_statement       : 26
 statement            : 11 12
 statements           : 12 13
-statements_block     : 33 34 35 36 39 40 45
+statements_block     : 33 34 35 36 39 40
 trinary_mark_expression : 57
 type                 : 27 28 33 126 127 128
-unary_op             : 77 78
+unary_op             : 75 76
 value                : 56
-value_expression     : 31 48 50 58 59 72 72 73 75 75 76 95 96
+value_expression     : 31 48 50 58 59 70 70 71 73 73 74 95 96
 while_loop_statement : 20
 
 Parsing method: LALR
@@ -279,13 +279,13 @@ state 0
     (33) function_definition_statement -> . type ID L_BRACKET opt_args R_BRACKET statements_block
     (120) opt_const -> . CONST
     (121) opt_const -> . empty
-    (83) type -> . INT
-    (84) type -> . FLOAT
-    (85) type -> . DOUBLE
-    (86) type -> . CHAR
-    (87) type -> . BOOL
-    (88) type -> . LONG
-    (89) type -> . VOID
+    (81) type -> . INT
+    (82) type -> . FLOAT
+    (83) type -> . DOUBLE
+    (84) type -> . CHAR
+    (85) type -> . BOOL
+    (86) type -> . LONG
+    (87) type -> . VOID
     (130) empty -> .
 
   ! shift/reduce conflict for INT resolved as shift
@@ -351,13 +351,13 @@ state 3
     (33) function_definition_statement -> . type ID L_BRACKET opt_args R_BRACKET statements_block
     (120) opt_const -> . CONST
     (121) opt_const -> . empty
-    (83) type -> . INT
-    (84) type -> . FLOAT
-    (85) type -> . DOUBLE
-    (86) type -> . CHAR
-    (87) type -> . BOOL
-    (88) type -> . LONG
-    (89) type -> . VOID
+    (81) type -> . INT
+    (82) type -> . FLOAT
+    (83) type -> . DOUBLE
+    (84) type -> . CHAR
+    (85) type -> . BOOL
+    (86) type -> . LONG
+    (87) type -> . VOID
     (130) empty -> .
 
   ! shift/reduce conflict for INT resolved as shift
@@ -467,13 +467,13 @@ state 8
 
     (27) declaration_statement -> opt_const . type ID opt_array_mark
     (28) declaration_statement -> opt_const . type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON
-    (83) type -> . INT
-    (84) type -> . FLOAT
-    (85) type -> . DOUBLE
-    (86) type -> . CHAR
-    (87) type -> . BOOL
-    (88) type -> . LONG
-    (89) type -> . VOID
+    (81) type -> . INT
+    (82) type -> . FLOAT
+    (83) type -> . DOUBLE
+    (84) type -> . CHAR
+    (85) type -> . BOOL
+    (86) type -> . LONG
+    (87) type -> . VOID
 
     INT             shift and go to state 12
     FLOAT           shift and go to state 13
@@ -520,51 +520,51 @@ state 11
 
 state 12
 
-    (83) type -> INT .
+    (81) type -> INT .
 
-    ID              reduce using rule 83 (type -> INT .)
+    ID              reduce using rule 81 (type -> INT .)
 
 
 state 13
 
-    (84) type -> FLOAT .
+    (82) type -> FLOAT .
 
-    ID              reduce using rule 84 (type -> FLOAT .)
+    ID              reduce using rule 82 (type -> FLOAT .)
 
 
 state 14
 
-    (85) type -> DOUBLE .
+    (83) type -> DOUBLE .
 
-    ID              reduce using rule 85 (type -> DOUBLE .)
+    ID              reduce using rule 83 (type -> DOUBLE .)
 
 
 state 15
 
-    (86) type -> CHAR .
+    (84) type -> CHAR .
 
-    ID              reduce using rule 86 (type -> CHAR .)
+    ID              reduce using rule 84 (type -> CHAR .)
 
 
 state 16
 
-    (87) type -> BOOL .
+    (85) type -> BOOL .
 
-    ID              reduce using rule 87 (type -> BOOL .)
+    ID              reduce using rule 85 (type -> BOOL .)
 
 
 state 17
 
-    (88) type -> LONG .
+    (86) type -> LONG .
 
-    ID              reduce using rule 88 (type -> LONG .)
+    ID              reduce using rule 86 (type -> LONG .)
 
 
 state 18
 
-    (89) type -> VOID .
+    (87) type -> VOID .
 
-    ID              reduce using rule 89 (type -> VOID .)
+    ID              reduce using rule 87 (type -> VOID .)
 
 
 state 19
@@ -624,8 +624,6 @@ state 22
     INCREMENT       reduce using rule 130 (empty -> .)
     DECREMENT       reduce using rule 130 (empty -> .)
     R_BRACE         reduce using rule 130 (empty -> .)
-    TRUE            reduce using rule 130 (empty -> .)
-    FALSE           reduce using rule 130 (empty -> .)
     NEGATION        reduce using rule 130 (empty -> .)
     L_BRACKET       reduce using rule 130 (empty -> .)
     MINUS           reduce using rule 130 (empty -> .)
@@ -633,6 +631,8 @@ state 22
     DECIMAL         reduce using rule 130 (empty -> .)
     CHARACTER       reduce using rule 130 (empty -> .)
     STRING          reduce using rule 130 (empty -> .)
+    TRUE            reduce using rule 130 (empty -> .)
+    FALSE           reduce using rule 130 (empty -> .)
 
     opt_array_mark                 shift and go to state 24
     array_mark                     shift and go to state 25
@@ -646,13 +646,13 @@ state 23
     (126) args -> . type ID
     (127) args -> . type ID COMMA args
     (130) empty -> .
-    (83) type -> . INT
-    (84) type -> . FLOAT
-    (85) type -> . DOUBLE
-    (86) type -> . CHAR
-    (87) type -> . BOOL
-    (88) type -> . LONG
-    (89) type -> . VOID
+    (81) type -> . INT
+    (82) type -> . FLOAT
+    (83) type -> . DOUBLE
+    (84) type -> . CHAR
+    (85) type -> . BOOL
+    (86) type -> . LONG
+    (87) type -> . VOID
 
     R_BRACKET       reduce using rule 130 (empty -> .)
     INT             shift and go to state 12
@@ -697,8 +697,6 @@ state 24
     INCREMENT       reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
     DECREMENT       reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
     R_BRACE         reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
-    TRUE            reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
-    FALSE           reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
     NEGATION        reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
     L_BRACKET       reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
     MINUS           reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
@@ -706,6 +704,8 @@ state 24
     DECIMAL         reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
     CHARACTER       reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
     STRING          reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
+    TRUE            reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
+    FALSE           reduce using rule 27 (declaration_statement -> opt_const type ID opt_array_mark .)
     ASSIGN          shift and go to state 32
 
 
@@ -738,8 +738,6 @@ state 25
     INCREMENT       reduce using rule 122 (opt_array_mark -> array_mark .)
     DECREMENT       reduce using rule 122 (opt_array_mark -> array_mark .)
     R_BRACE         reduce using rule 122 (opt_array_mark -> array_mark .)
-    TRUE            reduce using rule 122 (opt_array_mark -> array_mark .)
-    FALSE           reduce using rule 122 (opt_array_mark -> array_mark .)
     NEGATION        reduce using rule 122 (opt_array_mark -> array_mark .)
     L_BRACKET       reduce using rule 122 (opt_array_mark -> array_mark .)
     MINUS           reduce using rule 122 (opt_array_mark -> array_mark .)
@@ -747,6 +745,8 @@ state 25
     DECIMAL         reduce using rule 122 (opt_array_mark -> array_mark .)
     CHARACTER       reduce using rule 122 (opt_array_mark -> array_mark .)
     STRING          reduce using rule 122 (opt_array_mark -> array_mark .)
+    TRUE            reduce using rule 122 (opt_array_mark -> array_mark .)
+    FALSE           reduce using rule 122 (opt_array_mark -> array_mark .)
 
 
 state 26
@@ -778,8 +778,6 @@ state 26
     INCREMENT       reduce using rule 123 (opt_array_mark -> empty .)
     DECREMENT       reduce using rule 123 (opt_array_mark -> empty .)
     R_BRACE         reduce using rule 123 (opt_array_mark -> empty .)
-    TRUE            reduce using rule 123 (opt_array_mark -> empty .)
-    FALSE           reduce using rule 123 (opt_array_mark -> empty .)
     NEGATION        reduce using rule 123 (opt_array_mark -> empty .)
     L_BRACKET       reduce using rule 123 (opt_array_mark -> empty .)
     MINUS           reduce using rule 123 (opt_array_mark -> empty .)
@@ -787,6 +785,8 @@ state 26
     DECIMAL         reduce using rule 123 (opt_array_mark -> empty .)
     CHARACTER       reduce using rule 123 (opt_array_mark -> empty .)
     STRING          reduce using rule 123 (opt_array_mark -> empty .)
+    TRUE            reduce using rule 123 (opt_array_mark -> empty .)
+    FALSE           reduce using rule 123 (opt_array_mark -> empty .)
 
 
 state 27
@@ -809,19 +809,19 @@ state 27
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     R_SQUARE_BRACKET reduce using rule 130 (empty -> .)
@@ -830,10 +830,10 @@ state 27
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     opt_value_expression           shift and go to state 33
     value_expression               shift and go to state 34
@@ -862,13 +862,13 @@ state 29
 state 30
 
     (128) opt_args -> args . type ID
-    (83) type -> . INT
-    (84) type -> . FLOAT
-    (85) type -> . DOUBLE
-    (86) type -> . CHAR
-    (87) type -> . BOOL
-    (88) type -> . LONG
-    (89) type -> . VOID
+    (81) type -> . INT
+    (82) type -> . FLOAT
+    (83) type -> . DOUBLE
+    (84) type -> . CHAR
+    (85) type -> . BOOL
+    (86) type -> . LONG
+    (87) type -> . VOID
 
     INT             shift and go to state 12
     FLOAT           shift and go to state 13
@@ -907,19 +907,19 @@ state 32
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACE         shift and go to state 56
     L_BRACKET       shift and go to state 41
@@ -928,10 +928,10 @@ state 32
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     declaration_value_expression   shift and go to state 54
     value_expression               shift and go to state 55
@@ -951,8 +951,8 @@ state 33
 state 34
 
     (59) opt_value_expression -> value_expression .
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -968,9 +968,9 @@ state 34
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
     R_SQUARE_BRACKET reduce using rule 59 (opt_value_expression -> value_expression .)
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -978,13 +978,13 @@ state 34
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! R_SQUARE_BRACKET [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! R_SQUARE_BRACKET [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -1032,7 +1032,7 @@ state 37
 
     (54) value_expression -> logical_expression .
     (68) logical_expression -> logical_expression . bool_op logical_expression
-    (75) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
     (105) bool_op -> . AND
     (106) bool_op -> . OR
 
@@ -1142,19 +1142,19 @@ state 41
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -1162,10 +1162,10 @@ state 41
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     value_expression               shift and go to state 75
     math_expression                shift and go to state 76
@@ -1197,7 +1197,7 @@ state 42
 state 43
 
     (63) math_expression -> INTEGER .
-    (90) value -> INTEGER .
+    (88) value -> INTEGER .
 
   ! reduce/reduce conflict for EQUAL resolved using rule 63 (math_expression -> INTEGER .)
   ! reduce/reduce conflict for NOT_EQUAL resolved using rule 63 (math_expression -> INTEGER .)
@@ -1235,27 +1235,27 @@ state 43
     COMMA           reduce using rule 63 (math_expression -> INTEGER .)
     COLON           reduce using rule 63 (math_expression -> INTEGER .)
 
-  ! EQUAL           [ reduce using rule 90 (value -> INTEGER .) ]
-  ! NOT_EQUAL       [ reduce using rule 90 (value -> INTEGER .) ]
-  ! GREATER         [ reduce using rule 90 (value -> INTEGER .) ]
-  ! GREATER_EQUAL   [ reduce using rule 90 (value -> INTEGER .) ]
-  ! LESSER          [ reduce using rule 90 (value -> INTEGER .) ]
-  ! LESSER_EQUAL    [ reduce using rule 90 (value -> INTEGER .) ]
-  ! R_SQUARE_BRACKET [ reduce using rule 90 (value -> INTEGER .) ]
-  ! QUESTION_MARK   [ reduce using rule 90 (value -> INTEGER .) ]
-  ! AND             [ reduce using rule 90 (value -> INTEGER .) ]
-  ! OR              [ reduce using rule 90 (value -> INTEGER .) ]
-  ! SEMICOLON       [ reduce using rule 90 (value -> INTEGER .) ]
-  ! R_BRACKET       [ reduce using rule 90 (value -> INTEGER .) ]
-  ! R_BRACE         [ reduce using rule 90 (value -> INTEGER .) ]
-  ! COMMA           [ reduce using rule 90 (value -> INTEGER .) ]
-  ! COLON           [ reduce using rule 90 (value -> INTEGER .) ]
+  ! EQUAL           [ reduce using rule 88 (value -> INTEGER .) ]
+  ! NOT_EQUAL       [ reduce using rule 88 (value -> INTEGER .) ]
+  ! GREATER         [ reduce using rule 88 (value -> INTEGER .) ]
+  ! GREATER_EQUAL   [ reduce using rule 88 (value -> INTEGER .) ]
+  ! LESSER          [ reduce using rule 88 (value -> INTEGER .) ]
+  ! LESSER_EQUAL    [ reduce using rule 88 (value -> INTEGER .) ]
+  ! R_SQUARE_BRACKET [ reduce using rule 88 (value -> INTEGER .) ]
+  ! QUESTION_MARK   [ reduce using rule 88 (value -> INTEGER .) ]
+  ! AND             [ reduce using rule 88 (value -> INTEGER .) ]
+  ! OR              [ reduce using rule 88 (value -> INTEGER .) ]
+  ! SEMICOLON       [ reduce using rule 88 (value -> INTEGER .) ]
+  ! R_BRACKET       [ reduce using rule 88 (value -> INTEGER .) ]
+  ! R_BRACE         [ reduce using rule 88 (value -> INTEGER .) ]
+  ! COMMA           [ reduce using rule 88 (value -> INTEGER .) ]
+  ! COLON           [ reduce using rule 88 (value -> INTEGER .) ]
 
 
 state 44
 
     (64) math_expression -> DECIMAL .
-    (91) value -> DECIMAL .
+    (89) value -> DECIMAL .
 
   ! reduce/reduce conflict for EQUAL resolved using rule 64 (math_expression -> DECIMAL .)
   ! reduce/reduce conflict for NOT_EQUAL resolved using rule 64 (math_expression -> DECIMAL .)
@@ -1293,27 +1293,27 @@ state 44
     COMMA           reduce using rule 64 (math_expression -> DECIMAL .)
     COLON           reduce using rule 64 (math_expression -> DECIMAL .)
 
-  ! EQUAL           [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! NOT_EQUAL       [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! GREATER         [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! GREATER_EQUAL   [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! LESSER          [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! LESSER_EQUAL    [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! R_SQUARE_BRACKET [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! QUESTION_MARK   [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! AND             [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! OR              [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! SEMICOLON       [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! R_BRACKET       [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! R_BRACE         [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! COMMA           [ reduce using rule 91 (value -> DECIMAL .) ]
-  ! COLON           [ reduce using rule 91 (value -> DECIMAL .) ]
+  ! EQUAL           [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! NOT_EQUAL       [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! GREATER         [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! GREATER_EQUAL   [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! LESSER          [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! LESSER_EQUAL    [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! R_SQUARE_BRACKET [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! QUESTION_MARK   [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! AND             [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! OR              [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! SEMICOLON       [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! R_BRACKET       [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! R_BRACE         [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! COMMA           [ reduce using rule 89 (value -> DECIMAL .) ]
+  ! COLON           [ reduce using rule 89 (value -> DECIMAL .) ]
 
 
 state 45
 
     (65) math_expression -> CHARACTER .
-    (92) value -> CHARACTER .
+    (90) value -> CHARACTER .
 
   ! reduce/reduce conflict for EQUAL resolved using rule 65 (math_expression -> CHARACTER .)
   ! reduce/reduce conflict for NOT_EQUAL resolved using rule 65 (math_expression -> CHARACTER .)
@@ -1351,27 +1351,27 @@ state 45
     COMMA           reduce using rule 65 (math_expression -> CHARACTER .)
     COLON           reduce using rule 65 (math_expression -> CHARACTER .)
 
-  ! EQUAL           [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! NOT_EQUAL       [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! GREATER         [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! GREATER_EQUAL   [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! LESSER          [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! LESSER_EQUAL    [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! R_SQUARE_BRACKET [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! QUESTION_MARK   [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! AND             [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! OR              [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! SEMICOLON       [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! R_BRACKET       [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! R_BRACE         [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! COMMA           [ reduce using rule 92 (value -> CHARACTER .) ]
-  ! COLON           [ reduce using rule 92 (value -> CHARACTER .) ]
+  ! EQUAL           [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! NOT_EQUAL       [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! GREATER         [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! GREATER_EQUAL   [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! LESSER          [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! LESSER_EQUAL    [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! R_SQUARE_BRACKET [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! QUESTION_MARK   [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! AND             [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! OR              [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! SEMICOLON       [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! R_BRACKET       [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! R_BRACE         [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! COMMA           [ reduce using rule 90 (value -> CHARACTER .) ]
+  ! COLON           [ reduce using rule 90 (value -> CHARACTER .) ]
 
 
 state 46
 
     (66) math_expression -> ID .
-    (74) function_expression -> ID . L_BRACKET opt_listed_values R_BRACKET
+    (72) function_expression -> ID . L_BRACKET opt_listed_values R_BRACKET
     (94) value -> ID .
     (95) value -> ID . L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
 
@@ -1432,55 +1432,11 @@ state 46
 
 state 47
 
-    (69) logical_expression -> TRUE .
-
-    EQUAL           reduce using rule 69 (logical_expression -> TRUE .)
-    NOT_EQUAL       reduce using rule 69 (logical_expression -> TRUE .)
-    GREATER         reduce using rule 69 (logical_expression -> TRUE .)
-    GREATER_EQUAL   reduce using rule 69 (logical_expression -> TRUE .)
-    LESSER          reduce using rule 69 (logical_expression -> TRUE .)
-    LESSER_EQUAL    reduce using rule 69 (logical_expression -> TRUE .)
-    R_SQUARE_BRACKET reduce using rule 69 (logical_expression -> TRUE .)
-    QUESTION_MARK   reduce using rule 69 (logical_expression -> TRUE .)
-    AND             reduce using rule 69 (logical_expression -> TRUE .)
-    OR              reduce using rule 69 (logical_expression -> TRUE .)
-    SEMICOLON       reduce using rule 69 (logical_expression -> TRUE .)
-    R_BRACKET       reduce using rule 69 (logical_expression -> TRUE .)
-    R_BRACE         reduce using rule 69 (logical_expression -> TRUE .)
-    COMMA           reduce using rule 69 (logical_expression -> TRUE .)
-    COLON           reduce using rule 69 (logical_expression -> TRUE .)
-
-
-state 48
-
-    (70) logical_expression -> FALSE .
-
-    EQUAL           reduce using rule 70 (logical_expression -> FALSE .)
-    NOT_EQUAL       reduce using rule 70 (logical_expression -> FALSE .)
-    GREATER         reduce using rule 70 (logical_expression -> FALSE .)
-    GREATER_EQUAL   reduce using rule 70 (logical_expression -> FALSE .)
-    LESSER          reduce using rule 70 (logical_expression -> FALSE .)
-    LESSER_EQUAL    reduce using rule 70 (logical_expression -> FALSE .)
-    R_SQUARE_BRACKET reduce using rule 70 (logical_expression -> FALSE .)
-    QUESTION_MARK   reduce using rule 70 (logical_expression -> FALSE .)
-    AND             reduce using rule 70 (logical_expression -> FALSE .)
-    OR              reduce using rule 70 (logical_expression -> FALSE .)
-    SEMICOLON       reduce using rule 70 (logical_expression -> FALSE .)
-    R_BRACKET       reduce using rule 70 (logical_expression -> FALSE .)
-    R_BRACE         reduce using rule 70 (logical_expression -> FALSE .)
-    COMMA           reduce using rule 70 (logical_expression -> FALSE .)
-    COLON           reduce using rule 70 (logical_expression -> FALSE .)
-
-
-state 49
-
-    (71) logical_expression -> NEGATION . logical_expression
+    (69) logical_expression -> NEGATION . logical_expression
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -1494,25 +1450,27 @@ state 49
     (65) math_expression -> . CHARACTER
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
+    NEGATION        shift and go to state 47
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
     INTEGER         shift and go to state 43
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    STRING          shift and go to state 50
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     logical_expression             shift and go to state 85
     value_expression               shift and go to state 86
@@ -1521,25 +1479,67 @@ state 49
     value                          shift and go to state 39
     trinary_mark_expression        shift and go to state 40
 
+state 48
+
+    (91) value -> STRING .
+
+    EQUAL           reduce using rule 91 (value -> STRING .)
+    NOT_EQUAL       reduce using rule 91 (value -> STRING .)
+    GREATER         reduce using rule 91 (value -> STRING .)
+    GREATER_EQUAL   reduce using rule 91 (value -> STRING .)
+    LESSER          reduce using rule 91 (value -> STRING .)
+    LESSER_EQUAL    reduce using rule 91 (value -> STRING .)
+    R_SQUARE_BRACKET reduce using rule 91 (value -> STRING .)
+    QUESTION_MARK   reduce using rule 91 (value -> STRING .)
+    AND             reduce using rule 91 (value -> STRING .)
+    OR              reduce using rule 91 (value -> STRING .)
+    SEMICOLON       reduce using rule 91 (value -> STRING .)
+    R_BRACKET       reduce using rule 91 (value -> STRING .)
+    R_BRACE         reduce using rule 91 (value -> STRING .)
+    COMMA           reduce using rule 91 (value -> STRING .)
+    COLON           reduce using rule 91 (value -> STRING .)
+
+
+state 49
+
+    (92) value -> TRUE .
+
+    EQUAL           reduce using rule 92 (value -> TRUE .)
+    NOT_EQUAL       reduce using rule 92 (value -> TRUE .)
+    GREATER         reduce using rule 92 (value -> TRUE .)
+    GREATER_EQUAL   reduce using rule 92 (value -> TRUE .)
+    LESSER          reduce using rule 92 (value -> TRUE .)
+    LESSER_EQUAL    reduce using rule 92 (value -> TRUE .)
+    R_SQUARE_BRACKET reduce using rule 92 (value -> TRUE .)
+    QUESTION_MARK   reduce using rule 92 (value -> TRUE .)
+    AND             reduce using rule 92 (value -> TRUE .)
+    OR              reduce using rule 92 (value -> TRUE .)
+    SEMICOLON       reduce using rule 92 (value -> TRUE .)
+    R_BRACKET       reduce using rule 92 (value -> TRUE .)
+    R_BRACE         reduce using rule 92 (value -> TRUE .)
+    COMMA           reduce using rule 92 (value -> TRUE .)
+    COLON           reduce using rule 92 (value -> TRUE .)
+
+
 state 50
 
-    (93) value -> STRING .
+    (93) value -> FALSE .
 
-    EQUAL           reduce using rule 93 (value -> STRING .)
-    NOT_EQUAL       reduce using rule 93 (value -> STRING .)
-    GREATER         reduce using rule 93 (value -> STRING .)
-    GREATER_EQUAL   reduce using rule 93 (value -> STRING .)
-    LESSER          reduce using rule 93 (value -> STRING .)
-    LESSER_EQUAL    reduce using rule 93 (value -> STRING .)
-    R_SQUARE_BRACKET reduce using rule 93 (value -> STRING .)
-    QUESTION_MARK   reduce using rule 93 (value -> STRING .)
-    AND             reduce using rule 93 (value -> STRING .)
-    OR              reduce using rule 93 (value -> STRING .)
-    SEMICOLON       reduce using rule 93 (value -> STRING .)
-    R_BRACKET       reduce using rule 93 (value -> STRING .)
-    R_BRACE         reduce using rule 93 (value -> STRING .)
-    COMMA           reduce using rule 93 (value -> STRING .)
-    COLON           reduce using rule 93 (value -> STRING .)
+    EQUAL           reduce using rule 93 (value -> FALSE .)
+    NOT_EQUAL       reduce using rule 93 (value -> FALSE .)
+    GREATER         reduce using rule 93 (value -> FALSE .)
+    GREATER_EQUAL   reduce using rule 93 (value -> FALSE .)
+    LESSER          reduce using rule 93 (value -> FALSE .)
+    LESSER_EQUAL    reduce using rule 93 (value -> FALSE .)
+    R_SQUARE_BRACKET reduce using rule 93 (value -> FALSE .)
+    QUESTION_MARK   reduce using rule 93 (value -> FALSE .)
+    AND             reduce using rule 93 (value -> FALSE .)
+    OR              reduce using rule 93 (value -> FALSE .)
+    SEMICOLON       reduce using rule 93 (value -> FALSE .)
+    R_BRACKET       reduce using rule 93 (value -> FALSE .)
+    R_BRACE         reduce using rule 93 (value -> FALSE .)
+    COMMA           reduce using rule 93 (value -> FALSE .)
+    COLON           reduce using rule 93 (value -> FALSE .)
 
 
 state 51
@@ -1583,8 +1583,8 @@ state 54
 state 55
 
     (50) declaration_value_expression -> value_expression .
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -1600,9 +1600,9 @@ state 55
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
     SEMICOLON       reduce using rule 50 (declaration_value_expression -> value_expression .)
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -1610,13 +1610,13 @@ state 55
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! SEMICOLON       [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! SEMICOLON       [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -1643,19 +1643,19 @@ state 56
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACE         shift and go to state 56
     L_BRACKET       shift and go to state 41
@@ -1664,10 +1664,10 @@ state 56
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     listed_values                  shift and go to state 92
     declaration_value_expression   shift and go to state 93
@@ -1707,8 +1707,6 @@ state 57
     INCREMENT       reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
     DECREMENT       reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
     R_BRACE         reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
-    TRUE            reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
-    FALSE           reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
     NEGATION        reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
     L_BRACKET       reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
     MINUS           reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
@@ -1716,11 +1714,13 @@ state 57
     DECIMAL         reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
     CHARACTER       reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
     STRING          reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
+    TRUE            reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
+    FALSE           reduce using rule 119 (array_mark -> L_SQUARE_BRACKET opt_value_expression R_SQUARE_BRACKET .)
 
 
 state 58
 
-    (72) logical_expression -> value_expression comparison_op . value_expression
+    (70) logical_expression -> value_expression comparison_op . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -1735,19 +1735,19 @@ state 58
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -1755,10 +1755,10 @@ state 58
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     value_expression               shift and go to state 95
     math_expression                shift and go to state 36
@@ -1777,10 +1777,10 @@ state 59
     DECIMAL         reduce using rule 107 (comparison_op -> EQUAL .)
     CHARACTER       reduce using rule 107 (comparison_op -> EQUAL .)
     ID              reduce using rule 107 (comparison_op -> EQUAL .)
-    TRUE            reduce using rule 107 (comparison_op -> EQUAL .)
-    FALSE           reduce using rule 107 (comparison_op -> EQUAL .)
     NEGATION        reduce using rule 107 (comparison_op -> EQUAL .)
     STRING          reduce using rule 107 (comparison_op -> EQUAL .)
+    TRUE            reduce using rule 107 (comparison_op -> EQUAL .)
+    FALSE           reduce using rule 107 (comparison_op -> EQUAL .)
 
 
 state 60
@@ -1793,10 +1793,10 @@ state 60
     DECIMAL         reduce using rule 108 (comparison_op -> NOT_EQUAL .)
     CHARACTER       reduce using rule 108 (comparison_op -> NOT_EQUAL .)
     ID              reduce using rule 108 (comparison_op -> NOT_EQUAL .)
-    TRUE            reduce using rule 108 (comparison_op -> NOT_EQUAL .)
-    FALSE           reduce using rule 108 (comparison_op -> NOT_EQUAL .)
     NEGATION        reduce using rule 108 (comparison_op -> NOT_EQUAL .)
     STRING          reduce using rule 108 (comparison_op -> NOT_EQUAL .)
+    TRUE            reduce using rule 108 (comparison_op -> NOT_EQUAL .)
+    FALSE           reduce using rule 108 (comparison_op -> NOT_EQUAL .)
 
 
 state 61
@@ -1809,10 +1809,10 @@ state 61
     DECIMAL         reduce using rule 109 (comparison_op -> GREATER .)
     CHARACTER       reduce using rule 109 (comparison_op -> GREATER .)
     ID              reduce using rule 109 (comparison_op -> GREATER .)
-    TRUE            reduce using rule 109 (comparison_op -> GREATER .)
-    FALSE           reduce using rule 109 (comparison_op -> GREATER .)
     NEGATION        reduce using rule 109 (comparison_op -> GREATER .)
     STRING          reduce using rule 109 (comparison_op -> GREATER .)
+    TRUE            reduce using rule 109 (comparison_op -> GREATER .)
+    FALSE           reduce using rule 109 (comparison_op -> GREATER .)
 
 
 state 62
@@ -1825,10 +1825,10 @@ state 62
     DECIMAL         reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
     CHARACTER       reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
     ID              reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
-    TRUE            reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
-    FALSE           reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
     NEGATION        reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
     STRING          reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
+    TRUE            reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
+    FALSE           reduce using rule 110 (comparison_op -> GREATER_EQUAL .)
 
 
 state 63
@@ -1841,10 +1841,10 @@ state 63
     DECIMAL         reduce using rule 111 (comparison_op -> LESSER .)
     CHARACTER       reduce using rule 111 (comparison_op -> LESSER .)
     ID              reduce using rule 111 (comparison_op -> LESSER .)
-    TRUE            reduce using rule 111 (comparison_op -> LESSER .)
-    FALSE           reduce using rule 111 (comparison_op -> LESSER .)
     NEGATION        reduce using rule 111 (comparison_op -> LESSER .)
     STRING          reduce using rule 111 (comparison_op -> LESSER .)
+    TRUE            reduce using rule 111 (comparison_op -> LESSER .)
+    FALSE           reduce using rule 111 (comparison_op -> LESSER .)
 
 
 state 64
@@ -1857,10 +1857,10 @@ state 64
     DECIMAL         reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
     CHARACTER       reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
     ID              reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
-    TRUE            reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
-    FALSE           reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
     NEGATION        reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
     STRING          reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
+    TRUE            reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
+    FALSE           reduce using rule 112 (comparison_op -> LESSER_EQUAL .)
 
 
 state 65
@@ -1947,11 +1947,9 @@ state 71
 
     (68) logical_expression -> logical_expression bool_op . logical_expression
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -1965,25 +1963,27 @@ state 71
     (65) math_expression -> . CHARACTER
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
+    NEGATION        shift and go to state 47
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
     INTEGER         shift and go to state 43
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    STRING          shift and go to state 50
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     logical_expression             shift and go to state 97
     value_expression               shift and go to state 86
@@ -1994,7 +1994,7 @@ state 71
 
 state 72
 
-    (75) trinary_mark_expression -> logical_expression QUESTION_MARK . value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression QUESTION_MARK . value_expression COLON value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -2009,19 +2009,19 @@ state 72
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -2029,10 +2029,10 @@ state 72
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     logical_expression             shift and go to state 37
     value_expression               shift and go to state 98
@@ -2045,8 +2045,6 @@ state 73
 
     (105) bool_op -> AND .
 
-    TRUE            reduce using rule 105 (bool_op -> AND .)
-    FALSE           reduce using rule 105 (bool_op -> AND .)
     NEGATION        reduce using rule 105 (bool_op -> AND .)
     L_BRACKET       reduce using rule 105 (bool_op -> AND .)
     MINUS           reduce using rule 105 (bool_op -> AND .)
@@ -2055,14 +2053,14 @@ state 73
     CHARACTER       reduce using rule 105 (bool_op -> AND .)
     ID              reduce using rule 105 (bool_op -> AND .)
     STRING          reduce using rule 105 (bool_op -> AND .)
+    TRUE            reduce using rule 105 (bool_op -> AND .)
+    FALSE           reduce using rule 105 (bool_op -> AND .)
 
 
 state 74
 
     (106) bool_op -> OR .
 
-    TRUE            reduce using rule 106 (bool_op -> OR .)
-    FALSE           reduce using rule 106 (bool_op -> OR .)
     NEGATION        reduce using rule 106 (bool_op -> OR .)
     L_BRACKET       reduce using rule 106 (bool_op -> OR .)
     MINUS           reduce using rule 106 (bool_op -> OR .)
@@ -2071,13 +2069,15 @@ state 74
     CHARACTER       reduce using rule 106 (bool_op -> OR .)
     ID              reduce using rule 106 (bool_op -> OR .)
     STRING          reduce using rule 106 (bool_op -> OR .)
+    TRUE            reduce using rule 106 (bool_op -> OR .)
+    FALSE           reduce using rule 106 (bool_op -> OR .)
 
 
 state 75
 
     (58) value_expression -> L_BRACKET value_expression . R_BRACKET
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -2093,9 +2093,9 @@ state 75
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
     R_BRACKET       shift and go to state 99
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -2103,13 +2103,13 @@ state 75
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! R_BRACKET       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! R_BRACKET       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -2315,7 +2315,7 @@ state 82
 
 state 83
 
-    (74) function_expression -> ID L_BRACKET . opt_listed_values R_BRACKET
+    (72) function_expression -> ID L_BRACKET . opt_listed_values R_BRACKET
     (124) opt_listed_values -> . listed_values
     (125) opt_listed_values -> . empty
     (96) listed_values -> . value_expression
@@ -2335,19 +2335,19 @@ state 83
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     R_BRACKET       reduce using rule 130 (empty -> .)
     L_BRACKET       shift and go to state 41
@@ -2356,10 +2356,10 @@ state 83
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     opt_listed_values              shift and go to state 102
     listed_values                  shift and go to state 103
@@ -2388,19 +2388,19 @@ state 84
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -2408,10 +2408,10 @@ state 84
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     value_expression               shift and go to state 106
     math_expression                shift and go to state 36
@@ -2422,10 +2422,10 @@ state 84
 
 state 85
 
-    (71) logical_expression -> NEGATION logical_expression .
+    (69) logical_expression -> NEGATION logical_expression .
     (68) logical_expression -> logical_expression . bool_op logical_expression
     (54) value_expression -> logical_expression .
-    (75) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
     (105) bool_op -> . AND
     (106) bool_op -> . OR
 
@@ -2463,21 +2463,21 @@ state 85
     AND             shift and go to state 73
     OR              shift and go to state 74
 
-  ! EQUAL           [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! GREATER         [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! LESSER          [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! R_SQUARE_BRACKET [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! QUESTION_MARK   [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! AND             [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! OR              [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! SEMICOLON       [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! R_BRACKET       [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! R_BRACE         [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! COMMA           [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
-  ! COLON           [ reduce using rule 71 (logical_expression -> NEGATION logical_expression .) ]
+  ! EQUAL           [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! GREATER         [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! LESSER          [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! R_SQUARE_BRACKET [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! QUESTION_MARK   [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! AND             [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! OR              [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! SEMICOLON       [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! R_BRACKET       [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! R_BRACE         [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! COMMA           [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
+  ! COLON           [ reduce using rule 69 (logical_expression -> NEGATION logical_expression .) ]
   ! QUESTION_MARK   [ reduce using rule 54 (value_expression -> logical_expression .) ]
   ! AND             [ reduce using rule 54 (value_expression -> logical_expression .) ]
   ! OR              [ reduce using rule 54 (value_expression -> logical_expression .) ]
@@ -2486,8 +2486,8 @@ state 85
 
 state 86
 
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -2501,15 +2501,15 @@ state 86
   ! shift/reduce conflict for GREATER_EQUAL resolved as shift
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
-    R_SQUARE_BRACKET reduce using rule 73 (logical_expression -> value_expression .)
-    SEMICOLON       reduce using rule 73 (logical_expression -> value_expression .)
-    R_BRACKET       reduce using rule 73 (logical_expression -> value_expression .)
-    R_BRACE         reduce using rule 73 (logical_expression -> value_expression .)
-    COMMA           reduce using rule 73 (logical_expression -> value_expression .)
-    COLON           reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
+    R_SQUARE_BRACKET reduce using rule 71 (logical_expression -> value_expression .)
+    SEMICOLON       reduce using rule 71 (logical_expression -> value_expression .)
+    R_BRACKET       reduce using rule 71 (logical_expression -> value_expression .)
+    R_BRACE         reduce using rule 71 (logical_expression -> value_expression .)
+    COMMA           reduce using rule 71 (logical_expression -> value_expression .)
+    COLON           reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -2517,12 +2517,12 @@ state 86
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -2531,13 +2531,13 @@ state 87
     (127) args -> type ID COMMA . args
     (126) args -> . type ID
     (127) args -> . type ID COMMA args
-    (83) type -> . INT
-    (84) type -> . FLOAT
-    (85) type -> . DOUBLE
-    (86) type -> . CHAR
-    (87) type -> . BOOL
-    (88) type -> . LONG
-    (89) type -> . VOID
+    (81) type -> . INT
+    (82) type -> . FLOAT
+    (83) type -> . DOUBLE
+    (84) type -> . CHAR
+    (85) type -> . BOOL
+    (86) type -> . LONG
+    (87) type -> . VOID
 
     INT             shift and go to state 12
     FLOAT           shift and go to state 13
@@ -2603,10 +2603,10 @@ state 89
     (49) scan_statement -> . SCANF L_BRACKET AMPERSAND ID R_BRACKET
     (120) opt_const -> . CONST
     (121) opt_const -> . empty
-    (76) assign_expression -> . ID assign_op value_expression
-    (77) assign_expression -> . unary_op ID
-    (78) assign_expression -> . ID unary_op
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (74) assign_expression -> . ID assign_op value_expression
+    (75) assign_expression -> . unary_op ID
+    (76) assign_expression -> . ID unary_op
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
     (103) unary_op -> . INCREMENT
     (104) unary_op -> . DECREMENT
 
@@ -2689,8 +2689,6 @@ state 91
     INCREMENT       reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
     DECREMENT       reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
     R_BRACE         reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
-    TRUE            reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
-    FALSE           reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
     NEGATION        reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
     L_BRACKET       reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
     MINUS           reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
@@ -2698,6 +2696,8 @@ state 91
     DECIMAL         reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
     CHARACTER       reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
     STRING          reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
+    TRUE            reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
+    FALSE           reduce using rule 28 (declaration_statement -> opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON .)
 
 
 state 92
@@ -2720,8 +2720,8 @@ state 94
 
     (96) listed_values -> value_expression .
     (50) declaration_value_expression -> value_expression .
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -2731,7 +2731,7 @@ state 94
 
   ! reduce/reduce conflict for R_BRACE resolved using rule 50 (declaration_value_expression -> value_expression .)
   ! reduce/reduce conflict for R_BRACE resolved using rule 50 (declaration_value_expression -> value_expression .)
-  ! reduce/reduce conflict for COMMA resolved using rule 73 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for COMMA resolved using rule 71 (logical_expression -> value_expression .)
   ! shift/reduce conflict for EQUAL resolved as shift
   ! shift/reduce conflict for NOT_EQUAL resolved as shift
   ! shift/reduce conflict for GREATER resolved as shift
@@ -2739,10 +2739,10 @@ state 94
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
     R_BRACE         reduce using rule 50 (declaration_value_expression -> value_expression .)
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
-    COMMA           reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
+    COMMA           reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -2752,21 +2752,21 @@ state 94
 
   ! R_BRACE         [ reduce using rule 96 (listed_values -> value_expression .) ]
   ! COMMA           [ reduce using rule 96 (listed_values -> value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! R_BRACE         [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! R_BRACE         [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
 state 95
 
-    (72) logical_expression -> value_expression comparison_op value_expression .
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression comparison_op value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -2774,36 +2774,36 @@ state 95
     (111) comparison_op -> . LESSER
     (112) comparison_op -> . LESSER_EQUAL
 
-  ! reduce/reduce conflict for EQUAL resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for NOT_EQUAL resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for GREATER resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for GREATER_EQUAL resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for LESSER resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for LESSER_EQUAL resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for QUESTION_MARK resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for AND resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for OR resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for R_SQUARE_BRACKET resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for SEMICOLON resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for R_BRACKET resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for R_BRACE resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for COMMA resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-  ! reduce/reduce conflict for COLON resolved using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for EQUAL resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for NOT_EQUAL resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for GREATER resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for GREATER_EQUAL resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for LESSER resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for LESSER_EQUAL resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for QUESTION_MARK resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for AND resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for OR resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for R_SQUARE_BRACKET resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for SEMICOLON resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for R_BRACKET resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for R_BRACE resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for COMMA resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+  ! reduce/reduce conflict for COLON resolved using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
   ! shift/reduce conflict for EQUAL resolved as shift
   ! shift/reduce conflict for NOT_EQUAL resolved as shift
   ! shift/reduce conflict for GREATER resolved as shift
   ! shift/reduce conflict for GREATER_EQUAL resolved as shift
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
-    R_SQUARE_BRACKET reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-    QUESTION_MARK   reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-    AND             reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-    OR              reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-    SEMICOLON       reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-    R_BRACKET       reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-    R_BRACE         reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-    COMMA           reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
-    COLON           reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .)
+    R_SQUARE_BRACKET reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+    QUESTION_MARK   reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+    AND             reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+    OR              reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+    SEMICOLON       reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+    R_BRACKET       reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+    R_BRACE         reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+    COMMA           reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
+    COLON           reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -2811,27 +2811,27 @@ state 95
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! EQUAL           [ reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .) ]
-  ! GREATER         [ reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .) ]
-  ! LESSER          [ reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 72 (logical_expression -> value_expression comparison_op value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! QUESTION_MARK   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! AND             [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! OR              [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! R_SQUARE_BRACKET [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! SEMICOLON       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! R_BRACKET       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! R_BRACE         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! COMMA           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! COLON           [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .) ]
+  ! GREATER         [ reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .) ]
+  ! LESSER          [ reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 70 (logical_expression -> value_expression comparison_op value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! QUESTION_MARK   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! AND             [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! OR              [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! R_SQUARE_BRACKET [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! SEMICOLON       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! R_BRACKET       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! R_BRACE         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! COMMA           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! COLON           [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -2884,7 +2884,7 @@ state 97
     (68) logical_expression -> logical_expression bool_op logical_expression .
     (68) logical_expression -> logical_expression . bool_op logical_expression
     (54) value_expression -> logical_expression .
-    (75) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
     (105) bool_op -> . AND
     (106) bool_op -> . OR
 
@@ -2945,9 +2945,9 @@ state 97
 
 state 98
 
-    (75) trinary_mark_expression -> logical_expression QUESTION_MARK value_expression . COLON value_expression
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (73) trinary_mark_expression -> logical_expression QUESTION_MARK value_expression . COLON value_expression
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -2963,9 +2963,9 @@ state 98
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
     COLON           shift and go to state 143
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -2973,13 +2973,13 @@ state 98
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! COLON           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! COLON           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -3051,7 +3051,7 @@ state 101
 
 state 102
 
-    (74) function_expression -> ID L_BRACKET opt_listed_values . R_BRACKET
+    (72) function_expression -> ID L_BRACKET opt_listed_values . R_BRACKET
 
     R_BRACKET       shift and go to state 144
 
@@ -3075,8 +3075,8 @@ state 104
 state 105
 
     (96) listed_values -> value_expression .
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -3084,21 +3084,21 @@ state 105
     (111) comparison_op -> . LESSER
     (112) comparison_op -> . LESSER_EQUAL
 
-  ! reduce/reduce conflict for COMMA resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for R_BRACKET resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for R_BRACE resolved using rule 73 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for COMMA resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for R_BRACKET resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for R_BRACE resolved using rule 71 (logical_expression -> value_expression .)
   ! shift/reduce conflict for EQUAL resolved as shift
   ! shift/reduce conflict for NOT_EQUAL resolved as shift
   ! shift/reduce conflict for GREATER resolved as shift
   ! shift/reduce conflict for GREATER_EQUAL resolved as shift
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
-    COMMA           reduce using rule 73 (logical_expression -> value_expression .)
-    R_BRACKET       reduce using rule 73 (logical_expression -> value_expression .)
-    R_BRACE         reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
+    COMMA           reduce using rule 71 (logical_expression -> value_expression .)
+    R_BRACKET       reduce using rule 71 (logical_expression -> value_expression .)
+    R_BRACE         reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -3109,20 +3109,20 @@ state 105
   ! COMMA           [ reduce using rule 96 (listed_values -> value_expression .) ]
   ! R_BRACKET       [ reduce using rule 96 (listed_values -> value_expression .) ]
   ! R_BRACE         [ reduce using rule 96 (listed_values -> value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
 state 106
 
     (95) value -> ID L_SQUARE_BRACKET value_expression . R_SQUARE_BRACKET
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -3138,9 +3138,9 @@ state 106
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
     R_SQUARE_BRACKET shift and go to state 145
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -3148,13 +3148,13 @@ state 106
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! R_SQUARE_BRACKET [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! R_SQUARE_BRACKET [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -3234,10 +3234,10 @@ state 111
     (49) scan_statement -> . SCANF L_BRACKET AMPERSAND ID R_BRACKET
     (120) opt_const -> . CONST
     (121) opt_const -> . empty
-    (76) assign_expression -> . ID assign_op value_expression
-    (77) assign_expression -> . unary_op ID
-    (78) assign_expression -> . ID unary_op
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (74) assign_expression -> . ID assign_op value_expression
+    (75) assign_expression -> . unary_op ID
+    (76) assign_expression -> . ID unary_op
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
     (130) empty -> .
     (103) unary_op -> . INCREMENT
     (104) unary_op -> . DECREMENT
@@ -3693,9 +3693,9 @@ state 125
 
 state 126
 
-    (76) assign_expression -> ID . assign_op value_expression
-    (78) assign_expression -> ID . unary_op
-    (74) function_expression -> ID . L_BRACKET opt_listed_values R_BRACKET
+    (74) assign_expression -> ID . assign_op value_expression
+    (76) assign_expression -> ID . unary_op
+    (72) function_expression -> ID . L_BRACKET opt_listed_values R_BRACKET
     (113) assign_op -> . ASSIGN
     (114) assign_op -> . PLUS_ASSIGN
     (115) assign_op -> . MINUS_ASSIGN
@@ -3749,19 +3749,19 @@ state 129
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -3769,10 +3769,10 @@ state 129
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     value_expression               shift and go to state 163
     math_expression                shift and go to state 36
@@ -3834,7 +3834,7 @@ state 136
 
 state 137
 
-    (77) assign_expression -> unary_op . ID
+    (75) assign_expression -> unary_op . ID
 
     ID              shift and go to state 171
 
@@ -3884,19 +3884,19 @@ state 141
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -3904,10 +3904,10 @@ state 141
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     listed_values                  shift and go to state 172
     value_expression               shift and go to state 105
@@ -3927,7 +3927,7 @@ state 142
 
 state 143
 
-    (75) trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON . value_expression
+    (73) trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -3942,19 +3942,19 @@ state 143
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -3962,10 +3962,10 @@ state 143
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     logical_expression             shift and go to state 37
     value_expression               shift and go to state 173
@@ -3976,23 +3976,23 @@ state 143
 
 state 144
 
-    (74) function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .
+    (72) function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .
 
-    EQUAL           reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    NOT_EQUAL       reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    GREATER         reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    GREATER_EQUAL   reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    LESSER          reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    LESSER_EQUAL    reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    R_SQUARE_BRACKET reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    QUESTION_MARK   reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    AND             reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    OR              reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    SEMICOLON       reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    R_BRACKET       reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    R_BRACE         reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    COMMA           reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
-    COLON           reduce using rule 74 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    EQUAL           reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    NOT_EQUAL       reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    GREATER         reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    GREATER_EQUAL   reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    LESSER          reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    LESSER_EQUAL    reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    R_SQUARE_BRACKET reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    QUESTION_MARK   reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    AND             reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    OR              reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    SEMICOLON       reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    R_BRACKET       reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    R_BRACE         reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    COMMA           reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
+    COLON           reduce using rule 72 (function_expression -> ID L_BRACKET opt_listed_values R_BRACKET .)
 
 
 state 145
@@ -4059,7 +4059,7 @@ state 148
     (24) any_statement -> if_statement opt_else_if_statements . opt_else_statement
     (46) opt_else_statement -> . else_statement
     (47) opt_else_statement -> . empty
-    (45) else_statement -> . ELSE statements_block
+    (45) else_statement -> . ELSE
     (130) empty -> .
 
     ELSE            shift and go to state 177
@@ -4195,7 +4195,7 @@ state 152
 
 state 153
 
-    (76) assign_expression -> ID assign_op . value_expression
+    (74) assign_expression -> ID assign_op . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -4210,19 +4210,19 @@ state 153
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -4230,10 +4230,10 @@ state 153
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     value_expression               shift and go to state 180
     math_expression                shift and go to state 36
@@ -4244,10 +4244,10 @@ state 153
 
 state 154
 
-    (78) assign_expression -> ID unary_op .
+    (76) assign_expression -> ID unary_op .
 
-    SEMICOLON       reduce using rule 78 (assign_expression -> ID unary_op .)
-    R_BRACKET       reduce using rule 78 (assign_expression -> ID unary_op .)
+    SEMICOLON       reduce using rule 76 (assign_expression -> ID unary_op .)
+    R_BRACKET       reduce using rule 76 (assign_expression -> ID unary_op .)
 
 
 state 155
@@ -4260,10 +4260,10 @@ state 155
     DECIMAL         reduce using rule 113 (assign_op -> ASSIGN .)
     CHARACTER       reduce using rule 113 (assign_op -> ASSIGN .)
     ID              reduce using rule 113 (assign_op -> ASSIGN .)
-    TRUE            reduce using rule 113 (assign_op -> ASSIGN .)
-    FALSE           reduce using rule 113 (assign_op -> ASSIGN .)
     NEGATION        reduce using rule 113 (assign_op -> ASSIGN .)
     STRING          reduce using rule 113 (assign_op -> ASSIGN .)
+    TRUE            reduce using rule 113 (assign_op -> ASSIGN .)
+    FALSE           reduce using rule 113 (assign_op -> ASSIGN .)
 
 
 state 156
@@ -4276,10 +4276,10 @@ state 156
     DECIMAL         reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
     CHARACTER       reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
     ID              reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
-    TRUE            reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
-    FALSE           reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
     NEGATION        reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
     STRING          reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
+    TRUE            reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
+    FALSE           reduce using rule 114 (assign_op -> PLUS_ASSIGN .)
 
 
 state 157
@@ -4292,10 +4292,10 @@ state 157
     DECIMAL         reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
     CHARACTER       reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
     ID              reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
-    TRUE            reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
-    FALSE           reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
     NEGATION        reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
     STRING          reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
+    TRUE            reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
+    FALSE           reduce using rule 115 (assign_op -> MINUS_ASSIGN .)
 
 
 state 158
@@ -4308,10 +4308,10 @@ state 158
     DECIMAL         reduce using rule 116 (assign_op -> MUL_ASSIGN .)
     CHARACTER       reduce using rule 116 (assign_op -> MUL_ASSIGN .)
     ID              reduce using rule 116 (assign_op -> MUL_ASSIGN .)
-    TRUE            reduce using rule 116 (assign_op -> MUL_ASSIGN .)
-    FALSE           reduce using rule 116 (assign_op -> MUL_ASSIGN .)
     NEGATION        reduce using rule 116 (assign_op -> MUL_ASSIGN .)
     STRING          reduce using rule 116 (assign_op -> MUL_ASSIGN .)
+    TRUE            reduce using rule 116 (assign_op -> MUL_ASSIGN .)
+    FALSE           reduce using rule 116 (assign_op -> MUL_ASSIGN .)
 
 
 state 159
@@ -4324,10 +4324,10 @@ state 159
     DECIMAL         reduce using rule 117 (assign_op -> DIV_ASSIGN .)
     CHARACTER       reduce using rule 117 (assign_op -> DIV_ASSIGN .)
     ID              reduce using rule 117 (assign_op -> DIV_ASSIGN .)
-    TRUE            reduce using rule 117 (assign_op -> DIV_ASSIGN .)
-    FALSE           reduce using rule 117 (assign_op -> DIV_ASSIGN .)
     NEGATION        reduce using rule 117 (assign_op -> DIV_ASSIGN .)
     STRING          reduce using rule 117 (assign_op -> DIV_ASSIGN .)
+    TRUE            reduce using rule 117 (assign_op -> DIV_ASSIGN .)
+    FALSE           reduce using rule 117 (assign_op -> DIV_ASSIGN .)
 
 
 state 160
@@ -4340,10 +4340,10 @@ state 160
     DECIMAL         reduce using rule 118 (assign_op -> MOD_ASSIGN .)
     CHARACTER       reduce using rule 118 (assign_op -> MOD_ASSIGN .)
     ID              reduce using rule 118 (assign_op -> MOD_ASSIGN .)
-    TRUE            reduce using rule 118 (assign_op -> MOD_ASSIGN .)
-    FALSE           reduce using rule 118 (assign_op -> MOD_ASSIGN .)
     NEGATION        reduce using rule 118 (assign_op -> MOD_ASSIGN .)
     STRING          reduce using rule 118 (assign_op -> MOD_ASSIGN .)
+    TRUE            reduce using rule 118 (assign_op -> MOD_ASSIGN .)
+    FALSE           reduce using rule 118 (assign_op -> MOD_ASSIGN .)
 
 
 state 161
@@ -4405,8 +4405,8 @@ state 162
 state 163
 
     (31) return_statement -> RETURN value_expression . SEMICOLON
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -4422,9 +4422,9 @@ state 163
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
     SEMICOLON       shift and go to state 181
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -4432,13 +4432,13 @@ state 163
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! SEMICOLON       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! SEMICOLON       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -4446,11 +4446,9 @@ state 164
 
     (34) while_loop_statement -> WHILE L_BRACKET . logical_expression R_BRACKET statements_block
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -4464,25 +4462,27 @@ state 164
     (65) math_expression -> . CHARACTER
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
+    NEGATION        shift and go to state 47
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
     INTEGER         shift and go to state 43
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    STRING          shift and go to state 50
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     logical_expression             shift and go to state 182
     value_expression               shift and go to state 86
@@ -4556,11 +4556,9 @@ state 168
 
     (39) if_statement -> IF L_BRACKET . logical_expression R_BRACKET statements_block
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -4574,25 +4572,27 @@ state 168
     (65) math_expression -> . CHARACTER
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
+    NEGATION        shift and go to state 47
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
     INTEGER         shift and go to state 43
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    STRING          shift and go to state 50
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     logical_expression             shift and go to state 187
     value_expression               shift and go to state 86
@@ -4618,19 +4618,19 @@ state 169
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -4638,10 +4638,10 @@ state 169
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
-    STRING          shift and go to state 50
+    NEGATION        shift and go to state 47
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
     value_expression               shift and go to state 188
     math_expression                shift and go to state 36
@@ -4659,10 +4659,10 @@ state 170
 
 state 171
 
-    (77) assign_expression -> unary_op ID .
+    (75) assign_expression -> unary_op ID .
 
-    SEMICOLON       reduce using rule 77 (assign_expression -> unary_op ID .)
-    R_BRACKET       reduce using rule 77 (assign_expression -> unary_op ID .)
+    SEMICOLON       reduce using rule 75 (assign_expression -> unary_op ID .)
+    R_BRACKET       reduce using rule 75 (assign_expression -> unary_op ID .)
 
 
 state 172
@@ -4680,9 +4680,9 @@ state 172
 
 state 173
 
-    (75) trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (73) trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -4690,36 +4690,36 @@ state 173
     (111) comparison_op -> . LESSER
     (112) comparison_op -> . LESSER_EQUAL
 
-  ! reduce/reduce conflict for EQUAL resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for NOT_EQUAL resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for GREATER resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for GREATER_EQUAL resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for LESSER resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for LESSER_EQUAL resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for QUESTION_MARK resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for AND resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for OR resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for R_SQUARE_BRACKET resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for SEMICOLON resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for R_BRACKET resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for R_BRACE resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for COMMA resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for COLON resolved using rule 73 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for EQUAL resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for NOT_EQUAL resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for GREATER resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for GREATER_EQUAL resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for LESSER resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for LESSER_EQUAL resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for QUESTION_MARK resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for AND resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for OR resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for R_SQUARE_BRACKET resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for SEMICOLON resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for R_BRACKET resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for R_BRACE resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for COMMA resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for COLON resolved using rule 71 (logical_expression -> value_expression .)
   ! shift/reduce conflict for EQUAL resolved as shift
   ! shift/reduce conflict for NOT_EQUAL resolved as shift
   ! shift/reduce conflict for GREATER resolved as shift
   ! shift/reduce conflict for GREATER_EQUAL resolved as shift
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
-    R_SQUARE_BRACKET reduce using rule 73 (logical_expression -> value_expression .)
-    SEMICOLON       reduce using rule 73 (logical_expression -> value_expression .)
-    R_BRACKET       reduce using rule 73 (logical_expression -> value_expression .)
-    R_BRACE         reduce using rule 73 (logical_expression -> value_expression .)
-    COMMA           reduce using rule 73 (logical_expression -> value_expression .)
-    COLON           reduce using rule 73 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
+    R_SQUARE_BRACKET reduce using rule 71 (logical_expression -> value_expression .)
+    SEMICOLON       reduce using rule 71 (logical_expression -> value_expression .)
+    R_BRACKET       reduce using rule 71 (logical_expression -> value_expression .)
+    R_BRACE         reduce using rule 71 (logical_expression -> value_expression .)
+    COMMA           reduce using rule 71 (logical_expression -> value_expression .)
+    COLON           reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -4727,27 +4727,27 @@ state 173
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! EQUAL           [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! GREATER         [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! LESSER          [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! R_SQUARE_BRACKET [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! QUESTION_MARK   [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! AND             [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! OR              [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! SEMICOLON       [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! R_BRACKET       [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! R_BRACE         [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! COMMA           [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! COLON           [ reduce using rule 75 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! GREATER         [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! LESSER          [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! R_SQUARE_BRACKET [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! QUESTION_MARK   [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! AND             [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! OR              [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! SEMICOLON       [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! R_BRACKET       [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! R_BRACE         [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! COMMA           [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! COLON           [ reduce using rule 73 (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -4837,12 +4837,31 @@ state 176
 
 state 177
 
-    (45) else_statement -> ELSE . statements_block
-    (15) statements_block -> . L_BRACE opt_statements R_BRACE
+    (45) else_statement -> ELSE .
 
-    L_BRACE         shift and go to state 89
+    COMMENT         reduce using rule 45 (else_statement -> ELSE .)
+    SEMICOLON       reduce using rule 45 (else_statement -> ELSE .)
+    RETURN          reduce using rule 45 (else_statement -> ELSE .)
+    WHILE           reduce using rule 45 (else_statement -> ELSE .)
+    DO              reduce using rule 45 (else_statement -> ELSE .)
+    BREAK           reduce using rule 45 (else_statement -> ELSE .)
+    FOR             reduce using rule 45 (else_statement -> ELSE .)
+    IF              reduce using rule 45 (else_statement -> ELSE .)
+    PRINTF          reduce using rule 45 (else_statement -> ELSE .)
+    SCANF           reduce using rule 45 (else_statement -> ELSE .)
+    CONST           reduce using rule 45 (else_statement -> ELSE .)
+    ID              reduce using rule 45 (else_statement -> ELSE .)
+    INCREMENT       reduce using rule 45 (else_statement -> ELSE .)
+    DECREMENT       reduce using rule 45 (else_statement -> ELSE .)
+    INT             reduce using rule 45 (else_statement -> ELSE .)
+    FLOAT           reduce using rule 45 (else_statement -> ELSE .)
+    DOUBLE          reduce using rule 45 (else_statement -> ELSE .)
+    CHAR            reduce using rule 45 (else_statement -> ELSE .)
+    BOOL            reduce using rule 45 (else_statement -> ELSE .)
+    LONG            reduce using rule 45 (else_statement -> ELSE .)
+    VOID            reduce using rule 45 (else_statement -> ELSE .)
+    R_BRACE         reduce using rule 45 (else_statement -> ELSE .)
 
-    statements_block               shift and go to state 190
 
 state 178
 
@@ -4877,14 +4896,14 @@ state 179
 
     (40) else_if_statement -> ELSE IF . L_BRACKET logical_expression R_BRACKET statements_block
 
-    L_BRACKET       shift and go to state 191
+    L_BRACKET       shift and go to state 190
 
 
 state 180
 
-    (76) assign_expression -> ID assign_op value_expression .
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (74) assign_expression -> ID assign_op value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -4892,19 +4911,19 @@ state 180
     (111) comparison_op -> . LESSER
     (112) comparison_op -> . LESSER_EQUAL
 
-  ! reduce/reduce conflict for SEMICOLON resolved using rule 73 (logical_expression -> value_expression .)
-  ! reduce/reduce conflict for R_BRACKET resolved using rule 73 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for SEMICOLON resolved using rule 71 (logical_expression -> value_expression .)
+  ! reduce/reduce conflict for R_BRACKET resolved using rule 71 (logical_expression -> value_expression .)
   ! shift/reduce conflict for EQUAL resolved as shift
   ! shift/reduce conflict for NOT_EQUAL resolved as shift
   ! shift/reduce conflict for GREATER resolved as shift
   ! shift/reduce conflict for GREATER_EQUAL resolved as shift
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
-    SEMICOLON       reduce using rule 73 (logical_expression -> value_expression .)
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
-    R_BRACKET       reduce using rule 73 (logical_expression -> value_expression .)
+    SEMICOLON       reduce using rule 71 (logical_expression -> value_expression .)
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
+    R_BRACKET       reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -4912,14 +4931,14 @@ state 180
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! SEMICOLON       [ reduce using rule 76 (assign_expression -> ID assign_op value_expression .) ]
-  ! R_BRACKET       [ reduce using rule 76 (assign_expression -> ID assign_op value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! SEMICOLON       [ reduce using rule 74 (assign_expression -> ID assign_op value_expression .) ]
+  ! R_BRACKET       [ reduce using rule 74 (assign_expression -> ID assign_op value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -4956,7 +4975,7 @@ state 182
     (34) while_loop_statement -> WHILE L_BRACKET logical_expression . R_BRACKET statements_block
     (68) logical_expression -> logical_expression . bool_op logical_expression
     (54) value_expression -> logical_expression .
-    (75) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
     (105) bool_op -> . AND
     (106) bool_op -> . OR
 
@@ -4964,7 +4983,7 @@ state 182
   ! shift/reduce conflict for QUESTION_MARK resolved as shift
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
-    R_BRACKET       shift and go to state 192
+    R_BRACKET       shift and go to state 191
     EQUAL           reduce using rule 54 (value_expression -> logical_expression .)
     NOT_EQUAL       reduce using rule 54 (value_expression -> logical_expression .)
     GREATER         reduce using rule 54 (value_expression -> logical_expression .)
@@ -4986,20 +5005,18 @@ state 183
 
     (35) do_while_loop_statement -> DO statements_block WHILE . L_BRACKET logical_expression R_BRACKET SEMICOLON
 
-    L_BRACKET       shift and go to state 193
+    L_BRACKET       shift and go to state 192
 
 
 state 184
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem . opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET statements_block
-    (79) opt_logical_expression -> . logical_expression
-    (80) opt_logical_expression -> . empty
+    (77) opt_logical_expression -> . logical_expression
+    (78) opt_logical_expression -> . empty
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
     (130) empty -> .
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
@@ -5014,18 +5031,18 @@ state 184
     (65) math_expression -> . CHARACTER
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
+    NEGATION        shift and go to state 47
     SEMICOLON       reduce using rule 130 (empty -> .)
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
@@ -5033,11 +5050,13 @@ state 184
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    STRING          shift and go to state 50
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
-    opt_logical_expression         shift and go to state 194
-    logical_expression             shift and go to state 195
-    empty                          shift and go to state 196
+    opt_logical_expression         shift and go to state 193
+    logical_expression             shift and go to state 194
+    empty                          shift and go to state 195
     value_expression               shift and go to state 86
     math_expression                shift and go to state 36
     function_expression            shift and go to state 38
@@ -5048,8 +5067,6 @@ state 185
 
     (38) decl_stat_or_sem -> SEMICOLON .
 
-    TRUE            reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
-    FALSE           reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
     NEGATION        reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
     L_BRACKET       reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
     MINUS           reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
@@ -5058,6 +5075,8 @@ state 185
     CHARACTER       reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
     ID              reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
     STRING          reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
+    TRUE            reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
+    FALSE           reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
     SEMICOLON       reduce using rule 38 (decl_stat_or_sem -> SEMICOLON .)
 
 
@@ -5065,8 +5084,6 @@ state 186
 
     (37) decl_stat_or_sem -> declaration_statement .
 
-    TRUE            reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
-    FALSE           reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
     NEGATION        reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
     L_BRACKET       reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
     MINUS           reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
@@ -5075,6 +5092,8 @@ state 186
     CHARACTER       reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
     ID              reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
     STRING          reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
+    TRUE            reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
+    FALSE           reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
     SEMICOLON       reduce using rule 37 (decl_stat_or_sem -> declaration_statement .)
 
 
@@ -5083,7 +5102,7 @@ state 187
     (39) if_statement -> IF L_BRACKET logical_expression . R_BRACKET statements_block
     (68) logical_expression -> logical_expression . bool_op logical_expression
     (54) value_expression -> logical_expression .
-    (75) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
     (105) bool_op -> . AND
     (106) bool_op -> . OR
 
@@ -5091,7 +5110,7 @@ state 187
   ! shift/reduce conflict for QUESTION_MARK resolved as shift
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
-    R_BRACKET       shift and go to state 197
+    R_BRACKET       shift and go to state 196
     EQUAL           reduce using rule 54 (value_expression -> logical_expression .)
     NOT_EQUAL       reduce using rule 54 (value_expression -> logical_expression .)
     GREATER         reduce using rule 54 (value_expression -> logical_expression .)
@@ -5112,8 +5131,8 @@ state 187
 state 188
 
     (48) print_statement -> PRINTF L_BRACKET value_expression . R_BRACKET
-    (72) logical_expression -> value_expression . comparison_op value_expression
-    (73) logical_expression -> value_expression .
+    (70) logical_expression -> value_expression . comparison_op value_expression
+    (71) logical_expression -> value_expression .
     (107) comparison_op -> . EQUAL
     (108) comparison_op -> . NOT_EQUAL
     (109) comparison_op -> . GREATER
@@ -5128,10 +5147,10 @@ state 188
   ! shift/reduce conflict for GREATER_EQUAL resolved as shift
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
-    R_BRACKET       shift and go to state 198
-    QUESTION_MARK   reduce using rule 73 (logical_expression -> value_expression .)
-    AND             reduce using rule 73 (logical_expression -> value_expression .)
-    OR              reduce using rule 73 (logical_expression -> value_expression .)
+    R_BRACKET       shift and go to state 197
+    QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
+    AND             reduce using rule 71 (logical_expression -> value_expression .)
+    OR              reduce using rule 71 (logical_expression -> value_expression .)
     EQUAL           shift and go to state 59
     NOT_EQUAL       shift and go to state 60
     GREATER         shift and go to state 61
@@ -5139,13 +5158,13 @@ state 188
     LESSER          shift and go to state 63
     LESSER_EQUAL    shift and go to state 64
 
-  ! R_BRACKET       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! EQUAL           [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! NOT_EQUAL       [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER         [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! GREATER_EQUAL   [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER          [ reduce using rule 73 (logical_expression -> value_expression .) ]
-  ! LESSER_EQUAL    [ reduce using rule 73 (logical_expression -> value_expression .) ]
+  ! R_BRACKET       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! EQUAL           [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! NOT_EQUAL       [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER         [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! GREATER_EQUAL   [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER          [ reduce using rule 71 (logical_expression -> value_expression .) ]
+  ! LESSER_EQUAL    [ reduce using rule 71 (logical_expression -> value_expression .) ]
 
     comparison_op                  shift and go to state 58
 
@@ -5153,46 +5172,16 @@ state 189
 
     (49) scan_statement -> SCANF L_BRACKET AMPERSAND . ID R_BRACKET
 
-    ID              shift and go to state 199
+    ID              shift and go to state 198
 
 
 state 190
 
-    (45) else_statement -> ELSE statements_block .
-
-    COMMENT         reduce using rule 45 (else_statement -> ELSE statements_block .)
-    SEMICOLON       reduce using rule 45 (else_statement -> ELSE statements_block .)
-    RETURN          reduce using rule 45 (else_statement -> ELSE statements_block .)
-    WHILE           reduce using rule 45 (else_statement -> ELSE statements_block .)
-    DO              reduce using rule 45 (else_statement -> ELSE statements_block .)
-    BREAK           reduce using rule 45 (else_statement -> ELSE statements_block .)
-    FOR             reduce using rule 45 (else_statement -> ELSE statements_block .)
-    IF              reduce using rule 45 (else_statement -> ELSE statements_block .)
-    PRINTF          reduce using rule 45 (else_statement -> ELSE statements_block .)
-    SCANF           reduce using rule 45 (else_statement -> ELSE statements_block .)
-    CONST           reduce using rule 45 (else_statement -> ELSE statements_block .)
-    ID              reduce using rule 45 (else_statement -> ELSE statements_block .)
-    INCREMENT       reduce using rule 45 (else_statement -> ELSE statements_block .)
-    DECREMENT       reduce using rule 45 (else_statement -> ELSE statements_block .)
-    INT             reduce using rule 45 (else_statement -> ELSE statements_block .)
-    FLOAT           reduce using rule 45 (else_statement -> ELSE statements_block .)
-    DOUBLE          reduce using rule 45 (else_statement -> ELSE statements_block .)
-    CHAR            reduce using rule 45 (else_statement -> ELSE statements_block .)
-    BOOL            reduce using rule 45 (else_statement -> ELSE statements_block .)
-    LONG            reduce using rule 45 (else_statement -> ELSE statements_block .)
-    VOID            reduce using rule 45 (else_statement -> ELSE statements_block .)
-    R_BRACE         reduce using rule 45 (else_statement -> ELSE statements_block .)
-
-
-state 191
-
     (40) else_if_statement -> ELSE IF L_BRACKET . logical_expression R_BRACKET statements_block
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -5206,51 +5195,51 @@ state 191
     (65) math_expression -> . CHARACTER
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
+    NEGATION        shift and go to state 47
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
     INTEGER         shift and go to state 43
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    STRING          shift and go to state 50
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
-    logical_expression             shift and go to state 200
+    logical_expression             shift and go to state 199
     value_expression               shift and go to state 86
     math_expression                shift and go to state 36
     function_expression            shift and go to state 38
     value                          shift and go to state 39
     trinary_mark_expression        shift and go to state 40
 
-state 192
+state 191
 
     (34) while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET . statements_block
     (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
     L_BRACE         shift and go to state 89
 
-    statements_block               shift and go to state 201
+    statements_block               shift and go to state 200
 
-state 193
+state 192
 
     (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET . logical_expression R_BRACKET SEMICOLON
     (68) logical_expression -> . logical_expression bool_op logical_expression
-    (69) logical_expression -> . TRUE
-    (70) logical_expression -> . FALSE
-    (71) logical_expression -> . NEGATION logical_expression
-    (72) logical_expression -> . value_expression comparison_op value_expression
-    (73) logical_expression -> . value_expression
+    (69) logical_expression -> . NEGATION logical_expression
+    (70) logical_expression -> . value_expression comparison_op value_expression
+    (71) logical_expression -> . value_expression
     (53) value_expression -> . math_expression
     (54) value_expression -> . logical_expression
     (55) value_expression -> . function_expression
@@ -5264,46 +5253,48 @@ state 193
     (65) math_expression -> . CHARACTER
     (66) math_expression -> . ID
     (67) math_expression -> . L_BRACKET math_expression R_BRACKET
-    (74) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
-    (90) value -> . INTEGER
-    (91) value -> . DECIMAL
-    (92) value -> . CHARACTER
-    (93) value -> . STRING
+    (72) function_expression -> . ID L_BRACKET opt_listed_values R_BRACKET
+    (88) value -> . INTEGER
+    (89) value -> . DECIMAL
+    (90) value -> . CHARACTER
+    (91) value -> . STRING
+    (92) value -> . TRUE
+    (93) value -> . FALSE
     (94) value -> . ID
     (95) value -> . ID L_SQUARE_BRACKET value_expression R_SQUARE_BRACKET
-    (75) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> . logical_expression QUESTION_MARK value_expression COLON value_expression
 
-    TRUE            shift and go to state 47
-    FALSE           shift and go to state 48
-    NEGATION        shift and go to state 49
+    NEGATION        shift and go to state 47
     L_BRACKET       shift and go to state 41
     MINUS           shift and go to state 42
     INTEGER         shift and go to state 43
     DECIMAL         shift and go to state 44
     CHARACTER       shift and go to state 45
     ID              shift and go to state 46
-    STRING          shift and go to state 50
+    STRING          shift and go to state 48
+    TRUE            shift and go to state 49
+    FALSE           shift and go to state 50
 
-    logical_expression             shift and go to state 202
+    logical_expression             shift and go to state 201
     value_expression               shift and go to state 86
     math_expression                shift and go to state 36
     function_expression            shift and go to state 38
     value                          shift and go to state 39
     trinary_mark_expression        shift and go to state 40
 
-state 194
+state 193
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression . SEMICOLON opt_assign_expression R_BRACKET statements_block
 
-    SEMICOLON       shift and go to state 203
+    SEMICOLON       shift and go to state 202
 
 
-state 195
+state 194
 
-    (79) opt_logical_expression -> logical_expression .
+    (77) opt_logical_expression -> logical_expression .
     (68) logical_expression -> logical_expression . bool_op logical_expression
     (54) value_expression -> logical_expression .
-    (75) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
     (105) bool_op -> . AND
     (106) bool_op -> . OR
 
@@ -5322,30 +5313,30 @@ state 195
     AND             shift and go to state 73
     OR              shift and go to state 74
 
-  ! SEMICOLON       [ reduce using rule 79 (opt_logical_expression -> logical_expression .) ]
+  ! SEMICOLON       [ reduce using rule 77 (opt_logical_expression -> logical_expression .) ]
   ! QUESTION_MARK   [ reduce using rule 54 (value_expression -> logical_expression .) ]
   ! AND             [ reduce using rule 54 (value_expression -> logical_expression .) ]
   ! OR              [ reduce using rule 54 (value_expression -> logical_expression .) ]
 
     bool_op                        shift and go to state 71
 
+state 195
+
+    (78) opt_logical_expression -> empty .
+
+    SEMICOLON       reduce using rule 78 (opt_logical_expression -> empty .)
+
+
 state 196
-
-    (80) opt_logical_expression -> empty .
-
-    SEMICOLON       reduce using rule 80 (opt_logical_expression -> empty .)
-
-
-state 197
 
     (39) if_statement -> IF L_BRACKET logical_expression R_BRACKET . statements_block
     (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
     L_BRACE         shift and go to state 89
 
-    statements_block               shift and go to state 204
+    statements_block               shift and go to state 203
 
-state 198
+state 197
 
     (48) print_statement -> PRINTF L_BRACKET value_expression R_BRACKET .
 
@@ -5373,19 +5364,19 @@ state 198
     R_BRACE         reduce using rule 48 (print_statement -> PRINTF L_BRACKET value_expression R_BRACKET .)
 
 
-state 199
+state 198
 
     (49) scan_statement -> SCANF L_BRACKET AMPERSAND ID . R_BRACKET
 
-    R_BRACKET       shift and go to state 205
+    R_BRACKET       shift and go to state 204
 
 
-state 200
+state 199
 
     (40) else_if_statement -> ELSE IF L_BRACKET logical_expression . R_BRACKET statements_block
     (68) logical_expression -> logical_expression . bool_op logical_expression
     (54) value_expression -> logical_expression .
-    (75) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
     (105) bool_op -> . AND
     (106) bool_op -> . OR
 
@@ -5393,7 +5384,7 @@ state 200
   ! shift/reduce conflict for QUESTION_MARK resolved as shift
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
-    R_BRACKET       shift and go to state 206
+    R_BRACKET       shift and go to state 205
     EQUAL           reduce using rule 54 (value_expression -> logical_expression .)
     NOT_EQUAL       reduce using rule 54 (value_expression -> logical_expression .)
     GREATER         reduce using rule 54 (value_expression -> logical_expression .)
@@ -5411,7 +5402,7 @@ state 200
 
     bool_op                        shift and go to state 71
 
-state 201
+state 200
 
     (34) while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .
 
@@ -5439,12 +5430,12 @@ state 201
     R_BRACE         reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
 
 
-state 202
+state 201
 
     (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression . R_BRACKET SEMICOLON
     (68) logical_expression -> logical_expression . bool_op logical_expression
     (54) value_expression -> logical_expression .
-    (75) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
     (105) bool_op -> . AND
     (106) bool_op -> . OR
 
@@ -5452,7 +5443,7 @@ state 202
   ! shift/reduce conflict for QUESTION_MARK resolved as shift
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
-    R_BRACKET       shift and go to state 207
+    R_BRACKET       shift and go to state 206
     EQUAL           reduce using rule 54 (value_expression -> logical_expression .)
     NOT_EQUAL       reduce using rule 54 (value_expression -> logical_expression .)
     GREATER         reduce using rule 54 (value_expression -> logical_expression .)
@@ -5470,29 +5461,29 @@ state 202
 
     bool_op                        shift and go to state 71
 
-state 203
+state 202
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON . opt_assign_expression R_BRACKET statements_block
-    (81) opt_assign_expression -> . assign_expression
-    (82) opt_assign_expression -> . empty
-    (76) assign_expression -> . ID assign_op value_expression
-    (77) assign_expression -> . unary_op ID
-    (78) assign_expression -> . ID unary_op
+    (79) opt_assign_expression -> . assign_expression
+    (80) opt_assign_expression -> . empty
+    (74) assign_expression -> . ID assign_op value_expression
+    (75) assign_expression -> . unary_op ID
+    (76) assign_expression -> . ID unary_op
     (130) empty -> .
     (103) unary_op -> . INCREMENT
     (104) unary_op -> . DECREMENT
 
-    ID              shift and go to state 211
+    ID              shift and go to state 210
     R_BRACKET       reduce using rule 130 (empty -> .)
     INCREMENT       shift and go to state 138
     DECREMENT       shift and go to state 139
 
-    opt_assign_expression          shift and go to state 208
-    assign_expression              shift and go to state 209
-    empty                          shift and go to state 210
+    opt_assign_expression          shift and go to state 207
+    assign_expression              shift and go to state 208
+    empty                          shift and go to state 209
     unary_op                       shift and go to state 137
 
-state 204
+state 203
 
     (39) if_statement -> IF L_BRACKET logical_expression R_BRACKET statements_block .
 
@@ -5521,7 +5512,7 @@ state 204
     R_BRACE         reduce using rule 39 (if_statement -> IF L_BRACKET logical_expression R_BRACKET statements_block .)
 
 
-state 205
+state 204
 
     (49) scan_statement -> SCANF L_BRACKET AMPERSAND ID R_BRACKET .
 
@@ -5549,47 +5540,47 @@ state 205
     R_BRACE         reduce using rule 49 (scan_statement -> SCANF L_BRACKET AMPERSAND ID R_BRACKET .)
 
 
-state 206
+state 205
 
     (40) else_if_statement -> ELSE IF L_BRACKET logical_expression R_BRACKET . statements_block
     (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
     L_BRACE         shift and go to state 89
 
-    statements_block               shift and go to state 212
+    statements_block               shift and go to state 211
 
-state 207
+state 206
 
     (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression R_BRACKET . SEMICOLON
 
-    SEMICOLON       shift and go to state 213
+    SEMICOLON       shift and go to state 212
+
+
+state 207
+
+    (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression . R_BRACKET statements_block
+
+    R_BRACKET       shift and go to state 213
 
 
 state 208
 
-    (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression . R_BRACKET statements_block
+    (79) opt_assign_expression -> assign_expression .
 
-    R_BRACKET       shift and go to state 214
+    R_BRACKET       reduce using rule 79 (opt_assign_expression -> assign_expression .)
 
 
 state 209
 
-    (81) opt_assign_expression -> assign_expression .
+    (80) opt_assign_expression -> empty .
 
-    R_BRACKET       reduce using rule 81 (opt_assign_expression -> assign_expression .)
+    R_BRACKET       reduce using rule 80 (opt_assign_expression -> empty .)
 
 
 state 210
 
-    (82) opt_assign_expression -> empty .
-
-    R_BRACKET       reduce using rule 82 (opt_assign_expression -> empty .)
-
-
-state 211
-
-    (76) assign_expression -> ID . assign_op value_expression
-    (78) assign_expression -> ID . unary_op
+    (74) assign_expression -> ID . assign_op value_expression
+    (76) assign_expression -> ID . unary_op
     (113) assign_op -> . ASSIGN
     (114) assign_op -> . PLUS_ASSIGN
     (115) assign_op -> . MINUS_ASSIGN
@@ -5611,7 +5602,7 @@ state 211
     assign_op                      shift and go to state 153
     unary_op                       shift and go to state 154
 
-state 212
+state 211
 
     (40) else_if_statement -> ELSE IF L_BRACKET logical_expression R_BRACKET statements_block .
 
@@ -5640,7 +5631,7 @@ state 212
     R_BRACE         reduce using rule 40 (else_if_statement -> ELSE IF L_BRACKET logical_expression R_BRACKET statements_block .)
 
 
-state 213
+state 212
 
     (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression R_BRACKET SEMICOLON .
 
@@ -5668,16 +5659,16 @@ state 213
     R_BRACE         reduce using rule 35 (do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression R_BRACKET SEMICOLON .)
 
 
-state 214
+state 213
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET . statements_block
     (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
     L_BRACE         shift and go to state 89
 
-    statements_block               shift and go to state 215
+    statements_block               shift and go to state 214
 
-state 215
+state 214
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET statements_block .
 
@@ -5835,17 +5826,17 @@ WARNING: shift/reduce conflict for GREATER in state 188 resolved as shift
 WARNING: shift/reduce conflict for GREATER_EQUAL in state 188 resolved as shift
 WARNING: shift/reduce conflict for LESSER in state 188 resolved as shift
 WARNING: shift/reduce conflict for LESSER_EQUAL in state 188 resolved as shift
-WARNING: shift/reduce conflict for QUESTION_MARK in state 195 resolved as shift
-WARNING: shift/reduce conflict for AND in state 195 resolved as shift
-WARNING: shift/reduce conflict for OR in state 195 resolved as shift
-WARNING: shift/reduce conflict for R_BRACKET in state 200 resolved as shift
-WARNING: shift/reduce conflict for QUESTION_MARK in state 200 resolved as shift
-WARNING: shift/reduce conflict for AND in state 200 resolved as shift
-WARNING: shift/reduce conflict for OR in state 200 resolved as shift
-WARNING: shift/reduce conflict for R_BRACKET in state 202 resolved as shift
-WARNING: shift/reduce conflict for QUESTION_MARK in state 202 resolved as shift
-WARNING: shift/reduce conflict for AND in state 202 resolved as shift
-WARNING: shift/reduce conflict for OR in state 202 resolved as shift
+WARNING: shift/reduce conflict for QUESTION_MARK in state 194 resolved as shift
+WARNING: shift/reduce conflict for AND in state 194 resolved as shift
+WARNING: shift/reduce conflict for OR in state 194 resolved as shift
+WARNING: shift/reduce conflict for R_BRACKET in state 199 resolved as shift
+WARNING: shift/reduce conflict for QUESTION_MARK in state 199 resolved as shift
+WARNING: shift/reduce conflict for AND in state 199 resolved as shift
+WARNING: shift/reduce conflict for OR in state 199 resolved as shift
+WARNING: shift/reduce conflict for R_BRACKET in state 201 resolved as shift
+WARNING: shift/reduce conflict for QUESTION_MARK in state 201 resolved as shift
+WARNING: shift/reduce conflict for AND in state 201 resolved as shift
+WARNING: shift/reduce conflict for OR in state 201 resolved as shift
 WARNING: reduce/reduce conflict in state 34 resolved using rule (opt_value_expression -> value_expression)
 WARNING: rejected rule (logical_expression -> value_expression) in state 34
 WARNING: reduce/reduce conflict in state 43 resolved using rule (math_expression -> INTEGER)
@@ -5876,8 +5867,8 @@ WARNING: reduce/reduce conflict in state 173 resolved using rule (logical_expres
 WARNING: rejected rule (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression) in state 173
 WARNING: reduce/reduce conflict in state 180 resolved using rule (logical_expression -> value_expression)
 WARNING: rejected rule (assign_expression -> ID assign_op value_expression) in state 180
-WARNING: reduce/reduce conflict in state 195 resolved using rule (value_expression -> logical_expression)
-WARNING: rejected rule (opt_logical_expression -> logical_expression) in state 195
+WARNING: reduce/reduce conflict in state 194 resolved using rule (value_expression -> logical_expression)
+WARNING: rejected rule (opt_logical_expression -> logical_expression) in state 194
 WARNING: Rule (value -> INTEGER) is never reduced
 WARNING: Rule (value -> DECIMAL) is never reduced
 WARNING: Rule (value -> CHARACTER) is never reduced

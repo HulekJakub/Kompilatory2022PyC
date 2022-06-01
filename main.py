@@ -3,6 +3,7 @@ import ply.yacc as yacc
 
 # Tokens
 tokens = (
+    "PREPROCESSOR_LINE", 'COMMENT',
     'L_BRACKET', 'R_BRACKET', 'L_BRACE', 'R_BRACE', 'L_SQUARE_BRACKET', 'R_SQUARE_BRACKET',
     'SEMICOLON', 'COLON', 'COMMA', 'QUESTION_MARK', 'AMPERSAND',
     'INCREMENT', 'DECREMENT',
@@ -10,8 +11,8 @@ tokens = (
     'EQUAL', 'NOT_EQUAL', 'GREATER_EQUAL', 'LESSER_EQUAL', 'GREATER', 'LESSER',
     'PLUS_ASSIGN', 'MINUS_ASSIGN', 'MUL_ASSIGN', 'DIV_ASSIGN', 'MOD_ASSIGN', 'ASSIGN',
     'PLUS', 'MINUS', 'MUL', 'DIV', 'MOD',
-    'ID', 'DECIMAL', 'INTEGER', 'CHARACTER', "STRING",
-    "PREPROCESSOR_LINE", 'COMMENT'
+    'ID', 'DECIMAL', 'INTEGER', 'CHARACTER', "STRING"
+
 )
 
 # Keywords
@@ -43,6 +44,21 @@ reserved = {
 tokens += tuple(reserved.values())
 
 # Token definitions
+
+def t_PREPROCESSOR_LINE(t):
+    r'\#[^\n]*'
+    #t.value = t.value[1:]
+    return t
+
+
+def t_COMMENT(t):
+    r'(\/\/[^\n]*\n)|(\/\*(.|\n)*\*\/)'
+    if t.value[:2] == "//":
+        t.value = "#" + t.value[2:]
+    else:
+        t.value = t.value[2:-2]
+        t.value = "\"\"\"" + t.value + "\"\"\""
+    return t
 
 t_L_BRACKET = r'\('
 t_R_BRACKET = r'\)'
@@ -87,7 +103,7 @@ t_MOD = r'%'
 
 
 def t_ID(t):
-    r'[a-zA-Z_][a-zA-zZ0-9_]*'
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value, 'ID')
     return t
 
@@ -116,20 +132,7 @@ def t_STRING(t):
     return t
 
 
-def t_PREPROCESSOR_LINE(t):
-    r'\#[^\n]*'
-    #t.value = t.value[1:]
-    return t
 
-
-def t_COMMENT(t):
-    r'(\/\/[^\n]*\n)|(\/\*(.|\n)*\*\/)'
-    if t.value[:2] == "//":
-        t.value = "#" + t.value[2:]
-    else:
-        t.value = t.value[2:-2]
-        t.value = "\"\"\"" + t.value + "\"\"\""
-    return t
 
 # Ignored characters
 t_ignore = " \t"
@@ -162,7 +165,6 @@ def indent_text(text):
 def p_s_prim(t):
     '''s_prim : program'''
     t[0] = t[1]
-    print(t[0])
 
 
 def p_program(t):
@@ -283,7 +285,7 @@ def p_function_statement(t):
 
 def p_return_statement(t):
     '''return_statement : RETURN value_expression SEMICOLON'''
-    t[0] = "return" + t[1] + "\n"
+    t[0] = "return " + t[2] + "\n"
 
 
 def p_break_statement(t):
@@ -361,7 +363,7 @@ def p_opt_else_if_statements(p):
 
 
 def p_else_statement(p):
-    '''else_statement : ELSE statements_block'''
+    '''else_statement : ELSE '''
 
     p[0] = "else" + p[2]
 
@@ -375,7 +377,7 @@ def p_opt_else_statement(p):
 
 def p_print_statement(p):
     '''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
-    p[0] = "print" + "(" + p[3] + ")"
+    p[0] = "print" + "(" + p[3] + ")" + "\n"
 
 
 def p_scan_statement(p):
@@ -442,24 +444,18 @@ def p_math_expression(p):
 
 def p_logical_expression(p):
     '''logical_expression : logical_expression bool_op logical_expression
-                          | TRUE
-                          | FALSE
                           | NEGATION logical_expression
                           | value_expression comparison_op value_expression
                           | value_expression'''
 
     if len(p) == 2:
-        if p[1] == "TRUE":
-            p[0] = 'True'
-
-        elif p[1] == "FALSE":
-            p[0] = "False"
+        p[0] = p[1]
 
     elif len(p) == 3:
         p[0] = "not" + p[2]
 
     elif len(p) == 4:
-            p[0] = p[1] + p[2] + p[3]
+        p[0] = p[1] + p[2] + p[3]
 
 
 def p_function_expression(p):
@@ -517,12 +513,20 @@ def p_value(p):
     '''value : INTEGER
              | DECIMAL
              | CHARACTER
-            | STRING
-            | ID
-            | ID L_SQUARE_BRACKET value_expression  R_SQUARE_BRACKET'''
+             | STRING
+             | TRUE
+             | FALSE
+             | ID
+             | ID L_SQUARE_BRACKET value_expression  R_SQUARE_BRACKET'''
 
     if len(p) == 2:
-        p[0] = p[1]
+        if p[1] == "true":
+            p[0] = 'True'
+
+        elif p[1] == "false":
+            p[0] = "False"
+        else:
+            p[0] = p[1]
 
     else:
         p[0] = p[1] + "[" + p[3] + "]"
@@ -655,18 +659,22 @@ lexer = lex.lex()
 parser = yacc.yacc()
 
 def main():
-
-
-    with open("small.c", "r") as f:
+    with open("source.c", "r") as f:
         while True:
             try:
                 s = f.read()
-
             except EOFError:
                 break
             if not s: continue
             result = parser.parse(s)
+            # token = lexer.token()
+            # print(token)
+            # while token is not None:
+            #     token = lexer.token()
+            #     print(token)
             print(result)
+            with open("converted.py", "w") as out_f:
+                out_f.write(result)
 
 """
     while True:
