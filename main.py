@@ -433,7 +433,6 @@ def p_opt_else_statement(p):
 
 def p_print_statement(p):
     '''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
-    
 
 '''scan_statement : SCANF L_BRACKET  R_BRACKET'''
 
