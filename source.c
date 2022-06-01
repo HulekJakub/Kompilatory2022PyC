@@ -1,3 +1,8 @@
+/* Program w C
+    git
+*/
+//Komentarz
+#define PAP 2
 
 int main() {
   int variable = 1;
@@ -6,6 +11,15 @@ int main() {
   if(variable > variable2)
   {
     printf(variable);
+  }
+  else if (variable2 > variable)
+  {
+    printf(variable2)
+  }
+
+  while(1)
+  {
+    break;
   }
 
   printf("TAK");

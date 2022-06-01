@@ -48,6 +48,7 @@ tokens += tuple(reserved.values())
 def t_PREPROCESSOR_LINE(t):
     r'\#[^\n]*'
     #t.value = t.value[1:]
+    t.value = t.value + "\n"
     return t
 
 
@@ -58,6 +59,7 @@ def t_COMMENT(t):
     else:
         t.value = t.value[2:-2]
         t.value = "\"\"\"" + t.value + "\"\"\""
+        t.value = t.value + "\n"
     return t
 
 t_L_BRACKET = r'\('
@@ -164,7 +166,8 @@ def indent_text(text):
 
 def p_s_prim(t):
     '''s_prim : program'''
-    t[0] = t[1]
+    t[0] = t[1] + "if __name__ == \"__main__\":\n" + INDENT + "main()"
+
 
 
 def p_program(t):
@@ -300,7 +303,7 @@ def p_function_definition_statement(t):
 
 def p_while_loop_statement(t):
     '''while_loop_statement : WHILE L_BRACKET logical_expression R_BRACKET statements_block'''
-    t[0] = "while" + "(" + t[3] + ")" + t[5] + "\n"
+    t[0] = "while" + "(" + t[3] + ")" + t[5]
 
 
 def p_do_while_loop_statement(p):
