@@ -230,6 +230,7 @@ def change_braces_to_brackets(text):
 
     return text
 
+
 def p_s_prim(t):
     '''s_prim : program'''
     t[0] = t[1]
@@ -399,43 +400,57 @@ def p_decl_stat_or_sem(t):
     else:
         t[0] = t[1]
 
-'''switch_statement : SWITCH L_BRACKET value_expression R_BRACKET 
-                        L_BRACE opt_case_statements opt_default_statement opt_case_statements  R_BRACE'''
+def p_if_statement(p):
+    '''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
-'''opt_case_statements : case_statement
-                       | case_statement opt_case_statements
-                       | empty'''
+    p[0] = "if" + "(" + p[3] + ")" + p[5]
 
-'''opt_default_statement : DEFAULT COLON opt_statements opt_break_statement'''
+def p_else_if_statement(p):
+    '''else_if_statement : ELSE IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
-'''opt_break_statement : break_statement 
-                       | empty'''
+    p[0] = "elif" + "(" + p[4] + ")" + p[6]
 
-'''case_statement : CASE value_expression COLON opt_statements opt_break_statement'''
+def p_else_if_statements(p):
+    '''else_if_statements : else_if_statement
+                          | else_if_statement else_if_statements'''
 
-'''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block'''
+    if len(p) == 3:
+        p[0] = p[1] + p[2]
 
-'''else_if_statement : ELSE IF L_BRACKET logical_expression R_BRACKET statements_block'''
+    elif len(p) == 2:
+        p[0] = p[1]
 
-'''else_if_statements : else_if_statement  
-                      | else_if_statement else_if_statements'''
+def p_opt_else_if_statements(p):
+    '''opt_else_if_statements : else_if_statements
+                              | empty'''
 
-'''opt_else_if_statements : else_if_statements
+    p[0] = p[1]
+
+def p_else_statement(p):
+    '''else_statement : ELSE statements_block'''
+
+    p[0] = "else" + p[2]
+
+def p_opt_else_statement(p):
+    '''opt_else_statement : else_statement
                           | empty'''
 
-'''else_statement : ELSE L_BRACE opt_statements R_BRACE'''
-
-'''opt_else_statement : else_statement 
-                      | empty'''
+    p[0] = p[1]
 
 '''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
 
 '''scan_statement : SCANF L_BRACKET  R_BRACKET'''
 
 # EXPRESSIONS
-'''declaration_value_expression : value_expression 
-                                | L_BRACE listed_values R_BRACE
-                                | L_BRACE declaration_value_expression R_BRACE'''
+def p_declaration_value_expression(p):
+    '''declaration_value_expression : value_expression
+                                    | L_BRACE listed_values R_BRACE
+                                    | L_BRACE declaration_value_expression R_BRACE'''
+    if len(p) == 2:
+        p[0] = p[1]
+
+    elif len(p) == 4:
+        p[0] = p[2]
 
 '''value_expression : math_expression 
                     | logical_expression 
@@ -477,23 +492,41 @@ def p_decl_stat_or_sem(t):
                          | empty'''
 
 # DEFINITIONS
-'''type : INT 
-        | FLOAT 
-        | DOUBLE 
-        | CHAR 
-        | BOOL 
-        | LONG 
-        | VOID'''
 
-'''value : INTEGER 
-         | DECIMAL 
-         | CHARACTER 
-         | STRING 
-         | ID 
-         | ID L_SQUARE_BRACKET value_expression  R_SQUARE_BRACKET'''
+def p_type(p):
+    '''type : INT
+            | FLOAT
+            | DOUBLE
+            | CHAR
+            | BOOL
+            | LONG
+            | VOID'''
 
-'''listed_values : value_expression 
-                 | listed_values COMMA listed_values'''
+    p[0] = p[1]
+
+def p_value(p):
+    '''value : INTEGER
+             | DECIMAL
+             | CHARACTER
+            | STRING
+            | ID
+            | ID L_SQUARE_BRACKET value_expression  R_SQUARE_BRACKET'''
+
+    if len(p) == 2:
+        p[0] = p[1]
+
+    else:
+        p[0] = p[1] + "[" + p[3] + "]"
+
+def p_listed_values(p):
+    '''listed_values : value_expression
+                     | listed_values COMMA listed_values'''
+
+    if len(p) == 2:
+        p[0] = p[1]
+
+    else:
+        p[0] = p[1] + "," + p[3]
 
 '''math_op : PLUS 
            | MINUS 
@@ -535,8 +568,9 @@ def p_decl_stat_or_sem(t):
 '''args : type ID
         | type ID COMMA args'''
 
-'''opt_args : args type ID 
-            | empty'''
+def p_opt_args(p):
+    '''opt_args : args type ID
+                | empty'''
 
 
 def p_empty(t):
