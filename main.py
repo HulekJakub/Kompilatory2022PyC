@@ -92,40 +92,41 @@ def t_ID(t):
 
 def t_DECIMAL(t):
     r'\d+\.\d+'
-    t.value = float(t.value)
+    #t.value = float(t.value)
     return t
 
 
 def t_INTEGER(t):
     r'\d+'
-    t.value = int(t.value)
+    #t.value = int(t.value)
     return t
 
 
 def t_CHARACTER(t):
     r'\'.\''
-    t.value = t.value[1:-1]
+    #t.value = "\"" + t.value[1:-1] + "\""
     return t
 
 
 def t_STRING(t):
     r'".*"'
-    t.value = t.value[1:-1]
+    #t.value = t.value[1:-1]
     return t
 
 
 def t_PREPROCESSOR_LINE(t):
     r'\#[^\n]*'
-    t.value = t.value[1:]
+    #t.value = t.value[1:]
     return t
 
 
 def t_COMMENT(t):
     r'(\/\/[^\n]*\n)|(\/\*(.|\n)*\*\/)'
-    if (t.value[:2] == "//"):
-        t.value = t.value[2:]
+    if t.value[:2] == "//":
+        t.value = "#" + t.value[2:]
     else:
         t.value = t.value[2:-2]
+        t.value = "\"\"\"" + t.value + "\"\"\""
     return t
 
 # Ignored characters
@@ -206,10 +207,9 @@ def p_error(t):
     print("Syntax error at '%s'" % t.value)
 """
 
-# Tylko gramatyka w formacie Ply, brak działań
-# PROGRAM
-INDENT = "    "
+# Funkcje pomocnicze
 
+INDENT = "    "
 
 def indent_text(text):
     text = INDENT + text
@@ -217,25 +217,13 @@ def indent_text(text):
     text = text.replace("\n", "\n" + INDENT, newlines-1)
     return text
 
-
-def change_braces_to_brackets(text):
-    change = True
-    for i, c in enumerate(text):
-        if c == "{" and change:
-            text = text[:i] + '[' + text[i+1:]
-        if c == "}" and change:
-            text = text[:i] + ']' + text[i+1:]
-        if c == "\"":
-            change = not change
-
-    return text
+# PROGRAM
 
 
 def p_s_prim(t):
     '''s_prim : program'''
     t[0] = t[1]
     print(t[0])
-
 
 
 def p_program(t):
@@ -302,21 +290,21 @@ def p_any_statement(t):
 
 def p_declaration_statement(t):
     '''declaration_statement : opt_const type ID opt_array_mark
-                             | opt_const type ID opt_array_mark ASSIGN declaration_expression SEMICOLON'''
+                             | opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON'''
     dec_type = ""
-    if t[2] == reserved["int"]:
+    if t[2] == "int":
         dec_type = "int()"
-    if t[2] == reserved["float"]:
+    if t[2] == "float":
         dec_type = "float()"
-    if t[2] == reserved["long"]:
+    if t[2] == "long":
         dec_type = "int()"
-    if t[2] == reserved["double"]:
+    if t[2] == "double":
         dec_type = "float()"
-    if t[2] == reserved["char"]:
+    if t[2] == "char":
         dec_type = "\"\""
-    if t[2] == reserved["bool"]:
+    if t[2] == "bool":
         dec_type = "bool()"
-    if t[2] == reserved["void"]:
+    if t[2] == "void":
         dec_type = ""
 
     dec_assign = ""
@@ -333,7 +321,7 @@ def p_declaration_statement(t):
                 dec_assign = " = 0"
     else:
         if t[4] != "":
-            dec_assign = " = " + change_braces_to_brackets(t[6])
+            dec_assign = " = " + t[6]
         else:
             dec_assign = " = " + t[6]
 
@@ -370,26 +358,26 @@ def p_while_loop_statement(t):
     t[0] = "while" + "(" + t[3] + ")" + t[5] + "\n"
 
 
-def do_while_loop_statement(t):
+def do_while_loop_statement(p):
     '''do_while_loop_statement : DO statements_block
                                 WHILE L_BRACKET logical_expression  R_BRACKET SEMICOLON'''
     preparation = "do_while_loop_first_pass = True\n"
-    body = "while(" + preparation + " or (" + t[5] + "))" + t[2]
+    body = "while(" + preparation + " or (" + p[5] + "))" + p[2]
     end = INDENT + "do_while_loop_first_pass = False\n"
-    t[0] = preparation + body + end
+    p[0] = preparation + body + end
 
 
-def p_for_loop_statement(t):
+def p_for_loop_statement(p):
     '''for_loop_statement : FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET
                             statements_block'''
-    condition = t[4]
+    condition = p[4]
     if condition == "":
         condition = "True"
 
-    preparation = t[3]
-    body = "while(" + condition + ")" + t[8]
-    end = INDENT + t[6] + "\n"
-    t[0] = preparation + body + end
+    preparation = p[3]
+    body = "while(" + condition + ")" + p[8]
+    end = INDENT + p[6] + "\n"
+    p[0] = preparation + body + end
 
 
 def p_decl_stat_or_sem(t):
@@ -400,15 +388,18 @@ def p_decl_stat_or_sem(t):
     else:
         t[0] = t[1]
 
+
 def p_if_statement(p):
     '''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
     p[0] = "if" + "(" + p[3] + ")" + p[5]
 
+
 def p_else_if_statement(p):
     '''else_if_statement : ELSE IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
     p[0] = "elif" + "(" + p[4] + ")" + p[6]
+
 
 def p_else_if_statements(p):
     '''else_if_statements : else_if_statement
@@ -420,16 +411,19 @@ def p_else_if_statements(p):
     elif len(p) == 2:
         p[0] = p[1]
 
+
 def p_opt_else_if_statements(p):
     '''opt_else_if_statements : else_if_statements
                               | empty'''
 
     p[0] = p[1]
 
+
 def p_else_statement(p):
     '''else_statement : ELSE statements_block'''
 
     p[0] = "else" + p[2]
+
 
 def p_opt_else_statement(p):
     '''opt_else_statement : else_statement
@@ -437,11 +431,15 @@ def p_opt_else_statement(p):
 
     p[0] = p[1]
 
+def p_print_statement(p):
+
 '''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
 
 '''scan_statement : SCANF L_BRACKET  R_BRACKET'''
 
 # EXPRESSIONS
+
+
 def p_declaration_value_expression(p):
     '''declaration_value_expression : value_expression
                                     | L_BRACE listed_values R_BRACE
@@ -451,6 +449,7 @@ def p_declaration_value_expression(p):
 
     elif len(p) == 4:
         p[0] = p[2]
+
 
 '''value_expression : math_expression 
                     | logical_expression 
