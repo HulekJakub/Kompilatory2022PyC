@@ -246,7 +246,7 @@ def p_program_component(t):
 
 def p_statement(t):
     '''statement : any_statement | COMMENT | SEMICOLON'''
-    if t[1] == t_SEMICOLON:
+    if t[1] == ";":
         t[0] = ""
     else:
         t[0] = t[1]
@@ -432,8 +432,8 @@ def p_opt_else_statement(p):
     p[0] = p[1]
 
 def p_print_statement(p):
-
-'''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
+    '''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
+    
 
 '''scan_statement : SCANF L_BRACKET  R_BRACKET'''
 
@@ -483,9 +483,9 @@ def p_math_expression(p):
         p[0] = p[1]
 
     elif len(p) == 3:
-        p[0] = -p[2]
+        p[0] = "-" + p[2]
 
-    elif len(p) == 4 and p[2] in "+-*/%":
+    elif len(p) == 4 and p[1] == "(":
         p[0] = p[1] + p[2] + p[3]
 
     elif len(p) == 4:
@@ -514,7 +514,7 @@ def p_logical_expression(p):
 def p_trinary_mark_expression(p):
     '''trinary_mark_expression : logical_expression Q_MARK value_expression COLON value_expression'''
 
-    p[0] = "if" + p[1] + "==" + "True:" + "\n" + p[3] + "else:" + p[5]
+    p[0] = "(" + p[5] + "," + p[3] + ")""[int(" + p[1] + ")]"
 
 def p_assign_expression(p):
     '''assign_expression : ID assign_op value_expression

@@ -4,4 +4,3 @@
 // test komentarz
 
 printf("cos" + wawd);
-printf("cos %d", wawd);
