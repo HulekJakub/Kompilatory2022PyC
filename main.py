@@ -660,10 +660,13 @@ def main():
     with open("small.c", "r") as f:
         while True:
             try:
-                a = lexer.input(f.read())
+                s = f.read()
+
             except EOFError:
                 break
-            parser.parse(a)
+            if not s: continue
+            result = parser.parse(s)
+            print(result)
 
 """
     while True:

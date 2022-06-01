@@ -20,3 +20,5 @@ int main(void) {
   printf("NIE");
 
 return 0; }
+//printf("cos" + wawd);
+//printf("cos %d", wawd);
