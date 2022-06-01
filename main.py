@@ -448,47 +448,95 @@ def p_declaration_value_expression(p):
         p[0] = p[1]
 
     elif len(p) == 4:
-        p[0] = p[2]
+        p[0] = "[" + p[2] + "]"
 
+def p_value_expression(p):
+    '''value_expression : math_expression
+                        | logical_expression
+                        | function_expression
+                        | value
+                        | trinary_mark_expression
+                        | L_BRACKET value_expression R_BRACKET'''
 
-'''value_expression : math_expression 
-                    | logical_expression 
-                    | function_expression
-                    | value 
-                    | trinary_mark_expression 
-                    | L_BRACKET value_expression R_BRACKET'''
+    if len(p) == 2:
+        p[0] = p[1]
 
-'''opt_value_expression : value_expression 
-                        | empty'''
+    else:
+        p[0] = "(" + p[2] + ")"
 
-'''math_expression : math_expression math_op math_expression 
-                   | MINUS math_expression 
-                   | INTEGER 
-                   | DECIMAL 
-                   | CHARACTER 
-                   | ID 
-                   | L_BRACKET math_expression R_BRACKET'''
+def p_opt_value_expression(p):
+    '''opt_value_expression : value_expression
+                            | empty'''
 
-'''logical_expression : logical_expression bool_op logical_expression 
-                      | TRUE  
-                      | FALSE 
-                      | NEGATION logical_expression  
-                      | value_expression comparison_op value_expression 
-                      | value_expression'''
+    p[0] = p[1]
+
+def p_math_expression(p):
+    '''math_expression : math_expression math_op math_expression
+                       | MINUS math_expression
+                       | INTEGER
+                       | DECIMAL
+                       | CHARACTER
+                       | ID
+                       | L_BRACKET math_expression R_BRACKET'''
+
+    if len(p) == 2:
+        p[0] = p[1]
+
+    elif len(p) == 3:
+        p[0] = -p[2]
+
+    elif len(p) == 4 and p[2] in "+-*/%":
+        p[0] = p[1] + p[2] + p[3]
+
+    elif len(p) == 4:
+        p[0] = "(" + p[2] + ")"
+
+def p_logical_expression(p):
+    '''logical_expression : logical_expression bool_op logical_expression
+                          | TRUE
+                          | FALSE
+                          | NEGATION logical_expression
+                          | value_expression comparison_op value_expression
+                          | value_expression'''
+
+    if len(p) == 2:
+        p[0] = p[1]
+
+    elif len(p) == 3:
+        p[0] = p[1] + p[2]
+
+    elif len(p) == 4:
+        p[0] = p[1] + p[2] + p[3]
+
 
 '''function_expression: ID L_BRACKET opt_listed_values R_BRACKET'''
 
-'''trinary_mark_expression : logical_expression Q_MARK value_expression COLON value_expression'''
+def p_trinary_mark_expression(p):
+    '''trinary_mark_expression : logical_expression Q_MARK value_expression COLON value_expression'''
 
-'''assign_expression : ID assign_op value_expression 
-                     | unary_op ID 
-                     | ID unary_op'''
+    p[0] = "if" + p[1] + "==" + "True:" + "\n" + p[3] + "else:" + p[5]
 
-'''opt_logical_expression : logical_expression 
-                          | empty'''
+def p_assign_expression(p):
+    '''assign_expression : ID assign_op value_expression
+                         | unary_op ID
+                         | ID unary_op'''
+    if len(p) == 3:
+        p[0] = p[1] + p[2]
 
-'''opt_assign_expression : assign_expression 
-                         | empty'''
+    else:
+        p[0] = p[1] + p[2] + p[3]
+
+def p_opt_logical_expression(p):
+    '''opt_logical_expression : logical_expression
+                              | empty'''
+
+    p[0] = p[1]
+
+def p_opt_assign_expression(p):
+    '''opt_assign_expression : assign_expression
+                             | empty'''
+
+    p[0] = p[1]
 
 # DEFINITIONS
 
@@ -527,50 +575,83 @@ def p_listed_values(p):
     else:
         p[0] = p[1] + "," + p[3]
 
-'''math_op : PLUS 
-           | MINUS 
-           | MUL 
-           | DIV 
-           | MOD'''
+def p_math_op(p):
+    '''math_op : PLUS
+               | MINUS
+               | MUL
+               | DIV
+               | MOD'''
 
-'''unary_op : INCREMENT 
-            | DECREMENT'''
+    p[0] = p[1]
 
-'''bool_op : AND 
-           | OR'''
+def p_unary_op(p):
+    '''unary_op : INCREMENT
+                | DECREMENT'''
+    p[0] = p[1]
 
-'''comparsion_op : EQUAL 
-                 | NOT_EQUAL
-                 | GREATER 
-                 | GREATER_EQUAL 
-                 | LESSER 
-                 | LESSER_EQUAL'''
+def p_bool_op(p):
+    '''bool_op : AND
+               | OR'''
 
-'''assign_op : ASSIGN 
-             | PLUS_ASSGIN 
-             | MINUS_ASIGN 
-             | MUL_ASSIGN 
-             | DIV_ASSIGN 
-             | MOD_ASSIGN'''
+    p[0] = p[1]
 
-'''array_mark : L_SQUARE_BRACKET opt_value_expression  R_SQUARE_BRACKET '''
+def p_comparsion_op(p):
+    '''comparsion_op : EQUAL
+                     | NOT_EQUAL
+                     | GREATER
+                     | GREATER_EQUAL
+                     | LESSER
+                     | LESSER_EQUAL'''
 
-'''opt_const : CONST 
-             | empty'''
+    p[0] = p[1]
 
-'''opt_array_mark : array_mark 
-                  | empty'''
+def p_assign_op(p):
+    '''assign_op : ASSIGN
+                 | PLUS_ASSGIN
+                 | MINUS_ASIGN
+                 | MUL_ASSIGN
+                 | DIV_ASSIGN
+                 | MOD_ASSIGN'''
 
-'''opt_listed_values :  listed_values 
-                     | empty'''
+    p[0] = p[1]
 
-'''args : type ID
-        | type ID COMMA args'''
+def p_array_mark(p):
+    '''array_mark : L_SQUARE_BRACKET opt_value_expression  R_SQUARE_BRACKET '''
+
+    p[0] = "[" + p[2] + "]"
+
+def p_opt_const(p):
+    '''opt_const : CONST
+                 | empty'''
+    p[0] = p[1]
+
+def p_opt_array_mark(p):
+    '''opt_array_mark : array_mark
+                      | empty'''
+
+    p[0] = p[1]
+
+def p_opt_listed_values(p):
+    '''opt_listed_values :  listed_values
+                         | empty'''
+
+    p[0] = p[1]
+
+def p_args(p):
+    '''args : type ID
+            | type ID COMMA args'''
+
+    if len(p) == 3:
+        p[0] = p[1] + p[2]
+
+    else:
+        p[0] = p[1] + p[2] + "," + p[4]
 
 def p_opt_args(p):
     '''opt_args : args type ID
                 | empty'''
 
+    p[0] = p[1]
 
 def p_empty(t):
     '''empty: '''
