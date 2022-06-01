@@ -213,13 +213,28 @@ INDENT = "    "
 
 def indent_text(text):
     text = INDENT + text
-    text.replace("\n", "\n" + INDENT)
+    newlines = text.count("\n")
+    text = text.replace("\n", "\n" + INDENT, newlines-1)
     return text
 
+
+def change_braces_to_brackets(text):
+    change = True
+    for i, c in enumerate(text):
+        if c == "{" and change:
+            text = text[:i] + '[' + text[i+1:]
+        if c == "}" and change:
+            text = text[:i] + ']' + text[i+1:]
+        if c == "\"":
+            change = not change
+
+    return text
 
 def p_s_prim(t):
     '''s_prim : program'''
     t[0] = t[1]
+    print(t[0])
+
 
 
 def p_program(t):
@@ -276,7 +291,8 @@ def p_any_statement(t):
                      | while_loop_statement
                      | for_loop_statement
                      | switch_statement
-                     | if_statement opt_else_if_statements opt_else_statement'''
+                     | if_statement opt_else_if_statements opt_else_statement
+                     | print_statement'''
     if len(t) == 4:
         t[0] = t[1] + t[2] + t[3]
     else:
@@ -286,59 +302,102 @@ def p_any_statement(t):
 def p_declaration_statement(t):
     '''declaration_statement : opt_const type ID opt_array_mark
                              | opt_const type ID opt_array_mark ASSIGN declaration_expression SEMICOLON'''
-    if len(t) == 5:
+    dec_type = ""
+    if t[2] == reserved["int"]:
+        dec_type = "int()"
+    if t[2] == reserved["float"]:
+        dec_type = "float()"
+    if t[2] == reserved["long"]:
+        dec_type = "int()"
+    if t[2] == reserved["double"]:
+        dec_type = "float()"
+    if t[2] == reserved["char"]:
+        dec_type = "\"\""
+    if t[2] == reserved["bool"]:
+        dec_type = "bool()"
+    if t[2] == reserved["void"]:
         dec_type = ""
-        if t[2] == reserved["int"]:
-            dec_type = "int()"
-        if t[2] == reserved["float"]:
-            dec_type = "float()"
-        if t[2] == reserved["long"]:
-            dec_type = "int()"
-        if t[2] == reserved["double"]:
-            dec_type = "float()"
-        if t[2] == reserved["char"]:
-            dec_type = "\"\""
-        if t[2] == reserved["bool"]:
-            dec_type = "bool()"
-        if t[2] == reserved["void"]:
-            dec_type = ""
 
-        dec_assign = ""
+    dec_assign = ""
+    if len(t) == 5:
         if t[4] != "":
             if dec_type != "":
                 dec_assign = " = " + "[" + dec_type + "]" + " * " "(" + t[4][1:-1] + ")"
             else:
-
+                dec_assign = " = " + "[None]" + " * " "(" + t[4][1:-1] + ")"
         else:
             if dec_type != "":
-
+                dec_assign = " = " + dec_type
             else:
-
+                dec_assign = " = 0"
     else:
         if t[4] != "":
+            dec_assign = " = " + change_braces_to_brackets(t[6])
+        else:
+            dec_assign = " = " + t[6]
+
+    t[0] = t[3] + dec_assign + "\n"
 
 
+def p_assign_statement(t):
+    '''assign_statement : assign_expression SEMICOLON'''
+    t[0] = t[1] + "\n"
 
-'''assign_statement : assign_expression SEMICOLON'''
 
-'''function_statement  : function_expression SEMICOLON'''
+def p_function_statement(t):
+    '''function_statement  : function_expression SEMICOLON'''
+    t[0] = t[1] + "\n"
 
-'''return_statement : RETURN value_expression SEMICOLON'''
 
-'''break_statement : BREAK SEMICOLON'''
+def p_return_statement(t):
+    '''return_statement : RETURN value_expression SEMICOLON'''
+    t[0] = "return" + t[1] + "\n"
 
-'''function_definition_statement : type ID L_BRACKET opt_args R_BRACKET statements_block'''
 
-'''while_loop_statement : WHILE L_BRACKET logical_expression R_BRACKET statements_block'''
+def p_break_statement(t):
+    '''break_statement : BREAK SEMICOLON'''
+    t[0] = "break" + "\n"
 
-'''do_while_loop_statement : DO statements_block
+
+def p_function_definition_statement(t):
+    '''function_definition_statement : type ID L_BRACKET opt_args R_BRACKET statements_block'''
+    t[0] = "def " + t[2] + "(" + t[4] + ")" + t[6] + "\n"
+
+
+def p_while_loop_statement(t):
+    '''while_loop_statement : WHILE L_BRACKET logical_expression R_BRACKET statements_block'''
+    t[0] = "while" + "(" + t[3] + ")" + t[5] + "\n"
+
+
+def do_while_loop_statement(t):
+    '''do_while_loop_statement : DO statements_block
                                 WHILE L_BRACKET logical_expression  R_BRACKET SEMICOLON'''
+    preparation = "do_while_loop_first_pass = True\n"
+    body = "while(" + preparation + " or (" + t[5] + "))" + t[2]
+    end = INDENT + "do_while_loop_first_pass = False\n"
+    t[0] = preparation + body + end
 
-'''for_loop_statement : FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET 
+
+def p_for_loop_statement(t):
+    '''for_loop_statement : FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET
                             statements_block'''
+    condition = t[4]
+    if condition == "":
+        condition = "True"
 
-'''decl_stat_or_sem : declaration_statement 
-                    | SEMICOLON'''
+    preparation = t[3]
+    body = "while(" + condition + ")" + t[8]
+    end = INDENT + t[6] + "\n"
+    t[0] = preparation + body + end
+
+
+def p_decl_stat_or_sem(t):
+    '''decl_stat_or_sem : declaration_statement
+                        | SEMICOLON'''
+    if t[1] == t_SEMICOLON:
+        t[0] = ""
+    else:
+        t[0] = t[1]
 
 '''switch_statement : SWITCH L_BRACKET value_expression R_BRACKET 
                         L_BRACE opt_case_statements opt_default_statement opt_case_statements  R_BRACE'''
@@ -368,6 +427,10 @@ def p_declaration_statement(t):
 
 '''opt_else_statement : else_statement 
                       | empty'''
+
+'''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
+
+'''scan_statement : SCANF L_BRACKET  R_BRACKET'''
 
 # EXPRESSIONS
 '''declaration_value_expression : value_expression 
@@ -483,16 +546,13 @@ def p_empty(t):
 
 def main():
     lexer = lex.lex()
-    # parser = yacc.yacc()
+    #parser = yacc.yacc()
     while True:
-        a = lexer.input(input('<<'))
-        token = lexer.token()
-        print(token)
-        while token is not None:
-            token = lexer.token()
-            print(token)
-
-
+        try:
+            a = lexer.input(input('<<'))
+        except EOFError:
+            break
+        #parser.parse(a)
 
 """
     while True:
