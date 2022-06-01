@@ -499,13 +499,17 @@ def p_logical_expression(p):
                           | value_expression'''
 
     if len(p) == 2:
-        p[0] = p[1]
+        if p[1] == "TRUE":
+            p[0] = 'True'
+
+        elif p[1] == "FALSE":
+            p[0] = "False"
 
     elif len(p) == 3:
-        p[0] = p[1] + p[2]
+        p[0] = "not" + p[2]
 
     elif len(p) == 4:
-        p[0] = p[1] + p[2] + p[3]
+            p[0] = p[1] + p[2] + p[3]
 
 
 '''function_expression: ID L_BRACKET opt_listed_values R_BRACKET'''
@@ -592,7 +596,11 @@ def p_bool_op(p):
     '''bool_op : AND
                | OR'''
 
-    p[0] = p[1]
+    if p[1] == '&&':
+        p[0] = "and"
+
+    elif p[1] == '||':
+        p[0] = 'or'
 
 def p_comparsion_op(p):
     '''comparsion_op : EQUAL
