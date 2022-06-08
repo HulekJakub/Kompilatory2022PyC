@@ -23,11 +23,6 @@ def main(a: int):
     elif add(2, 3) == 5:
         print("tak")
     
-    while True:
-        variable+= 1
-    
-        if variable < 3:
-            break
     print("TAK")
     print("NIE")
     return 0

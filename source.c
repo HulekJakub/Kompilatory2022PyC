@@ -30,16 +30,6 @@ int main(int a) {
   {
     printf("tak");
   }
-  while(1)
-  {
-    break;
-  }
-
-  do
-  {
-    variable++;
-  } while (variable < 3);
-
 
   printf("TAK");
   printf("NIE");

@@ -186,9 +186,9 @@ R_BRACKET            : 33 34 35 36 39 41 48 49 57 60 67
 R_SQUARE_BRACKET     : 90 114
 SCANF                : 49
 SEMICOLON            : 10 28 29 30 31 32 35 36 38
-STRING               : 91
-TRUE                 : 92
-VOID                 : 87
+STRING               : 86
+TRUE                 : 87
+VOID                 : 82
 WHILE                : 34 35
 error                : 
 
