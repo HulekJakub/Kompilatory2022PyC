@@ -9,13 +9,21 @@ def main():
     tab = [float()] * (5)
     if variable > variable2:
         print(variable)
+        if variable > variable2:
+            print(variable)
+        
     
     elif variable2 > variable:
         print(variable2)
     
-    while(1):
+    while 1:
         break
     
+    while True:
+        variable+= 1
+    
+        if variable < 3:
+            break
     print("TAK")
     print("NIE")
     return 0

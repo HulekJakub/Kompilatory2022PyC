@@ -8,6 +8,7 @@ int main() {
   int variable = 1;
   double variable2 = 3.2;
   double tab[5];
+
   if(variable > variable2)
   {
     printf(variable);
@@ -20,15 +21,17 @@ int main() {
   {
     printf(variable2)
   }
-  else
-  {
-    printf(variable)
-  }
 
   while(1)
   {
     break;
   }
+
+  do
+  {
+    variable++;
+  } while (variable < 3);
+
 
   printf("TAK");
   printf("NIE");
