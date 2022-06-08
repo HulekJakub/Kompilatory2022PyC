@@ -47,13 +47,16 @@ tokens += tuple(reserved.values())
 
 def t_PREPROCESSOR_LINE(t):
     r'\#[^\n]*'
+    t.lexer.lineno += t.value.count("\n")
     #t.value = t.value[1:]
+
     t.value = t.value + "\n"
     return t
 
 
 def t_COMMENT(t):
     r'(\/\/[^\n]*\n)|(\/\*(.|\n)*\*\/)'
+    t.lexer.lineno += t.value.count("\n")
     if t.value[:2] == "//":
         t.value = "#" + t.value[2:]
     else:
@@ -366,7 +369,7 @@ def p_opt_else_if_statements(p):
 
 
 def p_else_statement(p):
-    '''else_statement : ELSE '''
+    '''else_statement : ELSE statements_block'''
 
     p[0] = "else" + p[2]
 
@@ -646,7 +649,7 @@ def p_empty(p):
 # Errors
 
 def p_error(p):
-    print("Whoa. You are seriously hosed.")
+    print(f"Whoa. You are seriously hosed at line {p.lineno}.")
     if not p:
         print("End of File!")
         return

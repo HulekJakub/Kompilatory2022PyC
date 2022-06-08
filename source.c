@@ -11,10 +11,18 @@ int main() {
   if(variable > variable2)
   {
     printf(variable);
+    if(variable > variable2)
+    {
+      printf(variable);
+    }
   }
   else if (variable2 > variable)
   {
     printf(variable2)
+  }
+  else
+  {
+    printf(variable)
   }
 
   while(1)
