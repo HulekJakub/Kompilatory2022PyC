@@ -1,3 +1,5 @@
+import sys
+
 import ply.lex as lex
 import ply.yacc as yacc
 from lexer import *
@@ -29,13 +31,9 @@ reserved = {
     'for': 'FOR',
     'do': 'DO',
     'while': 'WHILE',
-    #'unsigned': 'UNSIGNED',
-    #'switch': 'SWITCH',
     'return': 'RETURN',
     'else': 'ELSE',
     'break': 'BREAK',
-    #'case': 'CASE',
-    #'default': 'DEFAULT',
     'const': 'CONST',
     'printf': 'PRINTF',
     'scanf': 'SCANF',
@@ -44,12 +42,13 @@ reserved = {
 }
 tokens += tuple(reserved.values())
 
+
 # Token definitions
 
 def t_PREPROCESSOR_LINE(t):
     r'\#[^\n]*'
     t.lexer.lineno += t.value.count("\n")
-    #t.value = t.value[1:]
+    # t.value = t.value[1:]
 
     t.value = t.value + "\n"
     return t
@@ -65,6 +64,7 @@ def t_COMMENT(t):
         t.value = "\"\"\"" + t.value + "\"\"\""
         t.value = t.value + "\n"
     return t
+
 
 t_L_BRACKET = r'\('
 t_R_BRACKET = r'\)'
@@ -107,7 +107,6 @@ t_DIV = r'\/'
 t_MOD = r'%'
 
 
-
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value, 'ID')
@@ -116,32 +115,31 @@ def t_ID(t):
 
 def t_DECIMAL(t):
     r'\d+\.\d+'
-    #t.value = float(t.value)
+    # t.value = float(t.value)
     return t
 
 
 def t_INTEGER(t):
     r'\d+'
-    #t.value = int(t.value)
+    # t.value = int(t.value)
     return t
 
 
 def t_CHARACTER(t):
     r'\'.\''
-    #t.value = "\"" + t.value[1:-1] + "\""
+    # t.value = "\"" + t.value[1:-1] + "\""
     return t
 
 
 def t_STRING(t):
     r'".*"'
-    #t.value = t.value[1:-1]
+    # t.value = t.value[1:-1]
     return t
-
-
 
 
 # Ignored characters
 t_ignore = " \t"
+
 
 def t_newline(t):
     r'\n+'
@@ -160,7 +158,7 @@ INDENT = "    "
 def indent_text(text):
     text = INDENT + text
     newlines = text.count("\n")
-    text = text.replace("\n", "\n" + INDENT, newlines-1)
+    text = text.replace("\n", "\n" + INDENT, newlines - 1)
     return text
 
 # PROGRAM
@@ -305,15 +303,13 @@ def p_function_definition_statement(t):
 
 def p_while_loop_statement(t):
     '''while_loop_statement : WHILE L_BRACKET logical_expression R_BRACKET statements_block'''
-    t[0] = "while" + "(" + t[3] + ")" + t[5]
+    t[0] = "while" + " " + t[3] + t[5]
 
 
 def p_do_while_loop_statement(p):
     '''do_while_loop_statement : DO statements_block WHILE L_BRACKET logical_expression  R_BRACKET SEMICOLON'''
-    preparation = "do_while_loop_first_pass = True\n"
-    body = "while(" + preparation + " or (" + p[5] + "))" + p[2]
-    end = INDENT + "do_while_loop_first_pass = False\n"
-    p[0] = preparation + body + end
+
+    p[0] = "while True" + p[2] + INDENT + "if " + p[5] + ":\n" + 2 * INDENT + "break\n"
 
 
 def p_for_loop_statement(p):
@@ -340,7 +336,7 @@ def p_decl_stat_or_sem(t):
 def p_if_statement(p):
     '''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
-    p[0] = "if" + " " + p[3]   + p[5]
+    p[0] = "if" + " " + p[3] + p[5]
 
 def p_else_statement(p):
     '''else_statement : ELSE statements_block '''
@@ -385,6 +381,7 @@ def p_print_statement(p):
 def p_scan_statement(p):
     '''scan_statement : SCANF L_BRACKET AMPERSAND ID  R_BRACKET'''
     p[0] = p[4] + " = " + "input" + "()" + "\n"
+
 
 # EXPRESSIONS
 
@@ -492,6 +489,7 @@ def p_opt_assign_expression(p):
                              | empty'''
 
     p[0] = p[1]
+
 
 # DEFINITIONS
 
@@ -653,11 +651,12 @@ def p_empty(p):
     '''empty : '''
     p[0] = ""
 
+
 # Errors
 
 
 def p_error(p):
-
+    print(f"Syntax error at line {p.lineno}.")
     if not p:
         print("End of File!")
         return ""
@@ -672,30 +671,28 @@ def p_error(p):
     return ""
 
 
+
 lexer = lex.lex()
 parser = yacc.yacc()
 
 
 def main():
-    with open("source.c", "r") as f:
-        while True:
-            try:
-                s = f.read()
-            except EOFError:
-                break
-            if not s: continue
-            result = parser.parse(s)
-            # token = lexer.token()
-            # print(token)
-            # while token is not None:
-            #     token = lexer.token()
-            #     print(token)
+    try:
+        with open(sys.argv[1], "r") as f:
+            file_body = f.read()
+            result = parser.parse(file_body)
             print(result)
-            with open("converted.py", "w") as out_f:
-                out_f.write(result)
-                break
 
+            if result is not None:
+                with open("converted.py", "w") as out_f:
+                    out_f.write(result)
 
+    except IndexError:
+        print(f"File path not added")
+
+    except FileNotFoundError:
+        print(f"File {sys.argv[1]} could not have been read.")
 
 if __name__ == "__main__":
     main()
+
