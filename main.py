@@ -29,12 +29,12 @@ reserved = {
     'do': 'DO',
     'while': 'WHILE',
     'unsigned': 'UNSIGNED',
-    'switch': 'SWITCH',
+    #'switch': 'SWITCH',
     'return': 'RETURN',
     'else': 'ELSE',
     'break': 'BREAK',
-    'case': 'CASE',
-    'default': 'DEFAULT',
+    #'case': 'CASE',
+    #'default': 'DEFAULT',
     'const': 'CONST',
     'printf': 'PRINTF',
     'scanf': 'SCANF',
@@ -338,13 +338,13 @@ def p_decl_stat_or_sem(t):
 def p_if_statement(p):
     '''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
-    p[0] = "if" + "(" + p[3] + ")" + p[5]
+    p[0] = "if" + " " + p[3]   + p[5]
 
 
 def p_else_if_statement(p):
     '''else_if_statement : ELSE IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
-    p[0] = "elif" + "(" + p[4] + ")" + p[6]
+    p[0] = "elif" + " " + p[4] + p[6]
 
 
 def p_else_if_statements(p):
@@ -366,7 +366,7 @@ def p_opt_else_if_statements(p):
 
 
 def p_else_statement(p):
-    '''else_statement : ELSE '''
+    '''else_statement : ELSE statements_block'''
 
     p[0] = "else" + p[2]
 
@@ -455,10 +455,10 @@ def p_logical_expression(p):
         p[0] = p[1]
 
     elif len(p) == 3:
-        p[0] = "not" + p[2]
+        p[0] = "not " + p[2]
 
     elif len(p) == 4:
-        p[0] = p[1] + p[2] + p[3]
+        p[0] = p[1] + " " + p[2] + " " + p[3]
 
 
 def p_function_expression(p):
@@ -543,7 +543,7 @@ def p_listed_values(p):
         p[0] = p[1]
 
     else:
-        p[0] = p[1] + "," + p[3]
+        p[0] = p[1] + ", " + p[3]
 
 
 def p_math_op(p):
@@ -678,15 +678,9 @@ def main():
             print(result)
             with open("converted.py", "w") as out_f:
                 out_f.write(result)
+                break
 
-"""
-    while True:
-        try:
-            s = input('calc > ')  # Use raw_input on Python 2
-        except EOFError:
-            break
-        parser.parse(s)
-"""
+
 
 if __name__ == "__main__":
     main()

@@ -7,10 +7,10 @@ def main():
     variable = 1
     variable2 = 3.2
     tab = [float()] * (5)
-    if(variable>variable2):
+    if variable > variable2:
         print(variable)
     
-    elif(variable2>variable):
+    elif variable2 > variable:
         print(variable2)
     
     while(1):
