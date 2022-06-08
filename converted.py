@@ -3,18 +3,25 @@
 """
 #Komentarz
 #define PAP 2
-def main():
+def add(a: int, b: int):
+    return a + b
+
+
+def main(a: int):
     variable = 1
     variable2 = 3.2
     tab = [float()] * (5)
     if variable > variable2:
         print(variable)
+        if variable > variable2:
+            print(variable)
+        
     
     elif variable2 > variable:
         print(variable2)
     
-    while(1):
-        break
+    elif add(2, 3) == 5:
+        print("tak")
     
     print("TAK")
     print("NIE")

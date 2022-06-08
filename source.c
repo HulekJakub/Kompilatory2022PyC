@@ -4,10 +4,16 @@
 //Komentarz
 #define PAP 2
 
-int main() {
+int add(int a, int b)
+{
+  return a + b;
+}
+
+int main(int a) {
   int variable = 1;
   double variable2 = 3.2;
   double tab[5];
+
   if(variable > variable2)
   {
     printf(variable);
@@ -18,16 +24,11 @@ int main() {
   }
   else if (variable2 > variable)
   {
-    printf(variable2)
+    printf(variable2);
   }
-  else
+  else if (add(2, 3) == 5)
   {
-    printf(variable)
-  }
-
-  while(1)
-  {
-    break;
+    printf("tak");
   }
 
   printf("TAK");

@@ -1,5 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
+from lexer import *
 
 # Tokens
 tokens = (
@@ -28,7 +29,7 @@ reserved = {
     'for': 'FOR',
     'do': 'DO',
     'while': 'WHILE',
-    'unsigned': 'UNSIGNED',
+    #'unsigned': 'UNSIGNED',
     #'switch': 'SWITCH',
     'return': 'RETURN',
     'else': 'ELSE',
@@ -152,7 +153,6 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-
 # Funkcje pomocnicze
 
 INDENT = "    "
@@ -166,11 +166,19 @@ def indent_text(text):
 # PROGRAM
 
 
+precedence = (
+     ('nonassoc', 'EQUAL', 'NOT_EQUAL', 'GREATER_EQUAL', 'LESSER_EQUAL', 'GREATER', 'LESSER'),  # Nonassociative operators
+     ('left', 'PLUS', 'MINUS'),
+     ('left', 'MUL', 'DIV'),
+     ('right', 'UMINUS'),            # Unary minus operator
+ )
+
+start = "s_prim"
+
 
 def p_s_prim(t):
     '''s_prim : program'''
     t[0] = t[1] + "if __name__ == \"__main__\":\n" + INDENT + "main()"
-
 
 
 def p_program(t):
@@ -190,6 +198,7 @@ def p_program_component(t):
     t[0] = t[1]
 
 # STATEMENTS
+
 
 def p_statement(t):
     '''statement : any_statement
@@ -243,20 +252,8 @@ def p_declaration_statement(t):
     '''declaration_statement : opt_const type ID opt_array_mark
                              | opt_const type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON'''
     dec_type = ""
-    if t[2] == "int":
-        dec_type = "int()"
-    if t[2] == "float":
-        dec_type = "float()"
-    if t[2] == "long":
-        dec_type = "int()"
-    if t[2] == "double":
-        dec_type = "float()"
-    if t[2] == "char":
-        dec_type = "\"\""
-    if t[2] == "bool":
-        dec_type = "bool()"
-    if t[2] == "void":
-        dec_type = ""
+    if t[2] in ["int", "float", "bool", "str"]:
+        dec_type = t[2]+"()"
 
     dec_assign = ""
     if len(t) == 5:
@@ -280,7 +277,8 @@ def p_declaration_statement(t):
 
 
 def p_assign_statement(t):
-    '''assign_statement : assign_expression SEMICOLON'''
+    '''assign_statement :  assign_expression SEMICOLON'''
+    print("assign")
     t[0] = t[1] + "\n"
 
 
@@ -301,6 +299,7 @@ def p_break_statement(t):
 
 def p_function_definition_statement(t):
     '''function_definition_statement : type ID L_BRACKET opt_args R_BRACKET statements_block'''
+    
     t[0] = "def " + t[2] + "(" + t[4] + ")" + t[6] + "\n"
 
 
@@ -343,6 +342,10 @@ def p_if_statement(p):
 
     p[0] = "if" + " " + p[3]   + p[5]
 
+def p_else_statement(p):
+    '''else_statement : ELSE statements_block '''
+
+    p[0] = "else" + p[2]
 
 def p_else_if_statement(p):
     '''else_if_statement : ELSE IF L_BRACKET logical_expression R_BRACKET statements_block'''
@@ -361,22 +364,15 @@ def p_else_if_statements(p):
         p[0] = p[1]
 
 
-def p_opt_else_if_statements(p):
-    '''opt_else_if_statements : else_if_statements
-                              | empty'''
-
-    p[0] = p[1]
-
-
-def p_else_statement(p):
-    '''else_statement : ELSE statements_block'''
-
-    p[0] = "else" + p[2]
-
-
 def p_opt_else_statement(p):
     '''opt_else_statement : else_statement
                           | empty'''
+    p[0] = p[1]
+
+
+def p_opt_else_if_statements(p):
+    '''opt_else_if_statements : else_if_statements
+                              | empty'''
 
     p[0] = p[1]
 
@@ -406,7 +402,6 @@ def p_declaration_value_expression(p):
 
 def p_value_expression(p):
     '''value_expression : math_expression
-                        | logical_expression
                         | function_expression
                         | value
                         | trinary_mark_expression
@@ -427,13 +422,10 @@ def p_opt_value_expression(p):
 
 
 def p_math_expression(p):
-    '''math_expression : math_expression math_op math_expression
-                       | MINUS math_expression
-                       | INTEGER
-                       | DECIMAL
-                       | CHARACTER
-                       | ID
-                       | L_BRACKET math_expression R_BRACKET'''
+    '''math_expression : L_BRACKET math_expression R_BRACKET
+                       | MINUS math_expression %prec UMINUS
+                       | MINUS value %prec UMINUS
+                       | value math_op value'''
 
     if len(p) == 2:
         p[0] = p[1]
@@ -442,17 +434,16 @@ def p_math_expression(p):
         p[0] = "-" + p[2]
 
     elif len(p) == 4 and p[1] == "(":
-        p[0] = p[1] + p[2] + p[3]
+        p[0] = "(" + p[2] + ")"
 
     elif len(p) == 4:
-        p[0] = "(" + p[2] + ")"
+        p[0] = f"{p[1]} {p[2]} {p[3]}"
 
 
 def p_logical_expression(p):
     '''logical_expression : logical_expression bool_op logical_expression
                           | NEGATION logical_expression
-                          | value_expression comparison_op value_expression
-                          | value_expression'''
+                          | value_expression comparison_op value_expression'''
 
     if len(p) == 2:
         p[0] = p[1]
@@ -479,6 +470,7 @@ def p_assign_expression(p):
     '''assign_expression : ID assign_op value_expression
                          | unary_op ID
                          | ID unary_op'''
+    print("assign_exp")
     if len(p) == 3:
         if p[1] == "-" or p[1] == "+":
             p[0] = p[2] + p[1] + "=" + " 1"
@@ -512,7 +504,22 @@ def p_type(p):
             | BOOL
             | LONG
             | VOID'''
-    p[0] = p[1]
+    py_type = ""
+    if p[1] == "int":
+        py_type = "int"
+    if p[1] == "float":
+        py_type = "float"
+    if p[1] == "double":
+        py_type = "float"
+    if p[1] == "char":
+        py_type = "str"
+    if p[1] == "bool":
+        py_type = "bool"
+    if p[1] == "long":
+        py_type = "int"
+    if p[1] == "void":
+        py_type = ""
+    p[0] = py_type
 
 
 def p_value(p):
@@ -539,9 +546,9 @@ def p_value(p):
 
 
 def p_listed_values(p):
-    '''listed_values : value_expression
-                     | listed_values COMMA listed_values'''
-
+    '''listed_values : value_expression COMMA value_expression
+                     | value_expression COMMA listed_values'''
+    print(f"listing values cur:{p}")
     if len(p) == 2:
         p[0] = p[1]
 
@@ -628,15 +635,15 @@ def p_args(p):
     '''args : type ID
             | type ID COMMA args'''
 
+    arg = p[2] + ": " + p[1]
     if len(p) == 3:
-        p[0] = p[1] + p[2]
-
+        p[0] = arg
     else:
-        p[0] = p[1] + p[2] + "," + p[4]
+        p[0] = arg + ", " + p[4]
 
 
 def p_opt_args(p):
-    '''opt_args : args type ID
+    '''opt_args : args
                 | empty'''
 
     p[0] = p[1]
@@ -648,21 +655,26 @@ def p_empty(p):
 
 # Errors
 
+
 def p_error(p):
-    print(f"Whoa. You are seriously hosed at line {p.lineno}.")
+
     if not p:
         print("End of File!")
-        return
-
+        return ""
+    print("Whoa. You are seriously hosed at line", p.lineno, " token ", p)
     # Read ahead looking for a closing '}'
     while True:
         tok = parser.token()  # Get the next token
-        if not tok or tok.type == 'R_BRACE' or tok.type == 'R_BRACKET' or tok.type == 'SEMICOLON':
+        if not tok or tok.type == 'R_BRACE' or tok.type == 'SEMICOLON':
             break
     parser.restart()
+    parser.errok()
+    return ""
+
 
 lexer = lex.lex()
 parser = yacc.yacc()
+
 
 def main():
     with open("source.c", "r") as f:
