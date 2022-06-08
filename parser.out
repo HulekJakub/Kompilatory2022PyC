@@ -2,9 +2,6 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    CASE
-    DEFAULT
-    SWITCH
     UNSIGNED
 
 Grammar
@@ -54,7 +51,7 @@ Rule 41    else_if_statements -> else_if_statement
 Rule 42    else_if_statements -> else_if_statement else_if_statements
 Rule 43    opt_else_if_statements -> else_if_statements
 Rule 44    opt_else_if_statements -> empty
-Rule 45    else_statement -> ELSE
+Rule 45    else_statement -> ELSE statements_block
 Rule 46    opt_else_statement -> else_statement
 Rule 47    opt_else_statement -> empty
 Rule 48    print_statement -> PRINTF L_BRACKET value_expression R_BRACKET
@@ -148,7 +145,6 @@ AND                  : 105
 ASSIGN               : 28 113
 BOOL                 : 85
 BREAK                : 32
-CASE                 : 
 CHAR                 : 84
 CHARACTER            : 65 90
 COLON                : 73
@@ -157,7 +153,6 @@ COMMENT              : 6 9
 CONST                : 120
 DECIMAL              : 64 89
 DECREMENT            : 104
-DEFAULT              : 
 DIV                  : 101
 DIV_ASSIGN           : 117
 DO                   : 35
@@ -201,7 +196,6 @@ R_SQUARE_BRACKET     : 95 119
 SCANF                : 49
 SEMICOLON            : 10 28 29 30 31 32 35 36 38
 STRING               : 91
-SWITCH               : 
 TRUE                 : 92
 UNSIGNED             : 
 VOID                 : 87
@@ -254,7 +248,7 @@ s_prim               : 0
 scan_statement       : 26
 statement            : 11 12
 statements           : 12 13
-statements_block     : 33 34 35 36 39 40
+statements_block     : 33 34 35 36 39 40 45
 trinary_mark_expression : 57
 type                 : 27 28 33 126 127 128
 unary_op             : 75 76
@@ -4059,7 +4053,7 @@ state 148
     (24) any_statement -> if_statement opt_else_if_statements . opt_else_statement
     (46) opt_else_statement -> . else_statement
     (47) opt_else_statement -> . empty
-    (45) else_statement -> . ELSE
+    (45) else_statement -> . ELSE statements_block
     (130) empty -> .
 
     ELSE            shift and go to state 177
@@ -4837,31 +4831,12 @@ state 176
 
 state 177
 
-    (45) else_statement -> ELSE .
+    (45) else_statement -> ELSE . statements_block
+    (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
-    COMMENT         reduce using rule 45 (else_statement -> ELSE .)
-    SEMICOLON       reduce using rule 45 (else_statement -> ELSE .)
-    RETURN          reduce using rule 45 (else_statement -> ELSE .)
-    WHILE           reduce using rule 45 (else_statement -> ELSE .)
-    DO              reduce using rule 45 (else_statement -> ELSE .)
-    BREAK           reduce using rule 45 (else_statement -> ELSE .)
-    FOR             reduce using rule 45 (else_statement -> ELSE .)
-    IF              reduce using rule 45 (else_statement -> ELSE .)
-    PRINTF          reduce using rule 45 (else_statement -> ELSE .)
-    SCANF           reduce using rule 45 (else_statement -> ELSE .)
-    CONST           reduce using rule 45 (else_statement -> ELSE .)
-    ID              reduce using rule 45 (else_statement -> ELSE .)
-    INCREMENT       reduce using rule 45 (else_statement -> ELSE .)
-    DECREMENT       reduce using rule 45 (else_statement -> ELSE .)
-    INT             reduce using rule 45 (else_statement -> ELSE .)
-    FLOAT           reduce using rule 45 (else_statement -> ELSE .)
-    DOUBLE          reduce using rule 45 (else_statement -> ELSE .)
-    CHAR            reduce using rule 45 (else_statement -> ELSE .)
-    BOOL            reduce using rule 45 (else_statement -> ELSE .)
-    LONG            reduce using rule 45 (else_statement -> ELSE .)
-    VOID            reduce using rule 45 (else_statement -> ELSE .)
-    R_BRACE         reduce using rule 45 (else_statement -> ELSE .)
+    L_BRACE         shift and go to state 89
 
+    statements_block               shift and go to state 190
 
 state 178
 
@@ -4896,7 +4871,7 @@ state 179
 
     (40) else_if_statement -> ELSE IF . L_BRACKET logical_expression R_BRACKET statements_block
 
-    L_BRACKET       shift and go to state 190
+    L_BRACKET       shift and go to state 191
 
 
 state 180
@@ -4983,7 +4958,7 @@ state 182
   ! shift/reduce conflict for QUESTION_MARK resolved as shift
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
-    R_BRACKET       shift and go to state 191
+    R_BRACKET       shift and go to state 192
     EQUAL           reduce using rule 54 (value_expression -> logical_expression .)
     NOT_EQUAL       reduce using rule 54 (value_expression -> logical_expression .)
     GREATER         reduce using rule 54 (value_expression -> logical_expression .)
@@ -5005,7 +4980,7 @@ state 183
 
     (35) do_while_loop_statement -> DO statements_block WHILE . L_BRACKET logical_expression R_BRACKET SEMICOLON
 
-    L_BRACKET       shift and go to state 192
+    L_BRACKET       shift and go to state 193
 
 
 state 184
@@ -5054,9 +5029,9 @@ state 184
     TRUE            shift and go to state 49
     FALSE           shift and go to state 50
 
-    opt_logical_expression         shift and go to state 193
-    logical_expression             shift and go to state 194
-    empty                          shift and go to state 195
+    opt_logical_expression         shift and go to state 194
+    logical_expression             shift and go to state 195
+    empty                          shift and go to state 196
     value_expression               shift and go to state 86
     math_expression                shift and go to state 36
     function_expression            shift and go to state 38
@@ -5110,7 +5085,7 @@ state 187
   ! shift/reduce conflict for QUESTION_MARK resolved as shift
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
-    R_BRACKET       shift and go to state 196
+    R_BRACKET       shift and go to state 197
     EQUAL           reduce using rule 54 (value_expression -> logical_expression .)
     NOT_EQUAL       reduce using rule 54 (value_expression -> logical_expression .)
     GREATER         reduce using rule 54 (value_expression -> logical_expression .)
@@ -5147,7 +5122,7 @@ state 188
   ! shift/reduce conflict for GREATER_EQUAL resolved as shift
   ! shift/reduce conflict for LESSER resolved as shift
   ! shift/reduce conflict for LESSER_EQUAL resolved as shift
-    R_BRACKET       shift and go to state 197
+    R_BRACKET       shift and go to state 198
     QUESTION_MARK   reduce using rule 71 (logical_expression -> value_expression .)
     AND             reduce using rule 71 (logical_expression -> value_expression .)
     OR              reduce using rule 71 (logical_expression -> value_expression .)
@@ -5172,10 +5147,38 @@ state 189
 
     (49) scan_statement -> SCANF L_BRACKET AMPERSAND . ID R_BRACKET
 
-    ID              shift and go to state 198
+    ID              shift and go to state 199
 
 
 state 190
+
+    (45) else_statement -> ELSE statements_block .
+
+    COMMENT         reduce using rule 45 (else_statement -> ELSE statements_block .)
+    SEMICOLON       reduce using rule 45 (else_statement -> ELSE statements_block .)
+    RETURN          reduce using rule 45 (else_statement -> ELSE statements_block .)
+    WHILE           reduce using rule 45 (else_statement -> ELSE statements_block .)
+    DO              reduce using rule 45 (else_statement -> ELSE statements_block .)
+    BREAK           reduce using rule 45 (else_statement -> ELSE statements_block .)
+    FOR             reduce using rule 45 (else_statement -> ELSE statements_block .)
+    IF              reduce using rule 45 (else_statement -> ELSE statements_block .)
+    PRINTF          reduce using rule 45 (else_statement -> ELSE statements_block .)
+    SCANF           reduce using rule 45 (else_statement -> ELSE statements_block .)
+    CONST           reduce using rule 45 (else_statement -> ELSE statements_block .)
+    ID              reduce using rule 45 (else_statement -> ELSE statements_block .)
+    INCREMENT       reduce using rule 45 (else_statement -> ELSE statements_block .)
+    DECREMENT       reduce using rule 45 (else_statement -> ELSE statements_block .)
+    INT             reduce using rule 45 (else_statement -> ELSE statements_block .)
+    FLOAT           reduce using rule 45 (else_statement -> ELSE statements_block .)
+    DOUBLE          reduce using rule 45 (else_statement -> ELSE statements_block .)
+    CHAR            reduce using rule 45 (else_statement -> ELSE statements_block .)
+    BOOL            reduce using rule 45 (else_statement -> ELSE statements_block .)
+    LONG            reduce using rule 45 (else_statement -> ELSE statements_block .)
+    VOID            reduce using rule 45 (else_statement -> ELSE statements_block .)
+    R_BRACE         reduce using rule 45 (else_statement -> ELSE statements_block .)
+
+
+state 191
 
     (40) else_if_statement -> ELSE IF L_BRACKET . logical_expression R_BRACKET statements_block
     (68) logical_expression -> . logical_expression bool_op logical_expression
@@ -5217,23 +5220,23 @@ state 190
     TRUE            shift and go to state 49
     FALSE           shift and go to state 50
 
-    logical_expression             shift and go to state 199
+    logical_expression             shift and go to state 200
     value_expression               shift and go to state 86
     math_expression                shift and go to state 36
     function_expression            shift and go to state 38
     value                          shift and go to state 39
     trinary_mark_expression        shift and go to state 40
 
-state 191
+state 192
 
     (34) while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET . statements_block
     (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
     L_BRACE         shift and go to state 89
 
-    statements_block               shift and go to state 200
+    statements_block               shift and go to state 201
 
-state 192
+state 193
 
     (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET . logical_expression R_BRACKET SEMICOLON
     (68) logical_expression -> . logical_expression bool_op logical_expression
@@ -5275,21 +5278,21 @@ state 192
     TRUE            shift and go to state 49
     FALSE           shift and go to state 50
 
-    logical_expression             shift and go to state 201
+    logical_expression             shift and go to state 202
     value_expression               shift and go to state 86
     math_expression                shift and go to state 36
     function_expression            shift and go to state 38
     value                          shift and go to state 39
     trinary_mark_expression        shift and go to state 40
 
-state 193
+state 194
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression . SEMICOLON opt_assign_expression R_BRACKET statements_block
 
-    SEMICOLON       shift and go to state 202
+    SEMICOLON       shift and go to state 203
 
 
-state 194
+state 195
 
     (77) opt_logical_expression -> logical_expression .
     (68) logical_expression -> logical_expression . bool_op logical_expression
@@ -5320,23 +5323,23 @@ state 194
 
     bool_op                        shift and go to state 71
 
-state 195
+state 196
 
     (78) opt_logical_expression -> empty .
 
     SEMICOLON       reduce using rule 78 (opt_logical_expression -> empty .)
 
 
-state 196
+state 197
 
     (39) if_statement -> IF L_BRACKET logical_expression R_BRACKET . statements_block
     (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
     L_BRACE         shift and go to state 89
 
-    statements_block               shift and go to state 203
+    statements_block               shift and go to state 204
 
-state 197
+state 198
 
     (48) print_statement -> PRINTF L_BRACKET value_expression R_BRACKET .
 
@@ -5364,75 +5367,16 @@ state 197
     R_BRACE         reduce using rule 48 (print_statement -> PRINTF L_BRACKET value_expression R_BRACKET .)
 
 
-state 198
+state 199
 
     (49) scan_statement -> SCANF L_BRACKET AMPERSAND ID . R_BRACKET
 
-    R_BRACKET       shift and go to state 204
-
-
-state 199
-
-    (40) else_if_statement -> ELSE IF L_BRACKET logical_expression . R_BRACKET statements_block
-    (68) logical_expression -> logical_expression . bool_op logical_expression
-    (54) value_expression -> logical_expression .
-    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
-    (105) bool_op -> . AND
-    (106) bool_op -> . OR
-
-  ! shift/reduce conflict for R_BRACKET resolved as shift
-  ! shift/reduce conflict for QUESTION_MARK resolved as shift
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
     R_BRACKET       shift and go to state 205
-    EQUAL           reduce using rule 54 (value_expression -> logical_expression .)
-    NOT_EQUAL       reduce using rule 54 (value_expression -> logical_expression .)
-    GREATER         reduce using rule 54 (value_expression -> logical_expression .)
-    GREATER_EQUAL   reduce using rule 54 (value_expression -> logical_expression .)
-    LESSER          reduce using rule 54 (value_expression -> logical_expression .)
-    LESSER_EQUAL    reduce using rule 54 (value_expression -> logical_expression .)
-    QUESTION_MARK   shift and go to state 72
-    AND             shift and go to state 73
-    OR              shift and go to state 74
 
-  ! R_BRACKET       [ reduce using rule 54 (value_expression -> logical_expression .) ]
-  ! QUESTION_MARK   [ reduce using rule 54 (value_expression -> logical_expression .) ]
-  ! AND             [ reduce using rule 54 (value_expression -> logical_expression .) ]
-  ! OR              [ reduce using rule 54 (value_expression -> logical_expression .) ]
-
-    bool_op                        shift and go to state 71
 
 state 200
 
-    (34) while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .
-
-    COMMENT         reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    SEMICOLON       reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    RETURN          reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    WHILE           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    DO              reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    BREAK           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    FOR             reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    IF              reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    PRINTF          reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    SCANF           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    CONST           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    ID              reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    INCREMENT       reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    DECREMENT       reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    INT             reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    FLOAT           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    DOUBLE          reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    CHAR            reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    BOOL            reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    LONG            reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    VOID            reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-    R_BRACE         reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
-
-
-state 201
-
-    (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression . R_BRACKET SEMICOLON
+    (40) else_if_statement -> ELSE IF L_BRACKET logical_expression . R_BRACKET statements_block
     (68) logical_expression -> logical_expression . bool_op logical_expression
     (54) value_expression -> logical_expression .
     (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
@@ -5461,7 +5405,66 @@ state 201
 
     bool_op                        shift and go to state 71
 
+state 201
+
+    (34) while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .
+
+    COMMENT         reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    SEMICOLON       reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    RETURN          reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    WHILE           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    DO              reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    BREAK           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    FOR             reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    IF              reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    PRINTF          reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    SCANF           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    CONST           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    ID              reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    INCREMENT       reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    DECREMENT       reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    INT             reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    FLOAT           reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    DOUBLE          reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    CHAR            reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    BOOL            reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    LONG            reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    VOID            reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+    R_BRACE         reduce using rule 34 (while_loop_statement -> WHILE L_BRACKET logical_expression R_BRACKET statements_block .)
+
+
 state 202
+
+    (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression . R_BRACKET SEMICOLON
+    (68) logical_expression -> logical_expression . bool_op logical_expression
+    (54) value_expression -> logical_expression .
+    (73) trinary_mark_expression -> logical_expression . QUESTION_MARK value_expression COLON value_expression
+    (105) bool_op -> . AND
+    (106) bool_op -> . OR
+
+  ! shift/reduce conflict for R_BRACKET resolved as shift
+  ! shift/reduce conflict for QUESTION_MARK resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_BRACKET       shift and go to state 207
+    EQUAL           reduce using rule 54 (value_expression -> logical_expression .)
+    NOT_EQUAL       reduce using rule 54 (value_expression -> logical_expression .)
+    GREATER         reduce using rule 54 (value_expression -> logical_expression .)
+    GREATER_EQUAL   reduce using rule 54 (value_expression -> logical_expression .)
+    LESSER          reduce using rule 54 (value_expression -> logical_expression .)
+    LESSER_EQUAL    reduce using rule 54 (value_expression -> logical_expression .)
+    QUESTION_MARK   shift and go to state 72
+    AND             shift and go to state 73
+    OR              shift and go to state 74
+
+  ! R_BRACKET       [ reduce using rule 54 (value_expression -> logical_expression .) ]
+  ! QUESTION_MARK   [ reduce using rule 54 (value_expression -> logical_expression .) ]
+  ! AND             [ reduce using rule 54 (value_expression -> logical_expression .) ]
+  ! OR              [ reduce using rule 54 (value_expression -> logical_expression .) ]
+
+    bool_op                        shift and go to state 71
+
+state 203
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON . opt_assign_expression R_BRACKET statements_block
     (79) opt_assign_expression -> . assign_expression
@@ -5473,17 +5476,17 @@ state 202
     (103) unary_op -> . INCREMENT
     (104) unary_op -> . DECREMENT
 
-    ID              shift and go to state 210
+    ID              shift and go to state 211
     R_BRACKET       reduce using rule 130 (empty -> .)
     INCREMENT       shift and go to state 138
     DECREMENT       shift and go to state 139
 
-    opt_assign_expression          shift and go to state 207
-    assign_expression              shift and go to state 208
-    empty                          shift and go to state 209
+    opt_assign_expression          shift and go to state 208
+    assign_expression              shift and go to state 209
+    empty                          shift and go to state 210
     unary_op                       shift and go to state 137
 
-state 203
+state 204
 
     (39) if_statement -> IF L_BRACKET logical_expression R_BRACKET statements_block .
 
@@ -5512,7 +5515,7 @@ state 203
     R_BRACE         reduce using rule 39 (if_statement -> IF L_BRACKET logical_expression R_BRACKET statements_block .)
 
 
-state 204
+state 205
 
     (49) scan_statement -> SCANF L_BRACKET AMPERSAND ID R_BRACKET .
 
@@ -5540,44 +5543,44 @@ state 204
     R_BRACE         reduce using rule 49 (scan_statement -> SCANF L_BRACKET AMPERSAND ID R_BRACKET .)
 
 
-state 205
+state 206
 
     (40) else_if_statement -> ELSE IF L_BRACKET logical_expression R_BRACKET . statements_block
     (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
     L_BRACE         shift and go to state 89
 
-    statements_block               shift and go to state 211
-
-state 206
-
-    (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression R_BRACKET . SEMICOLON
-
-    SEMICOLON       shift and go to state 212
-
+    statements_block               shift and go to state 212
 
 state 207
 
-    (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression . R_BRACKET statements_block
+    (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression R_BRACKET . SEMICOLON
 
-    R_BRACKET       shift and go to state 213
+    SEMICOLON       shift and go to state 213
 
 
 state 208
+
+    (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression . R_BRACKET statements_block
+
+    R_BRACKET       shift and go to state 214
+
+
+state 209
 
     (79) opt_assign_expression -> assign_expression .
 
     R_BRACKET       reduce using rule 79 (opt_assign_expression -> assign_expression .)
 
 
-state 209
+state 210
 
     (80) opt_assign_expression -> empty .
 
     R_BRACKET       reduce using rule 80 (opt_assign_expression -> empty .)
 
 
-state 210
+state 211
 
     (74) assign_expression -> ID . assign_op value_expression
     (76) assign_expression -> ID . unary_op
@@ -5602,7 +5605,7 @@ state 210
     assign_op                      shift and go to state 153
     unary_op                       shift and go to state 154
 
-state 211
+state 212
 
     (40) else_if_statement -> ELSE IF L_BRACKET logical_expression R_BRACKET statements_block .
 
@@ -5631,7 +5634,7 @@ state 211
     R_BRACE         reduce using rule 40 (else_if_statement -> ELSE IF L_BRACKET logical_expression R_BRACKET statements_block .)
 
 
-state 212
+state 213
 
     (35) do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression R_BRACKET SEMICOLON .
 
@@ -5659,16 +5662,16 @@ state 212
     R_BRACE         reduce using rule 35 (do_while_loop_statement -> DO statements_block WHILE L_BRACKET logical_expression R_BRACKET SEMICOLON .)
 
 
-state 213
+state 214
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET . statements_block
     (15) statements_block -> . L_BRACE opt_statements R_BRACE
 
     L_BRACE         shift and go to state 89
 
-    statements_block               shift and go to state 214
+    statements_block               shift and go to state 215
 
-state 214
+state 215
 
     (36) for_loop_statement -> FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression R_BRACKET statements_block .
 
@@ -5826,17 +5829,17 @@ WARNING: shift/reduce conflict for GREATER in state 188 resolved as shift
 WARNING: shift/reduce conflict for GREATER_EQUAL in state 188 resolved as shift
 WARNING: shift/reduce conflict for LESSER in state 188 resolved as shift
 WARNING: shift/reduce conflict for LESSER_EQUAL in state 188 resolved as shift
-WARNING: shift/reduce conflict for QUESTION_MARK in state 194 resolved as shift
-WARNING: shift/reduce conflict for AND in state 194 resolved as shift
-WARNING: shift/reduce conflict for OR in state 194 resolved as shift
-WARNING: shift/reduce conflict for R_BRACKET in state 199 resolved as shift
-WARNING: shift/reduce conflict for QUESTION_MARK in state 199 resolved as shift
-WARNING: shift/reduce conflict for AND in state 199 resolved as shift
-WARNING: shift/reduce conflict for OR in state 199 resolved as shift
-WARNING: shift/reduce conflict for R_BRACKET in state 201 resolved as shift
-WARNING: shift/reduce conflict for QUESTION_MARK in state 201 resolved as shift
-WARNING: shift/reduce conflict for AND in state 201 resolved as shift
-WARNING: shift/reduce conflict for OR in state 201 resolved as shift
+WARNING: shift/reduce conflict for QUESTION_MARK in state 195 resolved as shift
+WARNING: shift/reduce conflict for AND in state 195 resolved as shift
+WARNING: shift/reduce conflict for OR in state 195 resolved as shift
+WARNING: shift/reduce conflict for R_BRACKET in state 200 resolved as shift
+WARNING: shift/reduce conflict for QUESTION_MARK in state 200 resolved as shift
+WARNING: shift/reduce conflict for AND in state 200 resolved as shift
+WARNING: shift/reduce conflict for OR in state 200 resolved as shift
+WARNING: shift/reduce conflict for R_BRACKET in state 202 resolved as shift
+WARNING: shift/reduce conflict for QUESTION_MARK in state 202 resolved as shift
+WARNING: shift/reduce conflict for AND in state 202 resolved as shift
+WARNING: shift/reduce conflict for OR in state 202 resolved as shift
 WARNING: reduce/reduce conflict in state 34 resolved using rule (opt_value_expression -> value_expression)
 WARNING: rejected rule (logical_expression -> value_expression) in state 34
 WARNING: reduce/reduce conflict in state 43 resolved using rule (math_expression -> INTEGER)
@@ -5867,8 +5870,8 @@ WARNING: reduce/reduce conflict in state 173 resolved using rule (logical_expres
 WARNING: rejected rule (trinary_mark_expression -> logical_expression QUESTION_MARK value_expression COLON value_expression) in state 173
 WARNING: reduce/reduce conflict in state 180 resolved using rule (logical_expression -> value_expression)
 WARNING: rejected rule (assign_expression -> ID assign_op value_expression) in state 180
-WARNING: reduce/reduce conflict in state 194 resolved using rule (value_expression -> logical_expression)
-WARNING: rejected rule (opt_logical_expression -> logical_expression) in state 194
+WARNING: reduce/reduce conflict in state 195 resolved using rule (value_expression -> logical_expression)
+WARNING: rejected rule (opt_logical_expression -> logical_expression) in state 195
 WARNING: Rule (value -> INTEGER) is never reduced
 WARNING: Rule (value -> DECIMAL) is never reduced
 WARNING: Rule (value -> CHARACTER) is never reduced
