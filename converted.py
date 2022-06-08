@@ -23,6 +23,10 @@ def main(a: int):
     elif add(2, 3) == 5:
         print("tak")
     
+    #komentarz we funkcji
+    """ długi komentarz
+      we
+      funkcji """
     print("TAK")
     print("NIE")
     return 0

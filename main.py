@@ -1,8 +1,4 @@
 import sys
-
-import ply.lex as lex
-import ply.yacc as yacc
-from lexerPyC import *
 from parserPyC import *
 
 def main():
@@ -12,11 +8,22 @@ def main():
     lexer = lexer.lexer
     parser = parser.parser
     try:
-        with open(sys.argv[1], "r") as f:
+        with open("source.c", "r") as f:
+            file_body = f.read()
+            file_tokens = list()
+            lexer.input(file_body)
+            token = lexer.token()
+            while token is not None:
+                file_tokens.append(str(token))
+                token = lexer.token()
+            with open("read_tokens.txt", "w") as out_f:
+                print("aha")
+                out_f.write("\n".join(file_tokens))
+
+        with open("source.c", "r") as f:
             file_body = f.read()
             result = parser.parse(file_body)
             print(result)
-
             if result is not None:
                 with open("converted.py", "w") as out_f:
                     out_f.write(result)

@@ -1,16 +1,10 @@
 import ply.lex as lex
 
-import ply.lex as lex
-import ply.yacc as yacc
-import sys
-from ply.lex import TOKEN
-
 
 class PyCLexer():
 
     # CONSTRUCTOR
     def __init__(self):
-        print('Lexer constructor called.')
         self.lexer = lex.lex(module=self)
 
     # Tokens
@@ -61,8 +55,9 @@ class PyCLexer():
         t.value = t.value + "\n"
         return t
 
+
     def t_COMMENT(self, t):
-        r'(\/\/[^\n]*\n)|(\/\*(.|\n)*\*\/)'
+        r'(\/\/[^\n]*\n)|(\/\*(.|\n)*?\*\/)'
         t.lexer.lineno += t.value.count("\n")
         if t.value[:2] == "//":
             t.value = "#" + t.value[2:]

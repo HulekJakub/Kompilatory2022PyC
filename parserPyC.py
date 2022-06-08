@@ -1,14 +1,16 @@
 from lexerPyC import *
 import ply.yacc as yacc
-import sys
+
 
 class PyCParser:
     def __init__(self, lexer):
-        print("Parser constructor called")
         self.parser = yacc.yacc(module=self)
         self.lexer = lexer
 
     tokens = PyCLexer.tokens
+
+    # Flagi
+    main_function_declared = False
 
     # Funkcje pomocnicze
 
@@ -34,7 +36,11 @@ class PyCParser:
 
     def p_s_prim(self, p):
         '''s_prim : program'''
-        p[0] = p[1] + "if __name__ == \"__main__\":\n" + self.INDENT + "main()"
+        if self.main_function_declared:
+            p[0] = p[1] + "if __name__ == \"__main__\":\n" + self.INDENT + "main()"
+        else:
+            p[0] = p[1]
+
 
     def p_program(self, p):
         '''program : program_component
@@ -143,7 +149,8 @@ class PyCParser:
 
     def p_function_definition_statement(self, p):
         '''function_definition_statement : type ID L_BRACKET opt_args R_BRACKET statements_block'''
-
+        if p[2] == "main":
+            self.main_function_declared = True
         p[0] = "def " + p[2] + "(" + p[4] + ")" + p[6] + "\n"
 
     def p_while_loop_statement(self, p):

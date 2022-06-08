@@ -31,6 +31,11 @@ int main(int a) {
     printf("tak");
   }
 
+  //komentarz we funkcji
+  /* długi komentarz
+  we
+  funkcji */
+
   printf("TAK");
   printf("NIE");
 
