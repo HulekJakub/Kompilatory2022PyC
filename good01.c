@@ -11,5 +11,10 @@ int main()
     }
     bool x = true;
     double k = 2.3;
+
+    if (x)
+    {
+        printf(k);
+    }
     return 0;
 }

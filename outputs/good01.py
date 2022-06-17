@@ -8,6 +8,9 @@ def main():
     
     x = True
     k = 2.3
+    if x:
+        print(k)
+    
     return 0
 
 

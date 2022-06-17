@@ -10,10 +10,10 @@ def main():
     tab = [float()] * (5)
     i = 0
     while(i < 5):
-        tab[i]=i * 2
+        tab[i] = i * 2
         print(tab[i])
     
-        i+= 1
+        i +=  1
     #komentarz we funkcji
     """ długi komentarz
       we

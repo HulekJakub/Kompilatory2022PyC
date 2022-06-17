@@ -32,7 +32,9 @@ class PyCParser:
         ('right', 'UMINUS'),  # Unary minus operator
         ('nonassoc', 'ELSE_IF_WORSE'),
         ('nonassoc', 'ELSE_BETTER'),
-        ('nonassoc', 'ELEMENT_EXTRACTION_FIRST')
+        ('nonassoc', 'ELEMENT_EXTRACTION_FIRST'),
+        # ('nonassoc', 'SHORTER_LAST'),
+        # ('nonassoc', 'LONGER_FIRST')
     )
 
     start = "s_prim"
@@ -190,7 +192,8 @@ class PyCParser:
             p[0] = p[1] + p[2]
 
     def p_if_statement(self, p):
-        '''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block'''
+        '''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block
+                        | IF L_BRACKET value_expression R_BRACKET statements_block'''
 
         p[0] = "if" + " " + p[3] + p[5]
 
@@ -275,13 +278,17 @@ class PyCParser:
     def p_logical_expression(self, p):
         '''logical_expression : logical_expression bool_op logical_expression
                               | NEGATION logical_expression
-                              | value_expression comparison_op value_expression'''
+                              | value_expression comparison_op value_expression
+                              | L_BRACKET logical_expression R_BRACKET'''
 
         if len(p) == 2:
             p[0] = p[1]
 
         elif len(p) == 3:
             p[0] = "not " + p[2]
+
+        elif len(p) == 4 and p[1] == "(":
+            p[0] = "(" + p[2] + ")"
 
         elif len(p) == 4:
             p[0] = p[1] + " " + p[2] + " " + p[3]
@@ -302,11 +309,11 @@ class PyCParser:
                              | ID unary_op'''
         if len(p) == 3:
             if p[1] == "-" or p[1] == "+":
-                p[0] = p[2] + p[1] + "=" + " 1"
+                p[0] = p[2] + " " + p[1] + "= " + " 1"
             else:
-                p[0] = p[1] + p[2] + "=" + " 1"
+                p[0] = p[1] + " " + p[2] + "= " + " 1"
         elif len(p) == 4:
-            p[0] = p[1] + p[2] + p[3]
+            p[0] = p[1] + " " + p[2] + " " + p[3]
 
 
     def p_opt_logical_expression(self, p):
