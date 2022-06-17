@@ -30,6 +30,9 @@ class PyCParser:
         ('left', 'PLUS', 'MINUS'),
         ('left', 'MUL', 'DIV'),
         ('right', 'UMINUS'),  # Unary minus operator
+        ('nonassoc', 'ELSE_IF_WORSE'),
+        ('nonassoc', 'ELSE_BETTER'),
+        ('nonassoc', 'ELEMENT_EXTRACTION_FIRST')
     )
 
     start = "s_prim"
@@ -94,14 +97,12 @@ class PyCParser:
                          | do_while_loop_statement
                          | break_statement
                          | for_loop_statement
-                         | if_statement opt_else_if_statements opt_else_statement
+                         | if_statement_block
                          | print_statement
                          | scan_statement
                          '''
-        if len(p) == 4:
-            p[0] = p[1] + p[2] + p[3]
-        else:
-            p[0] = p[1]
+
+        p[0] = p[1]
 
     def p_declaration_statement(self, p):
         '''declaration_statement : opt_const type ID opt_array_mark
@@ -132,7 +133,6 @@ class PyCParser:
 
     def p_assign_statement(self, p):
         '''assign_statement :  assign_expression SEMICOLON'''
-        print("assign")
         p[0] = p[1] + "\n"
 
     def p_function_statement(self, p):
@@ -181,41 +181,39 @@ class PyCParser:
         else:
             t[0] = t[1]
 
+    def p_if_statement_block(self, p):
+        '''if_statement_block : if_statement
+                              | if_statement else_else_if_statements_block'''
+        if len(p) == 2:
+            p[0] = p[1]
+        elif len(p) == 3:
+            p[0] = p[1] + p[2]
+
     def p_if_statement(self, p):
         '''if_statement : IF L_BRACKET logical_expression R_BRACKET statements_block'''
 
         p[0] = "if" + " " + p[3] + p[5]
+
+    def p_else_else_if_statements_block(self, p):
+        '''else_else_if_statements_block : else_statement
+                                         | else_if_statement else_else_if_statements_block %prec ELSE_BETTER
+                                         | else_if_statement  %prec ELSE_IF_WORSE'''
+        if len(p) == 2:
+            p[0] = p[1]
+        elif len(p) == 3:
+            p[0] = p[1] + p[2]
 
     def p_else_statement(self, p):
         '''else_statement : ELSE statements_block '''
 
         p[0] = "else" + p[2]
 
+
     def p_else_if_statement(self, p):
-        '''else_if_statement : ELSE IF L_BRACKET logical_expression R_BRACKET statements_block'''
+        '''else_if_statement : ELSE if_statement'''
 
-        p[0] = "elif" + " " + p[4] + p[6]
+        p[0] = "el" + p[2]
 
-    def p_else_if_statements(self, p):
-        '''else_if_statements : else_if_statement
-                              | else_if_statement else_if_statements'''
-
-        if len(p) == 3:
-            p[0] = p[1] + p[2]
-
-        elif len(p) == 2:
-            p[0] = p[1]
-
-    def p_opt_else_statement(self, p):
-        '''opt_else_statement : else_statement
-                              | empty'''
-        p[0] = p[1]
-
-    def p_opt_else_if_statements(self, p):
-        '''opt_else_if_statements : else_if_statements
-                                  | empty'''
-
-        p[0] = p[1]
 
     def p_print_statement(self, p):
         '''print_statement : PRINTF L_BRACKET value_expression R_BRACKET'''
@@ -299,16 +297,17 @@ class PyCParser:
 
     def p_assign_expression(self, p):
         '''assign_expression : ID assign_op value_expression
+                             | list_element_extraction assign_op value_expression %prec ELEMENT_EXTRACTION_FIRST
                              | unary_op ID
                              | ID unary_op'''
-        print("assign_exp")
         if len(p) == 3:
             if p[1] == "-" or p[1] == "+":
                 p[0] = p[2] + p[1] + "=" + " 1"
             else:
                 p[0] = p[1] + p[2] + "=" + " 1"
-        else:
+        elif len(p) == 4:
             p[0] = p[1] + p[2] + p[3]
+
 
     def p_opt_logical_expression(self, p):
         '''opt_logical_expression : logical_expression
@@ -357,7 +356,7 @@ class PyCParser:
                  | TRUE
                  | FALSE
                  | ID
-                 | ID L_SQUARE_BRACKET value_expression  R_SQUARE_BRACKET'''
+                 | list_element_extraction %prec ELEMENT_EXTRACTION_FIRST'''
 
         if len(p) == 2:
             if p[1] == "true":
@@ -368,13 +367,15 @@ class PyCParser:
             else:
                 p[0] = p[1]
 
-        else:
-            p[0] = p[1] + "[" + p[3] + "]"
+
+    def p_list_element_extraction(self, p):
+        '''list_element_extraction : ID L_SQUARE_BRACKET value_expression  R_SQUARE_BRACKET'''
+
+        p[0] = p[1] + "[" + p[3] + "]"
 
     def p_listed_values(self, p):
         '''listed_values : value_expression COMMA value_expression
                          | value_expression COMMA listed_values'''
-        print(f"listing values cur:{p}")
         if len(p) == 2:
             p[0] = p[1]
 
@@ -474,12 +475,11 @@ class PyCParser:
         if not p:
             print("End of File!")
             return ""
-        print("Whoa. You are seriously hosed at line", p.lineno, " token ", p)
+        print("Whoa. You are seriously hosed at line", p.lineno, " token ", p, "\nterminating...")
         # Read ahead looking for a closing '}'
         while True:
             tok = self.parser.token()  # Get the next token
             if not tok or tok.type == 'R_BRACE' or tok.type == 'SEMICOLON':
                 break
-        self.parser.restart()
-        self.parser.errok()
+
         return ""

@@ -6,7 +6,7 @@
 #define PAP 2
 
 
-int main(int a) {
+int main() {
   int variable = 1;
   double variable2 = 3.2;
   double tab[5];

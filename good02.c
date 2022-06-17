@@ -5,7 +5,7 @@ int addNumber(int a, int b)
     return a + b;
 }
 
-int main()
+int noMainFunction()
 {
     int num1 = 2;
     int num2;
@@ -14,6 +14,14 @@ int main()
     if(num3 == 5)
     {
         printf(num3);
+    }
+    else if (num3 == 5.0)
+    {
+        printf(num3);
+    }
+    else if (num3 == 4)
+    {
+        printf("Not good, but close.");
     }
     else
     {
