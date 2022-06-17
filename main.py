@@ -8,7 +8,7 @@ def main():
     lexer = lexer.lexer
     parser = parser.parser
     try:
-        with open("source.c", "r") as f:
+        with open("good03.c", "r") as f:
             file_body = f.read()
             file_tokens = list()
             lexer.input(file_body)
@@ -20,7 +20,7 @@ def main():
                 print("aha")
                 out_f.write("\n".join(file_tokens))
 
-        with open("source.c", "r") as f:
+        with open("good03.c", "r") as f:
             file_body = f.read()
             result = parser.parse(file_body)
             print(result)
