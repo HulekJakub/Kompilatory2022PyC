@@ -2,6 +2,7 @@ import sys
 import os
 from parserPyC import *
 
+
 def main():
     for file_name in sys.argv[1:]:
         print(file_name)
@@ -11,6 +12,7 @@ def main():
         lexer = lexer.lexer
         parser = parser.parser
         try:
+            """debug lexer tokens
             with open(file_name, "r") as f:
                 file_body = f.read()
                 file_tokens = list()
@@ -22,7 +24,7 @@ def main():
                 with open(os.path.join("outputs", file_name.split(".")[0] + "_read_tokens.txt"), "w") as out_f:
                     out_f.write("\n".join(file_tokens))
                 lexer.lineno = 1
-
+            """
             with open(file_name, "r") as f:
                 file_body = f.read()
                 result = parser.parse(file_body)
@@ -36,7 +38,7 @@ def main():
             print(f"File path not added")
 
         except FileNotFoundError:
-            print(f"File {sys.argv[1]} could not have been read.")
+            print(f"File {file_name} could not have been read.")
 
 if __name__ == "__main__":
     main()
