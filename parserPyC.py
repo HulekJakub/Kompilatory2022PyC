@@ -9,6 +9,9 @@ class PyCParser:
 
     tokens = PyCLexer.tokens
 
+    # Zmienne
+    variable_type = dict()
+
     # Flagi
     main_function_declared = False
 
@@ -123,32 +126,33 @@ class PyCParser:
                                  | CONST type ID opt_array_mark SEMICOLON
                                  | CONST type ID opt_array_mark ASSIGN declaration_value_expression SEMICOLON"""
 
-        offset = -1
+        const_offset = -1
         if p[1] == "const":
-            offset = 0
+            const_offset = 0
         dec_type = ""
-        if p[2 + offset] in ["int", "float", "bool", "str"]:
-            dec_type = p[2 + offset] + "()"
+        if p[2 + const_offset] in ["int", "float", "bool", "str"]:
+            dec_type = p[2 + const_offset] + "()"
 
         dec_assign = ""
-        if len(p) == 6 + offset:
-            if p[4 + offset] != "":
+        if len(p) == 6 + const_offset:
+            if p[4 + const_offset] != "":
                 if dec_type != "":
-                    dec_assign = " = " + "[" + dec_type + "]" + " * " "(" + p[4 + offset][1:-1] + ")"
+                    dec_assign = " = " + "[" + dec_type + "]" + " * " "(" + p[4 + const_offset][1:-1] + ")"
                 else:
-                    dec_assign = " = " + "[None]" + " * " "(" + p[4 + offset][1:-1] + ")"
+                    dec_assign = " = " + "[None]" + " * " "(" + p[4 + const_offset][1:-1] + ")"
             else:
                 if dec_type != "":
                     dec_assign = " = " + dec_type
                 else:
                     dec_assign = " = 0"
         else:
-            if p[4 + offset] != "":
-                dec_assign = " = " + p[6 + offset]
+            if p[4 + const_offset] != "":
+                dec_assign = " = " + p[6 + const_offset]
             else:
-                dec_assign = " = " + p[6 + offset]
+                dec_assign = " = " + p[6 + const_offset]
 
-        p[0] = p[3 + offset] + dec_assign + "\n"
+        self.variable_type[p[3 + const_offset]] = p[2 + const_offset]
+        p[0] = p[3 + const_offset] + dec_assign + "\n"
 
     def p_function_definition_statement(self, p):
         """function_definition_statement : type ID L_BRACKET opt_args R_BRACKET statements_block"""
@@ -168,9 +172,13 @@ class PyCParser:
         p[0] = p[1] + "\n"
 
     def p_return_statement(self, p):
-        """return_statement : RETURN value_expression SEMICOLON"""
+        """return_statement : RETURN value_expression SEMICOLON
+                            | RETURN SEMICOLON"""
 
-        p[0] = "return " + p[2] + "\n"
+        if len(p) == 3:
+            p[0] = "return " + "\n"
+        else:
+            p[0] = "return " + p[2] + "\n"
 
     def p_break_statement(self, p):
         """break_statement : BREAK SEMICOLON"""
@@ -187,7 +195,7 @@ class PyCParser:
         """do_while_loop_statement : DO statements_block WHILE L_BRACKET logical_expression  R_BRACKET SEMICOLON
                                    | DO statements_block WHILE L_BRACKET value_expression  R_BRACKET SEMICOLON"""
 
-        p[0] = "while True" + p[2] + self.INDENT + "if " + p[5] + ":\n" + 2 * self.INDENT + "break\n"
+        p[0] = "while True" + p[2] + self.INDENT + "if not " + p[5] + ":\n" + 2 * self.INDENT + "break\n"
 
     def p_for_loop_statement(self, p):
         """for_loop_statement : FOR L_BRACKET decl_stat_or_sem opt_logical_expression SEMICOLON opt_assign_expression \
@@ -255,7 +263,13 @@ class PyCParser:
     def p_scan_statement(self, p):
         """scan_statement : SCANF L_BRACKET AMPERSAND ID  R_BRACKET"""
 
-        p[0] = p[4] + " = " + "input" + "()" + "\n"
+        if self.variable_type[p[4]] != "":
+
+            p[0] = p[4] + " = " + self.variable_type[p[4]] + "(input())" + "\n"
+        else:
+            var_type = ("array", "void")[int(self.variable_type[p[4]] == "")]
+            print("Syntax error at line " + str(p.lineno(1)) + ". Can't scan to variable of type " + var_type)
+            raise SyntaxError
 
     # EXPRESSIONS
 
@@ -514,13 +528,21 @@ class PyCParser:
 
         if not p:
             print("End of File!")
-            return ""
         else:
             print("Syntax error at line", p.lineno, "token:", p)
-        # Read ahead looking for a closing '}'
+
+        in_block = 1
+        tok = p
         while True:
-            tok = self.parser.token()  # Get the next token
-            if not tok or tok.type == 'R_BRACE' or tok.type == 'SEMICOLON':
+            if not tok:
+                break
+            elif tok.type == 'L_BRACE':
+                in_block += 1
+            elif tok.type == 'R_BRACE':
+                in_block -= 1
+
+            if in_block == 0:
+                self.parser.restart()
                 break
 
-        return ""
+            tok = self.parser.token()

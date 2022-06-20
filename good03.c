@@ -8,8 +8,16 @@
 char b = '3';
 const int c = 21;
 
+void printHello()
+{
+    printf("Hello");
+    return;
+    printf("Not hello");
+}
+
 int main() {
   printf(b);
+  printHello();
   int variable = 1;
   double variable2 = 3.2;
   double tab[5];
@@ -27,6 +35,15 @@ int main() {
       }
     }
   }
+
+  int a = 1;
+  scanf(&a);
+  do
+  {
+    a += 1;
+  }
+  while(a <= 1);
+  printf(a);
 
   //komentarz we funkcji
   /* długi komentarz

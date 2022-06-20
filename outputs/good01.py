@@ -6,7 +6,7 @@ def main():
     if 2 == 3:
         print("21")
     x = True
-    k = 2.3
+    k = (4,3)[int(2 == 2)]
     if x:
         print(k)
     return 0

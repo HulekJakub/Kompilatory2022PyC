@@ -10,7 +10,7 @@ int main()
         printf("21")
     }
     bool x = true;
-    double k = 2.3;
+    double k = 2 == 2 ? 3 : 4;
 
     if (x)
     {

@@ -6,8 +6,14 @@
 #define PAP 2
 b = '3'
 c = 21
+def printHello():
+    print("Hello")
+    return 
+    print("Not hello")
+
 def main():
     print(b)
+    printHello()
     variable = 1
     variable2 = 3.2
     tab = [float()] * (5)
@@ -20,6 +26,13 @@ def main():
                 print("OK")
                 break
         i += 1
+    a = 1
+    a = int(input())
+    while True:
+        a += 1
+        if not a <= 1:
+            break
+    print(a)
     #komentarz we funkcji
     """ długi komentarz
       we
